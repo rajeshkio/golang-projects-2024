@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"os"
 	"time"
@@ -14,34 +15,40 @@ import (
 
 func main() {
 
-	if len(os.Args) < 3 {
-		fmt.Println("Usage: ./main <command> <container-id-or-name>")
+	command := flag.String("command", "", "Command to execute: 'inspect', 'stats', or 'logs'")
+	containerIDOrName := flag.String("container", "", "Container ID or name")
+	follow := flag.Bool("follow", false, "Follow logs in real-time")
+	timeStamp := flag.String("timestamp", "", "Timestamp for log filtering (e.g., '2024-02-24T16:07:41.140905466Z')")
+	interval := flag.Duration("interval", 5*time.Second, "Interval for resource monitoring")
+
+	// Parse command-line arguments
+	flag.Parse()
+
+	if *command == "" || *containerIDOrName == "" {
+		fmt.Println("Usage: ./main -command <command> -container <container-id-or-name> [-follow] [-timestamp <timestamp>] [-interval <interval>]")
 		os.Exit(1)
 	}
 	ctx := context.Background()
-	command := os.Args[1]
-	containerIDOrName := os.Args[2]
 
 	apiClient := initAPIClient()
 	defer apiClient.Close()
 
-	switch command {
+	switch *command {
 	case "inspect":
-		containerInfo, err := inspectContainers.InspectContainers(apiClient, ctx, containerIDOrName)
+		containerInfo, err := inspectContainers.InspectContainers(apiClient, ctx, *containerIDOrName)
 		if err != nil {
 			fmt.Println("Failed to inspect container:", err)
 			os.Exit(1)
 		}
 		inspectContainers.PrintContainerInfo(containerInfo)
 	case "stats":
-		interval := 5 * time.Second
 		// By prefacing the monitorContainer function call with go, a new goroutine is spawned to execute monitorContainer concurrently with the main program.
-		go resourceMonitor.ResourceMonitor(apiClient, ctx, containerIDOrName, interval)
+		go resourceMonitor.ResourceMonitor(apiClient, ctx, *containerIDOrName, *interval)
 
 		// Keep the main goroutine running
 		select {}
 	case "logs":
-		err := checkLogs.CheckLogs(apiClient, ctx, containerIDOrName)
+		err := checkLogs.CheckLogs(apiClient, ctx, *containerIDOrName, *follow, *timeStamp)
 		if err != nil {
 			fmt.Println("Failed to follow container logs:", err)
 			os.Exit(1)
