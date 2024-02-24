@@ -3,12 +3,19 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
-	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
 )
 
 func main() {
+
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: ./main <container-id-or-name>")
+		os.Exit(1)
+	}
+	containerIDOrName := os.Args[1]
+
 	ctx := context.Background()
 	apiClient, err := client.NewClientWithOpts(client.FromEnv)
 	if err != nil {
@@ -17,14 +24,14 @@ func main() {
 	apiClient.NegotiateAPIVersion(ctx)
 	defer apiClient.Close()
 
-	containers, err := apiClient.ContainerList(context.Background(), container.ListOptions{All: true})
+	containers, err := apiClient.ContainerInspect(ctx, containerIDOrName)
 	if err != nil {
 		panic(err)
 	}
-
-	for _, ctr := range containers {
-		fmt.Printf("%s %s (status: %s)\n", ctr.ID, ctr.Image, ctr.Status)
-	}
-
-	
+	fmt.Printf("Container ID: %s\n", containers.ID)
+	fmt.Printf("Container Image: %s\n", containers.Image)
+	fmt.Printf("Container Name: %s\n", containers.Name)
+	fmt.Printf("Container Status: %s\n", containers.State.Status)
+	fmt.Printf("Container Ports: %s\n", containers.NetworkSettings.Ports)
+	fmt.Printf("Container Env: %s\n", containers.Config.Env)
 }
