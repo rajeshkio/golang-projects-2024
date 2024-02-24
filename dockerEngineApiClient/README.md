@@ -1,26 +1,24 @@
-Project Specifications:
+# Project Specifications:
 
-Inspect Container Metadata:
+### Inspect Container Metadata:
 
-Display container ID, name, image, status, ports, and environment variables.
-Allow users to specify a container by ID or name.
-Monitor Resource Usage:
+Display container ID, name, image, status, ports, and environment variables. Allow users to specify a container by ID or name.
 
-Monitor CPU, memory, and network usage metrics for a specified container.
-Provide real-time updates or periodic sampling of resource usage metrics.
-Check Logs:
+### Monitor Resource Usage:
 
-Retrieve and display logs from a container.
-Support options to filter logs by timestamp, log level, or custom criteria.
-Implement functionality to tail logs in real-time.
-Inspect File System:
+Monitor CPU, memory, and network usage metrics for a specified container. Provide real-time updates or periodic sampling of resource usage metrics.
 
-List files and directories within a container's file system.
-Display file contents for selected files.
-Allow users to specify a directory or file within the container to inspect.
-How to Get Started:
+### Check Logs:
 
-Choose a Programming Language: Since you mentioned GoLang, we'll proceed with using GoLang for this project.
+Retrieve and display logs from a container. Support options to filter logs by timestamp, log level, or custom criteria. Implement functionality to tail logs in real-time.
+
+### Inspect File System:
+
+List files and directories within a container's file system. Display file contents for selected files. Allow users to specify a directory or file within the container to inspect.
+
+## How to Get Started:
+
+Choose a Programming Language: We'll proceed with using GoLang for this project.
 
 Familiarize Yourself with Docker API: The Docker Remote API provides endpoints for interacting with Docker containers, including retrieving container metadata, monitoring resource usage, accessing logs, and inspecting the file system. Familiarize yourself with the Docker Remote API documentation to understand the available endpoints and how to use them in your GoLang application.
 
