@@ -1,11 +1,10 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"os"
 
-	"github.com/docker/docker/client"
+	"github.com/rk280392/dockerEngineApiClient/inspectContainers"
 )
 
 func main() {
@@ -15,23 +14,14 @@ func main() {
 		os.Exit(1)
 	}
 	containerIDOrName := os.Args[1]
-
-	ctx := context.Background()
-	apiClient, err := client.NewClientWithOpts(client.FromEnv)
+	containerInfo, err := inspectContainers.InspectContainers(containerIDOrName)
+	fmt.Printf("Container ID: %s\n", containerInfo.ID)
+	fmt.Printf("Container Image: %s\n", containerInfo.Image)
+	fmt.Printf("Container Name: %s\n", containerInfo.Name)
+	fmt.Printf("Container Status: %s\n", containerInfo.State.Status)
+	fmt.Printf("Container Ports: %s\n", containerInfo.NetworkSettings.Ports)
+	fmt.Printf("Container Env: %s\n", containerInfo.Config.Env)
 	if err != nil {
 		fmt.Println(err)
 	}
-	apiClient.NegotiateAPIVersion(ctx)
-	defer apiClient.Close()
-
-	containers, err := apiClient.ContainerInspect(ctx, containerIDOrName)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("Container ID: %s\n", containers.ID)
-	fmt.Printf("Container Image: %s\n", containers.Image)
-	fmt.Printf("Container Name: %s\n", containers.Name)
-	fmt.Printf("Container Status: %s\n", containers.State.Status)
-	fmt.Printf("Container Ports: %s\n", containers.NetworkSettings.Ports)
-	fmt.Printf("Container Env: %s\n", containers.Config.Env)
 }
