@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"os"
 	"time"
 
 	"github.com/docker/docker/api/types/container"
@@ -26,7 +27,12 @@ func CheckLogs(apiClient *client.Client, ctx context.Context, containerIDOrName 
 	defer containerLogs.Close()
 
 	if follow {
-		followLogs(ctx, containerLogs)
+		return followLogs(ctx, containerLogs)
+	}
+	// If follow is false, print logs and return
+	_, err = io.Copy(os.Stdout, containerLogs)
+	if err != nil {
+		return err
 	}
 
 	return nil
