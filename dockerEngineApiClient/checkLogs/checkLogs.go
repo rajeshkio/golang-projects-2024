@@ -11,16 +11,30 @@ import (
 	"github.com/docker/docker/client"
 )
 
-func CheckLogs(apiClient *client.Client, ctx context.Context, containerIDOrName string, follow bool, timeStamp string) error {
+func CheckLogs(apiClient *client.Client, ctx context.Context, containerIDOrName string, follow bool, timeStamp string, logLevel string) error {
 
-	// Follow container logs
-	containerLogs, err := apiClient.ContainerLogs(ctx, containerIDOrName, container.LogsOptions{
+	options := container.LogsOptions{
 		ShowStdout: true,
-		ShowStderr: true,
+		ShowStderr: false,
 		Follow:     follow,
 		Timestamps: true,
 		Since:      timeStamp,
-	})
+	}
+
+	if logLevel != "" {
+		if logLevel == "error" {
+			options.ShowStdout = true
+			options.ShowStderr = true
+		} else if logLevel == "info" {
+			options.ShowStdout = true
+			options.ShowStderr = false
+		} else {
+			fmt.Println("Only info and error are correct loglevels")
+		}
+	}
+
+	// Follow container logs
+	containerLogs, err := apiClient.ContainerLogs(ctx, containerIDOrName, options)
 	if err != nil {
 		return err
 	}
