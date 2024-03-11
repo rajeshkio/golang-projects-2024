@@ -55,3 +55,4 @@ func ListFilesAndDirectories(apiClient *client.Client, ctx context.Context, cont
 	}
 	return files, nil
 }
+
