@@ -11,14 +11,15 @@ func main() {
 
 	path := "/tmp/customCICDPath"
 	url := "https://github.com/git-fixtures/basic.git"
-	branch := "refs/heads/master"
+	branch := "master"
+	commitHash := ""
 
 	os.RemoveAll(path)
 	err := cloneRepo.CloneRepo(path, branch, url)
 	if err != nil {
 		fmt.Println("Failed to clone repo: ", url, branch)
 	}
-	err = cloneRepo.CheckoutCommit("", path, branch)
+	err = cloneRepo.CheckoutCommit(commitHash, path, branch)
 	if err != nil {
 		fmt.Println("Failed to checkout")
 	}
