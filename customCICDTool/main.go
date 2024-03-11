@@ -1,29 +1,27 @@
 package main
 
 import (
-	"io"
-	"log"
+	"fmt"
 	"os"
 
-	memfs "github.com/go-git/go-billy/v5/memfs"
-	git "github.com/go-git/go-git/v5"
-	memory "github.com/go-git/go-git/v5/storage/memory"
+	"github.com/rk280392/customCICDTool/cloneRepo"
 )
 
 func main() {
-	fs := memfs.New()
-	storer := memory.NewStorage()
 
-	_, err := git.Clone(storer, fs, &git.CloneOptions{
-		URL: "https://github.com/git-fixtures/basic.git",
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
+	path := "/tmp/customCICDPath"
+	url := "https://github.com/git-fixtures/basic.git"
+	branch := "refs/heads/master"
 
-	changelog, err := fs.Open("CHANGELOG")
+	os.RemoveAll(path)
+	err := cloneRepo.CloneRepo(path, branch, url)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("Failed to clone repo: ", url, branch)
 	}
-	io.Copy(os.Stdout, changelog)
+	err = cloneRepo.CheckoutCommit("", path, branch)
+	if err != nil {
+		fmt.Println("Failed to checkout")
+	}
+	fmt.Println("Repository cloned successfully")
+
 }
