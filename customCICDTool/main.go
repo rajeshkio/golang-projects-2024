@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/rk280392/customCICDTool/webHookHandler"
+	"github.com/rk280392/customCICDTool/runServer"
+	webhookhandler "github.com/rk280392/customCICDTool/webHookHandler"
+	"github.com/rk280392/customCICDTool/webHookParser"
 )
 
 func main() {
@@ -22,5 +24,10 @@ func main() {
 	   	}
 	   	fmt.Println("Repository cloned successfully")
 	*/
-	webHookHandler.RunServer()
+	parser := &webHookParser.MyWebhookParser{}
+	handler := webhookhandler.NewMyWebhookHandler(parser)
+
+	server := runServer.NewServer(handler)
+	server.Start()
+	
 }
