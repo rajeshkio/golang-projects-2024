@@ -3,6 +3,8 @@ package webhookParser
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/rk280392/customCICDTool/cloneRepo"
 )
 
 type RequestParse struct {
@@ -28,5 +30,11 @@ func (rp RequestParse) WebhookRequestParse(payloadData []byte) error {
 	}
 	fmt.Println(payload.Commit[0].ID)
 	fmt.Println(payload.Repo.Url)
+
+	err = cloneRepo.CloneRepo("/tmp/clonedRepos", payload.Ref, payload.Repo.Url)
+	if err != nil {
+		fmt.Println("Failed to clone")
+	}
+	fmt.Printf("Cloned repo")
 	return nil
 }

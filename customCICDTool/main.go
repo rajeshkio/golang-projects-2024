@@ -8,6 +8,8 @@ import (
 
 func main() {
 	port := "30480"
-	cert, _ := tls.LoadX509KeyPair("certs/fullchain.pem", "certs/privkey.pem")
+	certFile := "certs/fullchain.pem"
+	privKey := "certs/privkey.pem"
+	cert, _ := tls.LoadX509KeyPair(certFile, privKey)
 	runServer.RunServer(port, cert)
 }
