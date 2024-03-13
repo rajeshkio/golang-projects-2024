@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	webhookhandler "github.com/rk280392/customCICDTool/webHookHandler"
+	webhookParser "github.com/rk280392/customCICDTool/webHookParser"
 )
 
 func RunServer(port string) {
@@ -24,7 +25,8 @@ func RunServer(port string) {
 func httpHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
 	case "/webhook":
-		webhookhandler.WebhookVerifyRequest(w, r)
+		parser := &webhookParser.RequestParse{}
+		webhookhandler.WebhookVerifyRequest(w, r, parser)
 	default:
 		http.NotFound(w, r)
 	}

@@ -6,10 +6,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/rk280392/customCICDTool/webHookParser"
+	"github.com/rk280392/customCICDTool/myCICDInterfaces"
 )
 
-func WebhookVerifyRequest(w http.ResponseWriter, r *http.Request) {
+func WebhookVerifyRequest(w http.ResponseWriter, r *http.Request, parser myCICDInterfaces.WebhookParserInterface) {
 	if r.Method != "POST" {
 		http.Error(w, "Only POST request in valid", http.StatusMethodNotAllowed)
 		return
@@ -25,10 +25,9 @@ func WebhookVerifyRequest(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("Cannot read the webhook payload")
 	}
-
 	defer r.Body.Close()
 
-	err = webHookParser.WebhookRequestParse(payload)
+	err = parser.WebhookRequestParse(payload)
 	if err != nil {
 		http.Error(w, "Failed to parse webhook payload", http.StatusInternalServerError)
 		log.Println("Failed to parse webhook payload: ", err)
