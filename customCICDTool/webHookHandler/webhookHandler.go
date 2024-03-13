@@ -2,29 +2,38 @@ package webhookhandler
 
 import (
 	"fmt"
+	"io"
+	"log"
+	"net/http"
 
-	webhookParser "github.com/rk280392/customCICDTool/interfaces"
+	"github.com/rk280392/customCICDTool/webHookParser"
 )
 
-// Implementation of WebhookHandler
-type MyWebhookHandler struct {
-	parser webhookParser.WebhookParser
-}
-
-func NewMyWebhookHandler(parser webhookParser.WebhookParser) *MyWebhookHandler {
-	return &MyWebhookHandler{parser: parser}
-}
-
-func (h *MyWebhookHandler) HandleWebhook(payload []byte) error {
-	info, err := h.parser.Parse(payload)
-	if err != nil {
-		return err
+func WebhookVerifyRequest(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Only POST request in valid", http.StatusMethodNotAllowed)
+		return
 	}
-	// Process the parsed information
-	fmt.Println("Repository:", info.Repository)
-	fmt.Println("Branch:", info.Branch)
-	fmt.Println("Commit ID:", info.Commit)
-	fmt.Println("Repo URL:", info.Url)
 
-	return nil
+	eventType := r.Header.Get("X-GitHub-Event")
+	if eventType != "push" {
+		fmt.Println("Only push events are supported")
+		return
+	}
+
+	payload, err := io.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println("Cannot read the webhook payload")
+	}
+
+	defer r.Body.Close()
+
+	err = webHookParser.WebhookRequestParse(payload)
+	if err != nil {
+		http.Error(w, "Failed to parse webhook payload", http.StatusInternalServerError)
+		log.Println("Failed to parse webhook payload: ", err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }

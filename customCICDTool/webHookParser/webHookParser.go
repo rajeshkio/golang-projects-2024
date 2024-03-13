@@ -5,48 +5,28 @@ import (
 	"fmt"
 )
 
-type RepositoryInfo struct {
-	Repository string
-	Branch     string
-	Commit     string
-	Url        string
+type requestParse struct {
+	Ref    string `json:"ref"`
+	Repo   repo   `json:"repository"`
+	Commit commit `json:"commits"`
 }
 
-type MyWebhookParser struct{}
-
-type WebhookPayload struct {
-	Ref        string `json:"ref"`
-	Repository struct {
-		Name string `json:"name"`
-		Url  string `json:"clone_url"`
-	} `json:"repository"`
-	Commit []struct {
-		Id string `json:"id"`
-	} `json:"commits"`
+type repo struct {
+	Name string `json:"name"`
+	Url  string `json:"clone_url"`
+}
+type commit []struct {
+	ID string `json:"id"`
 }
 
-func (p *MyWebhookParser) Parse(payloadData []byte) (RepositoryInfo, error) {
-	var payload WebhookPayload
-
-	if err := json.Unmarshal(payloadData, &payload); err != nil {
-		return RepositoryInfo{}, err
+func WebhookRequestParse(payloadData []byte) error {
+	var payload requestParse
+	err := json.Unmarshal(payloadData, &payload)
+	if err != nil {
+		fmt.Println("Failed to parse the request")
+		return err
 	}
-	fmt.Println("Parsing payload...")
-	repoName := payload.Repository.Name
-	branchName := payload.Ref
-	commitID := payload.Commit[0].Id
-	repoUrl := payload.Repository.Url
-
-	return RepositoryInfo{
-		Repository: repoName,
-		Branch:     branchName,
-		Commit:     commitID,
-		Url:        repoUrl,
-	}, nil
+	fmt.Println(payload.Commit[0].ID)
+	fmt.Println(payload.Repo.Url)
+	return nil
 }
-
-/*
-TODO right now the code is tight coupled making any changes in the halder or parser need to rerun the server code.
-Need to understand and decouple it.
-
-*/
