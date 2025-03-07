@@ -38,6 +38,22 @@ func getKubeconfig(kubeconfig string) (*kubernetes.Clientset, error) {
 	return clientset, nil
 }
 
+func fetchResource(clientset *kubernetes.Clientset, resourceName, namespace, absPath, resource string) (map[string]interface{}, error) {
+	vm, err := clientset.RESTClient().Get().
+		AbsPath(absPath).
+		Namespace(namespace).
+		Resource(resource).
+		Name(resourceName).
+		Do(context.TODO()).Raw()
+	if err != nil {
+		return nil, err
+	}
+	var vmData map[string]interface{}
+	if err := json.Unmarshal(vm, &vmData); err != nil {
+		return nil, err
+	}
+	return vmData, nil
+}
 func main() {
 	kubeconfigPath := flag.String("kubeconfig", "", "Path to kubeconfig file (optional, falls back to $KUBECONFIG)")
 	flag.Parse()
@@ -54,23 +70,16 @@ func main() {
 
 	vmName := flag.Arg(0)
 	namespace := "default"
+	absPath := "apis/kubevirt.io/v1"
+	resource := "virtualmachines"
 
-	// fmt.Printf("Fetching details of the VM: %s\n", vmName)
-	vm, err := clientset.RESTClient().Get().
-		AbsPath("apis/kubevirt.io/v1").
-		Namespace(namespace).
-		Resource("virtualmachines").
-		Name(vmName).
-		Do(context.TODO()).Raw()
+	vmData, err := fetchResource(clientset, vmName, namespace, absPath, resource)
 	if err != nil {
-		fmt.Printf("Couldn't fetch the VM: %v", err)
+		log.Fatalf("Failed to fetch the VM Data: %s", err)
 	}
+	// fmt.Printf("Fetching details of the VM: %s\n", vmName)
 
 	// fmt.Printf("\nVM Name: %s\n", vm)
-	var vmData map[string]interface{}
-	if err := json.Unmarshal(vm, &vmData); err != nil {
-		log.Fatalf("Error parsing VM JSON: %v", err)
-	}
 
 	//var prettyJSON bytes.Buffer
 
@@ -85,12 +94,12 @@ func main() {
 	//fmt.Println("")
 
 	annotations := metadata["annotations"].(map[string]interface{})
-	volumeClainTemplateInterface := annotations["harvesterhci.io/volumeClaimTemplates"].(string)
+	volumeClaimTemplateInterface := annotations["harvesterhci.io/volumeClaimTemplates"].(string)
 	//fmt.Println("volumeClaimTemplateInterface: ", volumeClainTemplateInterface)
 	//fmt.Println("")
 
 	var volumeClaimTemplate []map[string]interface{}
-	json.Unmarshal([]byte(volumeClainTemplateInterface), &volumeClaimTemplate)
+	json.Unmarshal([]byte(volumeClaimTemplateInterface), &volumeClaimTemplate)
 
 	//fmt.Println("volumeClaimTemplate: ", volumeClaimTemplate)
 	//fmt.Println("")
@@ -129,47 +138,41 @@ func main() {
 
 	//prettyJSON, _ := json.MarshalIndent(formattedJSON, "", "  ")
 	//fmt.Println(string(prettyJSON))
+	pvcAPIPath := "api/v1"
+	pvcResource := "persistentvolumeclaims"
+	pvcResourceName := claimNames[0]
 
-	//fmt.Printf("Fetching details of PVC: %s\n", claimNames[0])
-	pvcDetails, err := clientset.RESTClient().Get().
-		AbsPath("api/v1").
-		Namespace(namespace).
-		Resource("persistentvolumeclaims").
-		Name(claimNames[0]).
-		Do(context.TODO()).Raw()
+	//fmt.Printf("Fetching details of PVC: %s\n", claimNames[0])  resourceName, namespace, absPath, resource
+	pvcDetails, err := fetchResource(clientset, pvcResourceName, namespace, pvcAPIPath, pvcResource)
 	if err != nil {
 		fmt.Printf("Couldn't fetch the volume: %v", err)
 	}
 
-	var pvcData map[string]interface{}
-	if err := json.Unmarshal(pvcDetails, &pvcData); err != nil {
-		log.Fatalf("Error parsing volumeName JSON: %v", err)
-	}
-	pvcSpec := pvcData["spec"].(map[string]interface{})
+	//	pvcData := pvcDetails
+	//var pvcData map[string]interface{}
+	//	if err := json.Unmarshal(byte(pvcDetails), &pvcData); err != nil {
+	//		log.Fatalf("Error parsing volumeName JSON: %v", err)
+	//	}
+	pvcSpec := pvcDetails["spec"].(map[string]interface{})
 	//fmt.Printf("PVC Spec: %+v\n", pvcSpec)
 
 	volumeName := pvcSpec["volumeName"].(string)
 	//fmt.Printf("Volume Name: %+v\n", volumeName)
 
+	volumeAPIPath := "apis/longhorn.io/v1beta2"
+	volNamespace := "longhorn-system"
+	volumeResource := "volumes"
+	volumeResourceName := volumeName
+
 	//fmt.Printf("Fetching details of volumes: %s\n", volumeName)
-	volumeDetails, err := clientset.RESTClient().Get().
-		AbsPath("apis/longhorn.io/v1beta2").
-		Namespace("longhorn-system").
-		Resource("volumes").
-		Name(volumeName).
-		Do(context.TODO()).Raw()
+	volumeDetails, err := fetchResource(clientset, volumeResourceName, volNamespace, volumeAPIPath, volumeResource)
 	if err != nil {
 		fmt.Printf("Couldn't fetch the volume: %v", err)
 	}
 
-	var volumeData map[string]interface{}
-	if err := json.Unmarshal(volumeDetails, &volumeData); err != nil {
-		log.Fatalf("Error parsing volumeName JSON: %v", err)
-	}
-
 	//fmt.Printf(" volume: %v", volumeData)
 
-	volumeStatus := volumeData["status"].(map[string]interface{})
+	volumeStatus := volumeDetails["status"].(map[string]interface{})
 	workloadStatus := volumeStatus["kubernetesStatus"].(map[string]interface{})["workloadsStatus"].([]interface{})
 	var podName string
 	if len(workloadStatus) > 0 {
@@ -181,24 +184,17 @@ func main() {
 	}
 
 	//fmt.Printf("Fetching details of volumeAttachment: %s\n", volumeName)
-	volumeAttachmentDetails, err := clientset.RESTClient().Get().
-		AbsPath("apis/longhorn.io/v1beta2").
-		Namespace("longhorn-system").
-		Resource("volumeattachments").
-		Name(volumeName).
-		Do(context.TODO()).Raw()
+	volAttachmentNamespace := "longhorn-system"
+	voleAttachmentAPIPath := "apis/longhorn.io/v1beta2"
+	voleAttachmentResource := "volumeattachments"
+	voleAttachmentResouceName := volumeName
+
+	volumeAttachmentDetails, err := fetchResource(clientset, voleAttachmentResouceName, volAttachmentNamespace, voleAttachmentAPIPath, voleAttachmentResource)
 	if err != nil {
 		fmt.Printf("Couldn't fetch the volume: %v", err)
 	}
 
-	var volumeAttachmentData map[string]interface{}
-	if err := json.Unmarshal(volumeAttachmentDetails, &volumeAttachmentData); err != nil {
-		log.Fatalf("Error parsing volumeAttachmentDetails JSON: %v", err)
-	}
-
-	//fmt.Printf(" volume: %v", volumeData)
-
-	volumeAttachmentTickets := volumeAttachmentData["spec"].(map[string]interface{})["attachmentTickets"].(map[string]interface{})
+	volumeAttachmentTickets := volumeAttachmentDetails["spec"].(map[string]interface{})["attachmentTickets"].(map[string]interface{})
 
 	fmt.Println("VM Name:", vmName)
 	fmt.Println("VM Image ID:", vmImageId)
