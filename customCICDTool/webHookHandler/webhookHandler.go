@@ -33,6 +33,5 @@ func WebhookVerifyRequest(w http.ResponseWriter, r *http.Request, parser myCICDI
 		log.Println("Failed to parse webhook payload: ", err)
 		return
 	}
-
 	w.WriteHeader(http.StatusOK)
 }

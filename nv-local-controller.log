@@ -1,0 +1,791 @@
+2024-03-14T14:24:55|MON|/usr/local/bin/monitor starts, pid=1
+2024-03-14T14:24:55|MON|Start ctrl, pid=7
+2024-03-14T14:24:55|MON|Start opa, pid=8
+{"level":"warning","msg":"OPA running with uid or gid 0. Running OPA with root privileges is not recommended.","time":"2024-03-14T14:24:55Z"}
+2024-03-14T14:24:55.292|INFO|CTL|main.main: START - version=v5.3.0
+2024-03-14T14:24:55.292|INFO|CTL|main.main: - join=neuvector-svc-controller.cattle-neuvector-system
+2024-03-14T14:24:55.292|INFO|CTL|main.main: - advertise=10.42.0.251
+2024-03-14T14:24:55.292|INFO|CTL|main.main: - bind=10.42.0.251
+2024-03-14T14:24:55.297|INFO|CTL|container.Connect: - endpoint=
+2024-03-14T14:24:55.297|INFO|CTL|container.InitStubRtDriver:
+2024-03-14T14:24:55.357|ERRO|CTL|orchestration.GetK8sVersion: getVersion fail - code=403, tag=oc, useToken=true
+2024-03-14T14:24:55.357|INFO|CTL|main.main: - cgroups=2
+2024-03-14T14:24:55.357|INFO|CTL|main.main: Container socket connected - endpoint= runtime=stubRtDriver
+2024-03-14T14:24:55.4  |INFO|CTL|resource.IsRancherFlavor: resource found - namespace=cattle-system service=rancher
+2024-03-14T14:24:55.4  |INFO|CTL|main.main: - flavor=Rancher k8s=1.26.7+k3s1 oc=
+2024-03-14T14:24:55.74 |INFO|CTL|main.main: - host={ID:rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d Name:rajesh-manual-local-rancher Runtime:stubRtDriver Platform:Kubernetes Flavor:Rancher Network:Default RuntimeVer:1.0 RuntimeAPIVer:1.0 OS:Alpine Linux v3.19 Kernel:5.15.0-91-generic CPUs:8 Memory:16764633088 Ifaces:map[] TunnelIP:[] CapDockerBench:false CapKubeBench:false StorageDriver: CgroupVersion:2}
+2024-03-14T14:24:55.74 |INFO|CTL|main.main: - ctrler={CLUSDevice:{ID:e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc Name:k8s_neuvector-controller-pod_neuvector-controller-pod-749bb85b8d-d8ccc_cattle-neuvector-system_fd43f7fe-214a-4e4d-8fa6-6f4f678f1757_0 SelfHostname: HostName:rajesh-manual-local-rancher HostID:rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d Domain:cattle-neuvector-system NetworkMode:default PidMode: Ver:v5.3.0 Labels:map[app:neuvector-controller-pod io.kubernetes.container.name:neuvector-controller-pod io.kubernetes.pod.name:neuvector-controller-pod-749bb85b8d-d8ccc io.kubernetes.pod.namespace:cattle-neuvector-system io.kubernetes.pod.uid:fd43f7fe-214a-4e4d-8fa6-6f4f678f1757 name:controller neuvector.role:controller pod-template-hash:749bb85b8d release: vendor:NeuVector Inc. version:] CreatedAt:2024-03-14 14:24:55.298629622 +0000 UTC StartedAt:2024-03-14 14:24:55.298629622 +0000 UTC JoinedAt:0001-01-01 00:00:00 +0000 UTC MemoryLimit:0 CPUs: ClusterIP: RPCServerPort:0 Pid:1 Ifaces:map[eth0:[{IPNet:{IP:10.42.0.251 Mask:ffffff00} Gateway: Scope:global NetworkID: NetworkName:}]]} Leader:false OrchConnStatus: OrchConnLastError:}
+2024-03-14T14:24:55.824|INFO|CTL|ruleid.Init: UUID: 
+2024-03-14T14:24:55.824|INFO|CTL|cluster.FillClusterAddrs: - advertise=10.42.0.251 join=neuvector-svc-controller.cattle-neuvector-system
+2024-03-14T14:24:55.824|INFO|CTL|ruleid.(*uuidPRuleCache).ruleIdTimerLoop: UUID: timer starts
+2024-03-14T14:24:56.835|INFO|CTL|cluster.FillClusterAddrs: resolve - join=neuvector-svc-controller.cattle-neuvector-system retry=1
+2024-03-14T14:24:56.846|INFO|CTL|utils.SetReady: - value=cluster init
+2024-03-14T14:24:58.847|INFO|CTL|cluster.FillClusterAddrs: resolve - join=neuvector-svc-controller.cattle-neuvector-system retry=2
+2024-03-14T14:25:02.851|INFO|CTL|cluster.FillClusterAddrs: resolve - join=neuvector-svc-controller.cattle-neuvector-system retry=3
+2024-03-14T14:25:02.854|INFO|CTL|cluster.(*consulMethod).Start: - config=&{ID:e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc Server:true Debug:false Ifaces:map[eth0:[{IPNet:{IP:10.42.0.251 Mask:ffffff00} Gateway: Scope:global NetworkID: NetworkName:}]] JoinAddr:neuvector-svc-controller.cattle-neuvector-system joinAddrList:[10.42.0.251] BindAddr:10.42.0.251 AdvertiseAddr:10.42.0.251 DataCenter:neuvector RPCPort:0 LANPort:0 WANPort:0 EnableDebug:false} recover=false
+2024-03-14T14:25:02.855|INFO|CTL|cluster.(*consulMethod).Start: - node-id=a0d03fd4-5615-d981-4054-9fadd67cab0d
+2024-03-14T14:25:02.855|INFO|CTL|cluster.(*consulMethod).Start: Consul start - args=[agent -datacenter neuvector -data-dir /tmp/neuvector -server -bootstrap -config-file /tmp/neuvector/consul.json -bind 10.42.0.251 -advertise 10.42.0.251 -node 10.42.0.251 -node-id a0d03fd4-5615-d981-4054-9fadd67cab0d -raft-protocol 3]
+==> Starting Consul agent...
+           Version: '1.11.11'
+           Node ID: 'a0d03fd4-5615-d981-4054-9fadd67cab0d'
+         Node name: '10.42.0.251'
+        Datacenter: 'neuvector' (Segment: '<all>')
+            Server: true (Bootstrap: true)
+       Client Addr: [127.0.0.1] (HTTP: 8500, HTTPS: -1, gRPC: -1, DNS: -1)
+      Cluster Addr: 10.42.0.251 (LAN: 18301, WAN: -1)
+           Encrypt: Gossip: true, TLS-Outgoing: true, TLS-Incoming: true, Auto-Encrypt-TLS: false
+
+==> Log data will now stream in as it occurs:
+
+2024-03-14T14:25:14.859|INFO|CTL|utils.SetReady: - value=ctrl init done
+2024-03-14T14:25:14.859|INFO|CTL|cluster.StartCluster: - lead=10.42.0.251
+2024-03-14T14:25:14.868|INFO|CTL|main.main: - cspEnv= ctrler={CLUSDevice:{ID:e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc Name:k8s_neuvector-controller-pod_neuvector-controller-pod-749bb85b8d-d8ccc_cattle-neuvector-system_fd43f7fe-214a-4e4d-8fa6-6f4f678f1757_0 SelfHostname: HostName:rajesh-manual-local-rancher HostID:rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d Domain:cattle-neuvector-system NetworkMode:default PidMode: Ver:v5.3.0 Labels:map[app:neuvector-controller-pod io.kubernetes.container.name:neuvector-controller-pod io.kubernetes.pod.name:neuvector-controller-pod-749bb85b8d-d8ccc io.kubernetes.pod.namespace:cattle-neuvector-system io.kubernetes.pod.uid:fd43f7fe-214a-4e4d-8fa6-6f4f678f1757 name:controller neuvector.role:controller pod-template-hash:749bb85b8d release: vendor:NeuVector Inc. version:] CreatedAt:2024-03-14 14:24:55.298629622 +0000 UTC StartedAt:2024-03-14 14:24:55.298629622 +0000 UTC JoinedAt:2024-03-14 14:25:14.859634383 +0000 UTC MemoryLimit:0 CPUs: ClusterIP:10.42.0.251 RPCServerPort:18400 Pid:1 Ifaces:map[eth0:[{IPNet:{IP:10.42.0.251 Mask:ffffff00} Gateway: Scope:global NetworkID: NetworkName:}]]} Leader:true OrchConnStatus: OrchConnLastError:} lead=10.42.0.251 new-cluster=true noDefAdmin=false self=10.42.0.251
+2024-03-14T14:25:14.887|INFO|CTL|kv.(*clusterHelper).GetInstallationID: installation ID is updated - id=73392582196573190553204c0cdf9a81
+2024-03-14T14:25:14.925|INFO|CTL|kv.(*configHelper).Restore:
+2024-03-14T14:25:14.925|INFO|CTL|kv.(*configHelper).Restore: Config persistence disabled
+2024-03-14T14:25:14.946|INFO|CTL|kv.clusterHelper.UpgradeClusterKV: Before upgrade - version=&{CtrlVersion: KVVersion:}
+2024-03-14T14:25:15.538|INFO|CTL|kv.clusterHelper.UpgradeClusterKV: After upgrade - version=&{CtrlVersion:v5.3.0 KVVersion:449EC339}
+2024-03-14T14:25:15.595|INFO|CTL|kv.clusterHelper.FixMissingClusterKV: Re-create because not found - key=object/config/group/fed.nodes
+2024-03-14T14:25:15.596|INFO|CTL|kv.clusterHelper.FixMissingClusterKV: Re-create because not found - key=object/config/group/fed.containers
+2024-03-14T14:25:15.612|INFO|CTL|kv.ValidateWebhookCert:
+2024-03-14T14:25:15.613|ERRO|CTL|kv.clusterHelper.GetObjectCertRev: - cn=rootCA error=Key not found
+2024-03-14T14:25:15.614|INFO|CTL|kv.restoreKeyCertFromOldKvKey: no cert/key - cn=rootCA err1=<nil> err2=<nil> len1=0 len2=0
+2024-03-14T14:25:15.614|INFO|CTL|kv.ValidateWebhookCert: regen - cn=rootCA
+2024-03-14T14:25:16.202|INFO|CTL|kv.StoreKeyCertFilesInKV: store key/cert in new kv
+2024-03-14T14:25:16.213|ERRO|CTL|kv.clusterHelper.GetObjectCertRev: - cn=neuvector-svc-admission-webhook.cattle-neuvector-system.svc error=Key not found
+2024-03-14T14:25:16.214|INFO|CTL|kv.restoreKeyCertFromOldKvKey: no cert/key - cn=neuvector-svc-admission-webhook.cattle-neuvector-system.svc err1=<nil> err2=<nil> len1=0 len2=0
+2024-03-14T14:25:16.214|INFO|CTL|kv.ValidateWebhookCert: regen - cn=neuvector-svc-admission-webhook.cattle-neuvector-system.svc
+2024-03-14T14:25:16.755|INFO|CTL|kv.StoreKeyCertFilesInKV: store key/cert in new kv
+2024-03-14T14:25:16.773|ERRO|CTL|kv.clusterHelper.GetObjectCertRev: - cn=neuvector-svc-crd-webhook.cattle-neuvector-system.svc error=Key not found
+2024-03-14T14:25:16.774|INFO|CTL|kv.restoreKeyCertFromOldKvKey: no cert/key - cn=neuvector-svc-crd-webhook.cattle-neuvector-system.svc err1=<nil> err2=<nil> len1=0 len2=0
+2024-03-14T14:25:16.774|INFO|CTL|kv.ValidateWebhookCert: regen - cn=neuvector-svc-crd-webhook.cattle-neuvector-system.svc
+2024-03-14T14:25:16.994|INFO|CTL|kv.StoreKeyCertFilesInKV: store key/cert in new kv
+2024-03-14T14:25:18.005|INFO|CTL|kv.ValidateWebhookCert: - err1=<nil> err2=<nil>
+2024-03-14T14:25:18.005|INFO|CTL|kv.ValidateWebhookCert: md5 - cert=1738ffe9cec231da1b4b8883b98c673a cn=rootCA
+2024-03-14T14:25:18.007|INFO|CTL|kv.verifyWebServerCert: - cn=neuvector-svc-admission-webhook.cattle-neuvector-system.svc customerCert=false san=[neuvector-svc-admission-webhook.cattle-neuvector-system.svc] subject=CN=neuvector-svc-admission-webhook.cattle-neuvector-system.svc,OU=Neuvector,O=Neuvector,L=EN,ST=CA,C=US
+2024-03-14T14:25:18.007|INFO|CTL|kv.ValidateWebhookCert: md5 - cert=9d798823a82700680e8fc792f591c7f2 cn=neuvector-svc-admission-webhook.cattle-neuvector-system.svc
+2024-03-14T14:25:18.009|INFO|CTL|kv.verifyWebServerCert: - cn=neuvector-svc-crd-webhook.cattle-neuvector-system.svc customerCert=false san=[neuvector-svc-crd-webhook.cattle-neuvector-system.svc] subject=CN=neuvector-svc-crd-webhook.cattle-neuvector-system.svc,OU=Neuvector,O=Neuvector,L=EN,ST=CA,C=US
+2024-03-14T14:25:18.009|INFO|CTL|kv.ValidateWebhookCert: md5 - cert=e4c483eeeb6942354981c81f8c6e3240 cn=neuvector-svc-crd-webhook.cattle-neuvector-system.svc
+2024-03-14T14:25:18.014|INFO|CTL|nvvalidatewebhookcfg.SetCABundle: md5 - cert=9d798823a82700680e8fc792f591c7f2 svcName=neuvector-svc-admission-webhook
+2024-03-14T14:25:18.02 |INFO|CTL|nvvalidatewebhookcfg.SetCABundle: md5 - cert=e4c483eeeb6942354981c81f8c6e3240 svcName=neuvector-svc-crd-webhook
+2024-03-14T14:25:18.024|INFO|CTL|main.setConfigLoaded: Set config loaded flag.
+2024-03-14T14:25:18.052|INFO|CTL|cache.Init: - isLeader=true leadAddr=10.42.0.251
+2024-03-14T14:25:18.088|INFO|CTL|cache.SchedulePruneGroups: group prune timertask scheduled - timertask=e536e2f85cf2fdff95e4f0edfcfeb532
+2024-03-14T14:25:18.102|INFO|CTL|cache.SyncLearnedPolicyFromCluster: - maxLearnRuleID=10000 total learned rules=0
+2024-03-14T14:25:18.175|INFO|CTL|cache.licenseInit:
+2024-03-14T14:25:18.186|INFO|CTL|cache.ScannerChangeNotify: - isScanner=true
+2024-03-14T14:25:18.187|INFO|CTL|scan.Init:
+2024-03-14T14:25:18.188|INFO|CTL|scan.ScannerChangeNotify: - scanner=true
+2024-03-14T14:25:18.188|INFO|CTL|resource.GetNvCtrlerServiceAccount: - nvControllerSA=neuvector
+2024-03-14T14:25:18.198|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-updater-pod sa=neuvector
+2024-03-14T14:25:18.206|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-enforcer-pod sa=neuvector
+2024-03-14T14:25:18.344|ERRO|CTL|resource.(*kubernetes).RegisterResource: fail to register - error=Failed to discover API group: image.openshift.io(decode error status 404: decode json: invalid character 'p' after top-level value) resource=image
+2024-03-14T14:25:18.346|INFO|CTL|main.(*orchConn).cbWatcherState: updating conn status - lastError= status=connected
+2024-03-14T14:25:18.414|INFO|CTL|main.startGRPCServer: - port=18400
+2024-03-14T14:25:18.414|INFO|CTL|main.startGRPCServer: GRPC server started
+2024-03-14T14:25:18.415|INFO|CTL|rest.initJWTSignKey: cert manager is configured. - period=30m0s threshold=720h0m0s validity_length_day=90
+2024-03-14T14:25:18.415|ERRO|CTL|kv.clusterHelper.GetObjectCertRev: - cn=neuvector-jwt-signing error=Key not found
+2024-03-14T14:25:18.415|INFO|CTL|kv.(*CertManager).checkAndRotateCert.func1: certificate is not found.  Create it. - cn=neuvector-jwt-signing
+2024-03-14T14:25:19.097|INFO|CTL|rest.initJWTSignKey.func2: new certificate is loaded - cn=neuvector-jwt-signing newExpiryDate=2024-06-12 14:25:18 +0000 UTC oldExpiryDate=<nil>
+2024-03-14T14:25:19.097|INFO|CTL|kv.(*CertManager).checkAndRotateCert.func1: Certificate renewed. - cn=neuvector-jwt-signing generated_time=2024-03-14T14:25:19Z validity=2024-06-12T14:25:18Z
+2024-03-14T14:25:19.099|INFO|CTL|cache.SyncInit: - new-cluster=true
+2024-03-14T14:25:19.103|INFO|CTL|cache.SyncInit: skip sync - self=true target=10.42.0.251
+2024-03-14T14:25:19.103|INFO|CTL|rest.LoadInitCfg: - load=true
+2024-03-14T14:25:19.103|INFO|CTL|rest.LoadInitCfg: done - load=true
+2024-03-14T14:25:19.104|INFO|CTL|rest.LeadChangeNotify: - _isLeader=0 isLeader=true
+2024-03-14T14:25:19.104|INFO|CTL|rest.initDefaultRegistries: - default registries=[https://registry.hub.docker.com/ https://registry-1.docker.io/ https://docker.io/ https://index.docker.io/]
+2024-03-14T14:25:19.104|INFO|CTL|rest.CrossCheckCrd: - kvCrdKind=NvSecurityRule kvOnly=false len(objs)=0 len(recordList)=0 rscType=nvsecurityrules
+2024-03-14T14:25:19.105|INFO|CTL|rest.StartRESTServer: Start REST server - port=10443
+2024-03-14T14:25:19.109|INFO|CTL|cache.memberStateUpdateHandler: - agentID= flag=3 member=10.42.0.251 notify=connect
+2024-03-14T14:25:19.175|INFO|CTL|rest.loadX509KeyPair: md5 - cert=e4c483eeeb6942354981c81f8c6e3240 svcName=neuvector-svc-crd-webhook
+2024-03-14T14:25:19.175|INFO|CTL|rest.k8sWebhookRestServer: Started Admission REST server - port=30443 svcName=neuvector-svc-crd-webhook
+2024-03-14T14:25:19.181|INFO|CTL|rest.loadX509KeyPair: md5 - cert=9d798823a82700680e8fc792f591c7f2 svcName=neuvector-svc-admission-webhook
+2024-03-14T14:25:19.182|INFO|CTL|rest.k8sWebhookRestServer: Started Admission REST server - port=20443 svcName=neuvector-svc-admission-webhook
+2024-03-14T14:25:19.204|INFO|CTL|rest.CrossCheckCrd: - kvCrdKind=NvSecurityRule kvOnly=false len(objs)=0 len(recordList)=0 rscType=nvclustersecurityrules
+2024-03-14T14:25:19.285|INFO|CTL|rest.CrossCheckCrd: - kvCrdKind=NvAdmissionControlSecurityRule kvOnly=false len(objs)=0 len(recordList)=0 rscType=nvadmissioncontrolsecurityrules
+2024-03-14T14:25:19.344|INFO|CTL|rest.restartWebhookServer: - svcName=neuvector-svc-admission-webhook
+2024-03-14T14:25:19.345|INFO|CTL|cache.certObjectUpdate: md5 - cert=1738ffe9cec231da1b4b8883b98c673a svcName=rootCA
+2024-03-14T14:25:19.345|INFO|CTL|cache.certObjectUpdate: md5 - cert=9d798823a82700680e8fc792f591c7f2 svcName=neuvector-svc-admission-webhook
+2024-03-14T14:25:19.346|INFO|CTL|cache.certObjectUpdate: md5 - cert=e4c483eeeb6942354981c81f8c6e3240 svcName=neuvector-svc-crd-webhook
+2024-03-14T14:25:19.354|INFO|CTL|cache.fedConfigUpdate: - role=
+2024-03-14T14:25:19.355|INFO|CTL|scan.FedRoleChangeNotify: - fedRole=
+2024-03-14T14:25:19.359|INFO|CTL|cache.controllerUpdate: Add or update controller - controller={CLUSDevice:{ID:e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc Name:k8s_neuvector-controller-pod_neuvector-controller-pod-749bb85b8d-d8ccc_cattle-neuvector-system_fd43f7fe-214a-4e4d-8fa6-6f4f678f1757_0 SelfHostname: HostName:rajesh-manual-local-rancher HostID:rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d Domain:cattle-neuvector-system NetworkMode:default PidMode: Ver:v5.3.0 Labels:map[app:neuvector-controller-pod io.kubernetes.container.name:neuvector-controller-pod io.kubernetes.pod.name:neuvector-controller-pod-749bb85b8d-d8ccc io.kubernetes.pod.namespace:cattle-neuvector-system io.kubernetes.pod.uid:fd43f7fe-214a-4e4d-8fa6-6f4f678f1757 name:controller neuvector.role:controller pod-template-hash:749bb85b8d release: vendor:NeuVector Inc. version:] CreatedAt:2024-03-14 14:24:55.298629622 +0000 UTC StartedAt:2024-03-14 14:24:55.298629622 +0000 UTC JoinedAt:2024-03-14 14:25:14.859634383 +0000 UTC MemoryLimit:0 CPUs: ClusterIP:10.42.0.251 RPCServerPort:18400 Pid:1 Ifaces:map[eth0:[{IPNet:{IP:10.42.0.251 Mask:ffffff00} Gateway: Scope:global NetworkID: NetworkName:}]]} Leader:true OrchConnStatus:connected OrchConnLastError:}
+2024-03-14T14:25:19.36 |INFO|CTL|rest.k8sWebhookRestServer: Got signal, shutting down webhook server gracefully... - src=reload svcName=neuvector-svc-admission-webhook
+2024-03-14T14:25:19.36 |ERRO|CTL|rest.k8sWebhookRestServer.func1: Failed to listen and serve webhook server - error=http: Server closed svcName=neuvector-svc-admission-webhook
+2024-03-14T14:25:19.363|INFO|CTL|rest.CrossCheckCrd: - kvCrdKind=NvDlpSecurityRule kvOnly=false len(objs)=0 len(recordList)=0 rscType=nvdlpsecurityrules
+2024-03-14T14:25:19.371|INFO|CTL|cache.addrDeviceAdd: add ip-device map - id=e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc ip=10.42.0.251
+2024-03-14T14:25:19.377|INFO|CTL|cache.addrDeviceAdd: - count=1
+2024-03-14T14:25:19.377|INFO|CTL|cache.connectControllerAdd: - id=e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc name=k8s_neuvector-controller-pod_neuvector-controller-pod-749bb85b8d-d8ccc_cattle-neuvector-system_fd43f7fe-214a-4e4d-8fa6-6f4f678f1757_0
+2024-03-14T14:25:19.414|INFO|CTL|main.main.func1: Memory Snapshots - Snapshot_At=3865470566 Step=644245094
+2024-03-14T14:25:19.414|INFO|CTL|main.main.func1: Memory Resource - Controlled_At=4831838208 Controlled_Limit=6442450944
+2024-03-14T14:25:19.415|ERRO|CTL|system.(*SystemTools).MonitorMemoryPressureEvents: - error=not supported
+2024-03-14T14:25:19.43 |INFO|CTL|rest.CrossCheckCrd: - kvCrdKind=NvWafSecurityRule kvOnly=false len(objs)=0 len(recordList)=0 rscType=nvwafsecurityrules
+2024-03-14T14:25:19.492|INFO|CTL|rest.CrossCheckCrd: - kvCrdKind=NvVulnerabilityProfile kvOnly=false len(objs)=0 len(recordList)=0 rscType=nvvulnerabilityprofiles
+2024-03-14T14:25:19.548|INFO|CTL|rest.CrossCheckCrd: - kvCrdKind=NvComplianceProfile kvOnly=false len(objs)=0 len(recordList)=0 rscType=nvcomplianceprofiles
+2024-03-14T14:25:19.603|INFO|CTL|nvvalidatewebhookcfg.ConfigK8sAdmissionControl: Configured admission control in k8s - enable=true name=neuvector-validating-crd-webhook op=update
+2024-03-14T14:25:20.386|INFO|CTL|rest.loadX509KeyPair: md5 - cert=9d798823a82700680e8fc792f591c7f2 svcName=neuvector-svc-admission-webhook
+2024-03-14T14:25:20.386|INFO|CTL|rest.k8sWebhookRestServer: Started Admission REST server - port=20443 svcName=neuvector-svc-admission-webhook
+2024-03-14T14:25:34.86 |INFO|CTL|cluster.StartCluster.func2: Lead check timer expired
+2024-03-14T14:25:34.861|INFO|CTL|cluster.StartCluster.func2: Lead elected - lead=10.42.0.251:18300
+2024-03-14T14:25:35.05 |INFO|CTL|main.ctlrMemberUpdateHandler: - member=10.42.0.250 type=add
+2024-03-14T14:25:35.05 |INFO|CTL|cache.memberStateUpdateHandler: - agentID= flag=3 member=10.42.0.250 notify=connect
+2024-03-14T14:25:36.271|INFO|CTL|cache.AgentAdmissionRequest: Receive connect request - host=rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d id=591ace48e91be0bf4b5c426c3c6b3807f803718e25b1922cca5d4c83205e4774
+2024-03-14T14:25:36.274|INFO|CTL|cache.AgentAdmissionRequest: - allowed=true host=rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d id=591ace48e91be0bf4b5c426c3c6b3807f803718e25b1922cca5d4c83205e4774 online=0
+2024-03-14T14:25:37.179|INFO|CTL|cache.hostUpdate: Add or update host - host={ID:rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d Name:rajesh-manual-local-rancher Runtime:containerd Platform:Kubernetes Flavor:Rancher Network:Default RuntimeVer:v1.7.1-k3s1 RuntimeAPIVer:v1.7.1-k3s1 OS:Ubuntu 22.04.3 LTS Kernel:5.15.0-91-generic CPUs:8 Memory:17179869184 Ifaces:map[eth0:[{IPNet:{IP:159.89.175.232 Mask:fffff000} Gateway: Scope:nat NetworkID: NetworkName:} {IPNet:{IP:10.47.0.5 Mask:ffff0000} Gateway: Scope:nat NetworkID: NetworkName:}] eth1:[{IPNet:{IP:10.122.0.2 Mask:fffff000} Gateway: Scope:nat NetworkID: NetworkName:}]] TunnelIP:[{IP:10.42.0.1 Mask:ffffff00} {IP:10.42.0.0 Mask:ffffffff}] CapDockerBench:false CapKubeBench:true StorageDriver:overlayfs CgroupVersion:2}
+2024-03-14T14:25:37.266|INFO|CTL|cache.agentUpdate: Add or update enforcer - agent={CLUSDevice:{ID:591ace48e91be0bf4b5c426c3c6b3807f803718e25b1922cca5d4c83205e4774 Name:k8s_neuvector-enforcer-pod_neuvector-enforcer-pod-bj48w_cattle-neuvector-system_334286a9-36f8-47a1-abfd-34c97bba1194_0 SelfHostname: HostName:rajesh-manual-local-rancher HostID:rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d Domain:cattle-neuvector-system NetworkMode:/proc/3171134/ns/net PidMode:host Ver:v5.3.0 Labels:map[io.cri-containerd.kind:container io.kubernetes.container.name:neuvector-enforcer-pod io.kubernetes.pod.name:neuvector-enforcer-pod-bj48w io.kubernetes.pod.namespace:cattle-neuvector-system io.kubernetes.pod.uid:334286a9-36f8-47a1-abfd-34c97bba1194 name:enforcer neuvector.image:neuvector/enforcer neuvector.rev:eb1008e neuvector.role:enforcer release:5.3.0 vendor:NeuVector Inc. version:5.3.0] CreatedAt:2024-03-14 14:24:55.510843108 +0000 UTC StartedAt:2024-03-14 14:24:55.510843108 +0000 UTC JoinedAt:2024-03-14 14:25:37.143754191 +0000 UTC MemoryLimit:0 CPUs: ClusterIP:10.42.0.250 RPCServerPort:18401 Pid:3171868 Ifaces:map[eth0:[{IPNet:{IP:10.42.0.250 Mask:ffffff00} Gateway: Scope:global NetworkID: NetworkName:}]]}}
+2024-03-14T14:25:37.266|INFO|CTL|cache.addrDeviceAdd: add ip-device map - id=591ace48e91be0bf4b5c426c3c6b3807f803718e25b1922cca5d4c83205e4774 ip=10.42.0.250
+2024-03-14T14:25:37.266|INFO|CTL|cache.addrDeviceAdd: - count=2
+2024-03-14T14:25:37.266|INFO|CTL|cache.connectAgentAdd: - id=591ace48e91be0bf4b5c426c3c6b3807f803718e25b1922cca5d4c83205e4774 name=k8s_neuvector-enforcer-pod_neuvector-enforcer-pod-bj48w_cattle-neuvector-system_334286a9-36f8-47a1-abfd-34c97bba1194_0
+2024-03-14T14:25:39.95 |INFO|CTL|cache.workloadUpdate: Add - NVcontainer=k8s_POD_neuvector-controller-pod-749bb85b8d-d8ccc_cattle-neuvector-system_fd43f7fe-214a-4e4d-8fa6-6f4f678f1757_0
+2024-03-14T14:25:39.95 |INFO|CTL|cache.addrDeviceAdd: renew ip-device map - id=e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc ip=10.42.0.251
+2024-03-14T14:25:39.95 |INFO|CTL|cache.addrDeviceAdd: - count=2
+2024-03-14T14:25:40.172|INFO|CTL|cache.workloadUpdate: Add - NVcontainer=k8s_POD_neuvector-scanner-pod-6b544d88c4-8smmd_cattle-neuvector-system_ffa048cf-79f5-45e9-9eea-e890cdaa35c3_0
+2024-03-14T14:25:40.172|INFO|CTL|cache.addrDeviceAdd: add ip-device map - id=5e2a47cbe3b6e2b5ee2aee4b44f5974bd40457e0181b24ef0aa1b2d4531290d6 ip=10.42.0.249
+2024-03-14T14:25:40.172|INFO|CTL|cache.addrDeviceAdd: - count=3
+2024-03-14T14:25:40.311|INFO|CTL|cache.workloadUpdate: Add - NVcontainer=k8s_POD_neuvector-manager-pod-fdbc8b686-thw6w_cattle-neuvector-system_af974022-bdf9-4f01-a2b5-5524d20e3f5c_0
+2024-03-14T14:25:40.311|INFO|CTL|cache.addrDeviceAdd: add ip-device map - id=15c351f08c9eeef393d66b0ce656bcf439235ac85ad6c59e9dfae0f8ff4a1af9 ip=10.42.0.248
+2024-03-14T14:25:40.311|INFO|CTL|cache.addrDeviceAdd: - count=4
+2024-03-14T14:25:41.434|INFO|CTL|cache.workloadUpdate: Add - NVcontainer=k8s_POD_neuvector-enforcer-pod-bj48w_cattle-neuvector-system_334286a9-36f8-47a1-abfd-34c97bba1194_0
+2024-03-14T14:25:41.434|INFO|CTL|cache.addrDeviceAdd: renew ip-device map - id=72105dc9d10838ac05baa3a29443342ea071d5a97d0f4a356e70cfe3ed863281 ip=10.42.0.250
+2024-03-14T14:25:41.434|INFO|CTL|cache.addrDeviceAdd: - count=4
+2024-03-14T14:25:43.967|INFO|CTL|cache.workloadUpdate: Add - NVcontainer=k8s_neuvector-controller-pod_neuvector-controller-pod-749bb85b8d-d8ccc_cattle-neuvector-system_fd43f7fe-214a-4e4d-8fa6-6f4f678f1757_0
+2024-03-14T14:25:43.967|INFO|CTL|cache.addrDeviceAdd: - count=4
+2024-03-14T14:25:44.666|INFO|CTL|cache.workloadUpdate: Add - NVcontainer=k8s_neuvector-manager-pod_neuvector-manager-pod-fdbc8b686-thw6w_cattle-neuvector-system_af974022-bdf9-4f01-a2b5-5524d20e3f5c_0
+2024-03-14T14:25:44.666|INFO|CTL|cache.addrDeviceAdd: - count=4
+2024-03-14T14:25:45.866|INFO|CTL|cache.workloadUpdate: Add - NVcontainer=k8s_neuvector-enforcer-pod_neuvector-enforcer-pod-bj48w_cattle-neuvector-system_334286a9-36f8-47a1-abfd-34c97bba1194_0
+2024-03-14T14:25:45.866|INFO|CTL|cache.addrDeviceAdd: - count=4
+2024-03-14T14:25:47.02 |INFO|CTL|cache.workloadUpdate: Add - NVcontainer=k8s_neuvector-scanner-pod_neuvector-scanner-pod-6b544d88c4-8smmd_cattle-neuvector-system_ffa048cf-79f5-45e9-9eea-e890cdaa35c3_0
+2024-03-14T14:25:47.021|INFO|CTL|cache.addrDeviceAdd: - count=4
+2024-03-14T14:25:48.94 |INFO|CTL|main.(*ScanService).ScannerRegisterStream: Stream receive - entries=32768
+2024-03-14T14:25:50.465|INFO|CTL|main.(*ScanService).ScannerRegisterStream: Stream receive - entries=32768
+2024-03-14T14:25:51.978|INFO|CTL|main.(*ScanService).ScannerRegisterStream: Stream receive - entries=32768
+2024-03-14T14:25:53.5  |INFO|CTL|main.(*ScanService).ScannerRegisterStream: Stream receive - entries=32768
+2024-03-14T14:25:53.659|INFO|CTL|main.(*ScanService).ScannerRegisterStream: Stream receive - entries=8519
+2024-03-14T14:25:53.661|INFO|CTL|main.(*ScanService).ScannerRegisterStream: Stream receive done
+2024-03-14T14:25:53.663|INFO|CTL|main.(*ScanService).scannerRegister: - create=2024-03-11T00:22:32Z entries=139591 id=5e2a47cbe3b6e2b5ee2aee4b44f5974bd40457e0181b24ef0aa1b2d4531290d6 server=10.42.0.249 version=3.374
+2024-03-14T14:26:07.126|INFO|CTL|main.(*ScanService).scannerRegister: CVE database written - cvedb=scan/database/3.374/
+2024-03-14T14:26:07.169|INFO|CTL|cache.ScannerUpdateHandler: Add or update scanner - scanner={ID:5e2a47cbe3b6e2b5ee2aee4b44f5974bd40457e0181b24ef0aa1b2d4531290d6 CVEDBVersion:3.374 CVEDBCreateTime:2024-03-11T00:22:32Z JoinedAt:2024-03-14 14:25:53.665844091 +0000 UTC RPCServer:10.42.0.249 RPCServerPort:18402 BuiltIn:false CVEDBEntries:139591}
+2024-03-14T14:26:07.183|INFO|CTL|scan.AddScanner: - id=5e2a47cbe3b6e2b5ee2aee4b44f5974bd40457e0181b24ef0aa1b2d4531290d6
+2024-03-14T14:26:07.19 |INFO|CTL|cache.ScannerUpdateHandler: Add or update scanner - scanner={ID:NeuVectorCVEDBVersion CVEDBVersion:3.374 CVEDBCreateTime:2024-03-11T00:22:32Z JoinedAt:0001-01-01 00:00:00 +0000 UTC RPCServer: RPCServerPort:0 BuiltIn:false CVEDBEntries:139591}
+2024-03-14T14:26:18.121|INFO|CTL|cluster.newGRPCClientTCP: Expected server name - cn=NeuVector
+2024-03-14T14:26:19.149|INFO|CTL|cache.ScannerUpdateHandler: - cvedb=3.374 entries=193351
+2024-03-14T14:27:25.153|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-updater-pod sa=neuvector
+2024-03-14T14:27:25.153|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-updater-pod sa=neuvector
+2024-03-14T14:27:25.192|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-enforcer-pod sa=neuvector
+2024-03-14T14:27:25.198|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-enforcer-pod sa=neuvector
+2024-03-14T14:27:52.96 |INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-updater-pod sa=neuvector
+2024-03-14T14:27:52.987|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-enforcer-pod sa=neuvector
+2024-03-14T14:27:53.174|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-updater-pod sa=neuvector
+2024-03-14T14:27:53.194|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-enforcer-pod sa=neuvector
+2024-03-14T14:28:49.415|DEBU|CTL|cluster.PutBinary: - key=object/eventlog/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc/controller
+2024-03-14T14:28:49.488|DEBU|CTL|cache.eventLogUpdate: - key=object/eventlog/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc/controller type=modify
+2024-03-14T14:28:49.488|DEBU|CTL|cache.responseRuleLookup: No response rule match - event=event workload=
+2024-03-14T14:28:49.49 |DEBU|CTL|cache.recordEvent: - name=RESTful.Write
+2024-03-14T14:29:08.982|DEBU|CTL|cluster.Put: - key=state/dist_lock/policy value={"locked_by":"e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc","locked_at":"2024-03-14T14:29:08.982650184Z","caller":"cache.procLearnedPolicy"}
+2024-03-14T14:29:08.988|DEBU|CTL|cluster.(*ClusterTransact).Put: Transact - key=object/config/policy/default/rule/10041 value={"id":10041,"comment":"","from":"nv.fleet-agent.cattle-fleet-local-system","to":"nodes","from_host":"","to_host":"","ports":"tcp/443","applications":[],"action":"allow","learned":false,"Disable":false,"created_at":"2024-03-14T14:29:08.972056006Z","last_modified_at":"2024-03-14T14:29:08.972056006Z","cfg_type":1,"priority":0}
+2024-03-14T14:29:08.989|DEBU|CTL|cluster.(*ClusterTransact).PutBinary: Transact - key=object/config/policy/default/ziprules
+2024-03-14T14:29:08.989|DEBU|CTL|cluster.(*ClusterTransact).Apply: Transact
+2024-03-14T14:29:08.999|DEBU|CTL|cluster.Delete: - key=state/dist_lock/policy
+2024-03-14T14:29:09.039|DEBU|CTL|cache.scheduleIPPolicyCalculation: - fast=false policyCalculated=false
+2024-03-14T14:29:09.04 |DEBU|CTL|cache.scheduleIPPolicyCalculation: - fast=false policyCalculated=true
+2024-03-14T14:29:12.098|DEBU|CTL|cache.benchStateHandler: - key=scan/state/bench/workload/6b0ef014b407fb7a1041110b8b40611611bb81bc4fd86b90caff9e281668b814 type=add
+2024-03-14T14:29:12.126|DEBU|CTL|cache.benchStateHandler: - key=scan/state/bench/workload/6b0ef014b407fb7a1041110b8b40611611bb81bc4fd86b90caff9e281668b814 type=modify
+2024-03-14T14:29:13.04 |DEBU|CTL|cache.calculateIPPolicyFromCache:
+2024-03-14T14:29:13.046|DEBU|CTL|cache.preparePolicySlotsCommon: begin slots - beginSlot=16 maxPolicySlots=512 wlen=31
+2024-03-14T14:29:13.046|DEBU|CTL|cache.preparePolicySlotsCommon: segregate rules to slots - final_slots=16 maxPolicySlots=512 orig_rule_lens=42 rule_lens=16 slots=16 wl_lens=31 wl_slots=16
+2024-03-14T14:29:13.051|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/0
+2024-03-14T14:29:13.071|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/1
+2024-03-14T14:29:13.09 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/2
+2024-03-14T14:29:13.102|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/3
+2024-03-14T14:29:13.122|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/4
+2024-03-14T14:29:13.151|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/5
+2024-03-14T14:29:13.166|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/6
+2024-03-14T14:29:13.187|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/7
+2024-03-14T14:29:13.199|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/8
+2024-03-14T14:29:13.215|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/9
+2024-03-14T14:29:13.234|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/10
+2024-03-14T14:29:13.253|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/11
+2024-03-14T14:29:13.268|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/12
+2024-03-14T14:29:13.274|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/13
+2024-03-14T14:29:13.279|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/14
+2024-03-14T14:29:13.288|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/15
+2024-03-14T14:29:13.295|DEBU|CTL|cache.preparePolicySlotsNode: begin slots - beginSlot=16 maxPolicySlots=512 wlen=31
+2024-03-14T14:29:13.296|DEBU|CTL|cache.preparePolicySlotsNode: segregate rules to slots - final_slots=16 maxPolicySlots=512 orig_rule_lens=41 rule_lens=41 slots=16 wlen=31
+2024-03-14T14:29:13.303|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/0
+2024-03-14T14:29:13.31 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/1
+2024-03-14T14:29:13.326|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/2
+2024-03-14T14:29:13.346|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/3
+2024-03-14T14:29:13.352|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/4
+2024-03-14T14:29:13.374|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/5
+2024-03-14T14:29:13.39 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/6
+2024-03-14T14:29:13.398|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/7
+2024-03-14T14:29:13.419|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/8
+2024-03-14T14:29:13.425|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/9
+2024-03-14T14:29:13.436|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/10
+2024-03-14T14:29:13.46 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/11
+2024-03-14T14:29:13.469|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/12
+2024-03-14T14:29:13.478|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/13
+2024-03-14T14:29:13.494|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/14
+2024-03-14T14:29:13.502|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/15
+2024-03-14T14:29:13.509|DEBU|CTL|cache.putPolicyIPRulesToClusterScaleNode: New policy rules written - newNodeKey=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/ policyVer={Key:NeuVectorPolicyVersion PolicyIPRulesVersion:ver.1710426553046333140.1710426553046334031 NodeId:rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d CommonSlotNo:16 CommonRulesLen:16 SlotNo:16 RulesLen:41 WorkloadSlot:16 WorkloadLen:31}
+2024-03-14T14:29:13.513|DEBU|CTL|cluster.Put: - key=noderule/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/NeuVectorPolicyVersion value={"common_rules_len":16,"common_slot_no":16,"key":"NeuVectorPolicyVersion","node_id":"rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d","pol_version":"ver.1710426553046333140.1710426553046334031","rules_len":41,"slot_no":16,"workload_len":31,"workload_slot":16}
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/0
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/1
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/10
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/11
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/12
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/13
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/14
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/15
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/2
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/3
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/4
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/5
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/6
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/7
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/8
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426523049332920.1710426523049333373/9
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/0
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/1
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/10
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/11
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/12
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/13
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/14
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/15
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/2
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/3
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/4
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/5
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/6
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/7
+2024-03-14T14:29:13.529|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/8
+2024-03-14T14:29:13.53 |DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426523049332920.1710426523049333373/9
+2024-03-14T14:29:13.53 |DEBU|CTL|cluster.(*ClusterTransact).Apply: Transact
+2024-03-14T14:29:13.538|DEBU|CTL|cache.putPolicyIPRulesToClusterScaleNode: All policy rules written
+2024-03-14T14:29:13.538|DEBU|CTL|cache.calculateGroupDlpRulesFromCache:
+2024-03-14T14:29:13.538|DEBU|CTL|cache.processDlpGroupPolicy:
+2024-03-14T14:29:13.538|DEBU|CTL|cache.assocWl2RuleNames:
+2024-03-14T14:29:13.538|DEBU|CTL|cache.assocWl2RuleNames:
+2024-03-14T14:29:13.54 |DEBU|CTL|cache.calculateGroupWafRulesFromCache:
+2024-03-14T14:29:13.541|DEBU|CTL|cache.processWafGroupPolicy:
+2024-03-14T14:29:13.541|DEBU|CTL|cache.assocWafWl2RuleNames:
+2024-03-14T14:29:13.541|DEBU|CTL|cache.assocWafWl2RuleNames:
+2024-03-14T14:29:13.546|DEBU|CTL|cache.prepareDlpSlots: segregate dlpwlrules to slots - final_slots=0 maxDlpSlots=512 r_lens=0 slots=16 wl_lens=0
+2024-03-14T14:29:13.549|DEBU|CTL|cache.putDlpWorkloadRulesToClusterScale: New dlp rules written - DlpRules=recalculate/dlp/DlpWorkloadRules/ver.1710426553546133849.1710426553546134261/ dlpVer={Key:NeuVectorDlpVersion DlpRulesVersion:ver.1710426553546133849.1710426553546134261 SlotNo:0 RulesLen:0 WorkloadLen:0}
+2024-03-14T14:29:13.551|DEBU|CTL|cluster.Put: - key=network/NeuVectorDlpVersion value={"dlp_version":"ver.1710426553546133849.1710426553546134261","key":"NeuVectorDlpVersion","rules_len":0,"slot_no":0,"workload_len":0}
+2024-03-14T14:29:13.56 |DEBU|CTL|cluster.(*ClusterTransact).Apply: Transact
+2024-03-14T14:29:14.051|DEBU|CTL|cache.auditLogUpdate: - key=object/auditlog/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/591ace48e91be0bf4b5c426c3c6b3807f803718e25b1922cca5d4c83205e4774 type=modify
+2024-03-14T14:29:14.052|DEBU|CTL|cache.responseRuleLookup: No response rule match - event=compliance workload=6b0ef014b407fb7a1041110b8b40611611bb81bc4fd86b90caff9e281668b814
+2024-03-14T14:29:14.052|DEBU|CTL|cache.recordAudit: - level=Warning name=Compliance.ContainerFile.Violation
+2024-03-14T14:29:25.815|DEBU|CTL|rest.handlerAuthRefresh: Login keep-alive - user=admin
+2024-03-14T14:29:25.822|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=PATCH URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/auth
+2024-03-14T14:29:26.941|DEBU|CTL|rest.handlerGetFedMember: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/fed/member
+2024-03-14T14:29:26.949|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/fed/member
+2024-03-14T14:29:28.019|DEBU|CTL|rest.handlerSystemGetConfigBase: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v2/system/config
+2024-03-14T14:29:28.021|DEBU|CTL|rest.restParseQuery: - req={start:0 limit:0 backward:false brief:false raw:false verbose:false withCap:false filters:[] sorts:[] pairs:map[]}
+2024-03-14T14:29:28.025|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v2/system/config
+2024-03-14T14:29:57.17 |DEBU|CTL|rest.handlerPromoteToMaster: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/fed/promote
+2024-03-14T14:29:57.194|DEBU|CTL|cluster.Put: - key=state/dist_lock/federation value={"locked_by":"e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc","locked_at":"2024-03-14T14:29:57.194604305Z","caller":"rest.handlerPromoteToMaster"}
+2024-03-14T14:29:57.205|DEBU|CTL|cluster.PutRev: - key=object/config/system rev=1590 value={"auth_by_platform":true,"auth_order":[],"cfg_type":0,"cluster_name":"master.local","controller_debug":["cpath"],"detect_unmanaged_wl":false,"disable_net_policy":false,"enable_icmp_policy":false,"ibmsa_config":{"accountID":"","apikey":"","findingsURL":"","providerId":"","tokenURL":""},"ibmsa_config_nv":{"ep_connected_at":"0001-01-01T00:00:00Z","ep_dashboard_url":"","ep_enabled":false,"ep_start":0},"ibmsa_onboard_data":{"id":"","note_name":"","provider_id":""},"mode_auto_d2m":false,"mode_auto_d2m_duration":0,"mode_auto_m2p":false,"mode_auto_m2p_duration":0,"net_service_policy_mode":"Discover","net_service_status":false,"new_service_policy_mode":"Discover","new_service_profile_baseline":"zero-drift","output_event_to_logs":false,"rancher_ep":"https://rancher.rajesh-kumar.in","registry_http_proxy":{"enable":false,"password":"","url":"","username":""},"registry_https_proxy":{"enable":false,"password":"","url":"","username":""},"remote_repositories":null,"scanner_autoscale":{"disabled_by_others":false,"max_pods":0,"min_pods":0,"strategy":""},"single_cve_per_syslog":false,"syslog_categories":["event","security-event","audit"],"syslog_cve_in_layers":false,"syslog_enable":false,"syslog_in_json":false,"syslog_ip":"","syslog_ip_proto":17,"syslog_level":"Info","syslog_port":514,"syslog_server":"","syslog_server_cert":"","tap_proxymesh":true,"unused_group_aging":24,"webhook_enable":false,"webhook_url":"","webhooks":[],"xff_enabled":true}
+2024-03-14T14:29:57.209|DEBU|CTL|cluster.Put: - key=network/system value={"auth_by_platform":true,"auth_order":[],"cfg_type":0,"cluster_name":"master.local","controller_debug":["cpath"],"detect_unmanaged_wl":false,"disable_net_policy":false,"enable_icmp_policy":false,"ibmsa_config":{"accountID":"","apikey":"","findingsURL":"","providerId":"","tokenURL":""},"ibmsa_config_nv":{"ep_connected_at":"0001-01-01T00:00:00Z","ep_dashboard_url":"","ep_enabled":false,"ep_start":0},"ibmsa_onboard_data":{"id":"","note_name":"","provider_id":""},"mode_auto_d2m":false,"mode_auto_d2m_duration":0,"mode_auto_m2p":false,"mode_auto_m2p_duration":0,"net_service_policy_mode":"Discover","net_service_status":false,"new_service_policy_mode":"Discover","new_service_profile_baseline":"zero-drift","output_event_to_logs":false,"rancher_ep":"https://rancher.rajesh-kumar.in","registry_http_proxy":{"enable":false,"password":"","url":"","username":""},"registry_https_proxy":{"enable":false,"password":"","url":"","username":""},"remote_repositories":null,"scanner_autoscale":{"disabled_by_others":false,"max_pods":0,"min_pods":0,"strategy":""},"single_cve_per_syslog":false,"syslog_categories":["event","security-event","audit"],"syslog_cve_in_layers":false,"syslog_enable":false,"syslog_in_json":false,"syslog_ip":"","syslog_ip_proto":17,"syslog_level":"Info","syslog_port":514,"syslog_server":"","syslog_server_cert":"","tap_proxymesh":true,"unused_group_aging":24,"webhook_enable":false,"webhook_url":"","webhooks":[],"xff_enabled":true}
+2024-03-14T14:29:57.216|DEBU|CTL|cluster.PutRev: - key=object/config/user/admin rev=1482 value={"fullname":"admin","username":"admin","password_hash":"832e8860defa1d5d815fe548bb418656e1d2ef985c9e540a663526c1d65545834ddaf055aebb50d81285033cf1e1c9d75a490689e88b22a71a00a4b9f5bbde9f","pwd_reset_time":"2024-03-14T14:27:38.369557774Z","pwd_hash_history":null,"domain":"","server":"","email":"","role":"fedAdmin","role_oride":false,"timeout":3600,"locale":"en","role_domains":{},"last_login_at":"2024-03-14T14:27:52.078589405Z","login_count":3,"failed_login_count":0,"block_login_since":"0001-01-01T00:00:00Z","reset_password_in_next_login":false}
+2024-03-14T14:29:57.23 |DEBU|CTL|cluster.Put: - key=object/config/federation/membership value={"fed_role":"master","joint_cluster":{"client_cert":"","client_key":"","disabled":false,"id":"","name":"","proxy_required":false,"rest_info":{"port":0,"server":""},"secret":""},"local_rest_info":{"port":30919,"server":"159.89.175.232"},"master_cluster":{"ca_cert":"","disabled":false,"id":"9312bfc489ceda0db454057bb1c6cd13","name":"","rest_info":{"port":30919,"server":"159.89.175.232"},"secret":"VYzDhRPhofRmxf2a3X7Z724exd3QjjLwKEKEkFIPqbaZJ/JeSTIXcy2hncEoQghS","user":"admin"},"pending_dismiss":false,"pending_dismiss_at":"0001-01-01T00:00:00Z","use_proxy":""}
+2024-03-14T14:29:57.239|DEBU|CTL|cluster.PutIfNotExist: - key=object/config/group/fed.nodes value={"name":"fed.nodes","comment":"","learned":false,"reserved":true,"criteria":[],"domain":"","creater_domains":null,"policy_mode":"Discover","profile_mode":"Discover","kind":"node","platform_role":"","cap_intcp":false,"cfg_type":4,"baseline_profile":""}
+2024-03-14T14:29:57.245|DEBU|CTL|cluster.PutIfNotExist: - key=node/common/profiles/group/fed.nodes
+2024-03-14T14:29:57.249|DEBU|CTL|kv.createDefaultGroup: Create group - group=fed.nodes
+2024-03-14T14:29:57.249|DEBU|CTL|cluster.PutIfNotExist: - key=object/config/group/fed.containers value={"name":"fed.containers","comment":"","learned":false,"reserved":true,"criteria":[{"key":"container","value":"*","op":"="}],"domain":"","creater_domains":null,"kind":"container","platform_role":"","cap_intcp":false,"cfg_type":4,"baseline_profile":""}
+2024-03-14T14:29:57.254|DEBU|CTL|cache.systemConfigUpdate: - key=object/config/system type=modify
+2024-03-14T14:29:57.254|DEBU|CTL|cache.systemConfigUpdate: - config={NewServicePolicyMode:Discover NewServiceProfileBaseline:zero-drift UnusedGroupAging:24 CLUSSyslogConfig:{SyslogIP:<nil> SyslogServer: SyslogIPProto:17 SyslogPort:514 SyslogLevel:Info SyslogEnable:false SyslogCategories:[event security-event audit] SyslogInJSON:false SyslogServerCert: OutputEventToLogs:false} SingleCVEPerSyslog:false SyslogCVEInLayers:false AuthOrder:[] AuthByPlatform:true RancherEP:https://rancher.rajesh-kumar.in InternalSubnets:[] WebhookEnable_UNUSED:false WebhookUrl_UNUSED: Webhooks:[] ClusterName:master.local ControllerDebug:[cpath] TapProxymesh:true RegistryHttpProxy:{Enable:false URL: Username: Password:} RegistryHttpsProxy:{Enable:false URL: Username: Password:} IBMSAConfigNV:{EpEnabled:false EpStart:0 EpDashboardURL: EpConnectedAt:0001-01-01 00:00:00 +0000 UTC} IBMSAConfig:{AccountID: APIKey: ProviderID: FindingsURL: TokenURL:} IBMSAOnboardData:{NoteName: ID: ProviderID:} XffEnabled:true CfgType:0 NetServiceStatus:false NetServicePolicyMode:Discover DisableNetPolicy:false DetectUnmanagedWl:false EnableIcmpPolicy:false ModeAutoD2M:false ModeAutoD2MDuration:0 ModeAutoM2P:false ModeAutoM2PDuration:0 ScannerAutoscale:{Strategy: MinPods:0 MaxPods:0 DisabledByOthers:false} NoTelemetryReport:false RemoteRepositories:[]}
+2024-03-14T14:29:57.255|DEBU|CTL|kv._createAllContainerGroup: Create group - group=fed.containers
+2024-03-14T14:29:57.255|DEBU|CTL|cluster.Put: - key=object/config/federation/settings value={"deploy_repo_scan_data":false}
+2024-03-14T14:29:57.261|DEBU|CTL|cluster.Put: - key=object/config/federation/rules_revision value={"revisions":{"fed_admctrl_deny":0,"fed_admctrl_exception":0,"fed_file_profile":0,"fed_group":0,"fed_netwwork_rule":0,"fed_process_profile":0,"fed_response_rule":0,"fed_system_config":0}}
+2024-03-14T14:29:57.267|DEBU|CTL|cluster.Put: - key=scan/state/scan_revisions value={"reg_config_rev":0,"scanned_reg_revs":{},"scanned_repo_rev":0,"restoring":false}
+2024-03-14T14:29:57.275|DEBU|CTL|cache.fedScanRevsHandler: - key=scan/state/scan_revisions type=add
+2024-03-14T14:29:57.276|DEBU|CTL|rest.(*loginSession)._logout: - id=1d77f3abde95 user=admin
+2024-03-14T14:29:57.284|DEBU|CTL|resource.(*kubernetes).listResource: - resource=node
+2024-03-14T14:29:57.301|DEBU|CTL|cache.fedConfigUpdate: - cfgType=membership
+2024-03-14T14:29:57.301|INFO|CTL|cache.fedConfigUpdate: - role=master
+2024-03-14T14:29:57.306|INFO|CTL|scan.FedRoleChangeNotify: - fedRole=master
+2024-03-14T14:29:57.306|DEBU|CTL|cluster.Put: - key=object/config/group/fed.nodes value={"name":"fed.nodes","comment":"","learned":false,"reserved":true,"criteria":[],"domain":"","creater_domains":null,"kind":"node","platform_role":"","cap_intcp":false,"cfg_type":4,"baseline_profile":""}
+2024-03-14T14:29:57.309|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=POST URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/fed/promote
+2024-03-14T14:29:57.309|DEBU|CTL|cluster.Delete: - key=state/dist_lock/federation
+2024-03-14T14:29:57.309|INFO|CTL|rest.startFedRestServer: Start fed REST server - port=11443
+2024-03-14T14:29:57.319|DEBU|CTL|kv.clusterHelper.PutProcessProfileIfNotExist: GRP:  - group=fed.nodes key=object/config/process_profile/fed.nodes process=0
+2024-03-14T14:29:57.32 |DEBU|CTL|cluster.PutIfNotExist: - key=node/common/profiles/process/fed.nodes
+2024-03-14T14:29:57.33 |DEBU|CTL|cluster.PutIfNotExist: - key=object/config/process_profile/fed.nodes
+2024-03-14T14:29:57.338|DEBU|CTL|cluster.PutIfNotExist: - key=node/common/profiles/file/fed.nodes
+2024-03-14T14:29:57.342|DEBU|CTL|cluster.PutIfNotExist: - key=object/config/file_monitor/fed.nodes
+2024-03-14T14:29:57.347|DEBU|CTL|cluster.PutIfNotExist: - key=node/common/profiles/fileAccess/fed.nodes
+2024-03-14T14:29:57.353|DEBU|CTL|cluster.PutIfNotExist: - key=object/config/file_rule/fed.nodes
+2024-03-14T14:29:57.359|DEBU|CTL|cluster.PutRev: - key=object/config/federation/rules_revision rev=131 value={"revisions":{"fed_admctrl_deny":0,"fed_admctrl_exception":0,"fed_file_profile":1,"fed_group":1,"fed_netwwork_rule":0,"fed_process_profile":1,"fed_response_rule":0,"fed_system_config":0}}
+2024-03-14T14:29:57.362|DEBU|CTL|cache.eventHandlers.Trigger: - handler=connectGroupAdd id=fed.nodes
+2024-03-14T14:29:57.364|DEBU|CTL|cache.eventHandlers.Trigger: - handler=automodeGroupAdd id=fed.nodes
+2024-03-14T14:29:57.364|DEBU|CTL|cache.groupConfigUpdate: Update group cache - group=&{Name:fed.nodes Comment: Learned_UNUSED:false Reserved:true Criteria:[] Domain: CreaterDomains:[] PolicyMode: ProfileMode: NotScored:false Kind:node PlatformRole: CapIntcp:false CfgType:4 BaselineProfile:}
+2024-03-14T14:29:57.365|DEBU|CTL|kv.clusterHelper.PutProcessProfileIfNotExist: GRP:  - group=fed.containers key=object/config/process_profile/fed.containers process=0
+2024-03-14T14:29:57.365|DEBU|CTL|cluster.PutIfNotExist: - key=object/config/process_profile/fed.containers
+2024-03-14T14:29:57.369|DEBU|CTL|cluster.PutIfNotExist: - key=object/config/file_monitor/fed.containers
+2024-03-14T14:29:57.373|DEBU|CTL|cluster.PutIfNotExist: - key=object/config/file_rule/fed.containers
+2024-03-14T14:29:57.38 |DEBU|CTL|cluster.PutRev: - key=object/config/federation/rules_revision rev=1672 value={"revisions":{"fed_admctrl_deny":0,"fed_admctrl_exception":0,"fed_file_profile":2,"fed_group":2,"fed_netwwork_rule":0,"fed_process_profile":2,"fed_response_rule":0,"fed_system_config":0}}
+2024-03-14T14:29:57.39 |DEBU|CTL|cluster.(*ClusterTransact).PutQuiet: Transact - key=node/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/profiles/group/fed.containers
+2024-03-14T14:29:57.391|DEBU|CTL|cluster.(*ClusterTransact).PutQuiet: Transact - key=node/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/profiles/process/fed.containers
+2024-03-14T14:29:57.392|DEBU|CTL|cluster.(*ClusterTransact).PutQuiet: Transact - key=node/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/profiles/fileAccess/fed.containers
+2024-03-14T14:29:57.393|DEBU|CTL|cluster.(*ClusterTransact).PutQuiet: Transact - key=node/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/profiles/file/fed.containers
+2024-03-14T14:29:57.393|DEBU|CTL|cluster.(*ClusterTransact).Apply: Transact
+2024-03-14T14:29:57.399|DEBU|CTL|cache.eventHandlers.Trigger: - handler=connectGroupAdd id=fed.containers
+2024-03-14T14:29:57.399|DEBU|CTL|cache.eventHandlers.Trigger: - handler=automodeGroupAdd id=fed.containers
+2024-03-14T14:29:57.399|DEBU|CTL|cache.groupConfigUpdate: Update group cache - group=&{Name:fed.containers Comment: Learned_UNUSED:false Reserved:true Criteria:[{Key:container Value:* Op:=}] Domain: CreaterDomains:[] PolicyMode: ProfileMode: NotScored:false Kind:container PlatformRole: CapIntcp:false CfgType:4 BaselineProfile:}
+2024-03-14T14:29:57.399|DEBU|CTL|cache.scheduleIPPolicyCalculation: - fast=true policyCalculated=false
+2024-03-14T14:29:57.43 |DEBU|CTL|cache.fedConfigUpdate: - cfgType=settings
+2024-03-14T14:29:57.431|DEBU|CTL|kv.clusterHelper.PutProcessProfileIfNotExist: GRP:  - group=fed.nodes key=object/config/process_profile/fed.nodes process=0
+2024-03-14T14:29:57.431|DEBU|CTL|cluster.PutIfNotExist: - key=node/common/profiles/process/fed.nodes
+2024-03-14T14:29:57.435|DEBU|CTL|cluster.PutIfNotExist: - key=object/config/process_profile/fed.nodes
+2024-03-14T14:29:57.442|DEBU|CTL|cluster.PutIfNotExist: - key=node/common/profiles/file/fed.nodes
+2024-03-14T14:29:57.446|DEBU|CTL|cluster.PutIfNotExist: - key=object/config/file_monitor/fed.nodes
+2024-03-14T14:29:57.45 |DEBU|CTL|cluster.PutIfNotExist: - key=node/common/profiles/fileAccess/fed.nodes
+2024-03-14T14:29:57.455|DEBU|CTL|cluster.PutIfNotExist: - key=object/config/file_rule/fed.nodes
+2024-03-14T14:29:57.459|DEBU|CTL|cache.eventHandlers.Trigger: - handler=connectGroupAdd id=fed.nodes
+2024-03-14T14:29:57.46 |DEBU|CTL|cache.eventHandlers.Trigger: - handler=automodeGroupAdd id=fed.nodes
+2024-03-14T14:29:57.46 |DEBU|CTL|cache.groupConfigUpdate: Update group cache - group=&{Name:fed.nodes Comment: Learned_UNUSED:false Reserved:true Criteria:[] Domain: CreaterDomains:[] PolicyMode: ProfileMode: NotScored:false Kind:node PlatformRole: CapIntcp:false CfgType:4 BaselineProfile:}
+2024-03-14T14:29:57.46 |DEBU|CTL|cache.fileAccessRuleConfigUpdate: Update - crds=0 filters=0 key=object/config/file_rule/fed.nodes
+2024-03-14T14:29:57.46 |DEBU|CTL|cache.fileAccessRuleConfigUpdate: Update - crds=0 filters=0 key=object/config/file_rule/fed.containers
+2024-03-14T14:29:57.46 |DEBU|CTL|cache.fedConfigUpdate: - cfgType=rules_revision
+2024-03-14T14:29:58.414|DEBU|CTL|rest.handlerEULAShow: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/eula
+2024-03-14T14:29:58.415|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/eula
+2024-03-14T14:29:58.418|DEBU|CTL|rest.handlerTokenAuthServerList: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/token_auth_server
+2024-03-14T14:29:58.419|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/token_auth_server
+2024-03-14T14:29:59.4  |DEBU|CTL|cache.calculateIPPolicyFromCache:
+2024-03-14T14:29:59.403|DEBU|CTL|cache.preparePolicySlotsCommon: begin slots - beginSlot=16 maxPolicySlots=512 wlen=31
+2024-03-14T14:29:59.403|DEBU|CTL|cache.preparePolicySlotsCommon: segregate rules to slots - final_slots=16 maxPolicySlots=512 orig_rule_lens=42 rule_lens=16 slots=16 wl_lens=31 wl_slots=16
+2024-03-14T14:29:59.41 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/0
+2024-03-14T14:29:59.415|DEBU|CTL|cluster.PutBinary: - key=object/eventlog/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc/controller
+2024-03-14T14:29:59.417|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/1
+2024-03-14T14:29:59.422|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/2
+2024-03-14T14:29:59.428|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/3
+2024-03-14T14:29:59.431|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/4
+2024-03-14T14:29:59.435|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/5
+2024-03-14T14:29:59.439|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/6
+2024-03-14T14:29:59.443|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/7
+2024-03-14T14:29:59.45 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/8
+2024-03-14T14:29:59.455|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/9
+2024-03-14T14:29:59.46 |DEBU|CTL|cache.eventLogUpdate: - key=object/eventlog/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc/controller type=modify
+2024-03-14T14:29:59.46 |DEBU|CTL|cache.responseRuleLookup: No response rule match - event=event workload=
+2024-03-14T14:29:59.46 |DEBU|CTL|cache.recordEvent: - name=Federation.Promote
+2024-03-14T14:29:59.46 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/10
+2024-03-14T14:29:59.46 |DEBU|CTL|cache.responseRuleLookup: No response rule match - event=event workload=
+2024-03-14T14:29:59.46 |DEBU|CTL|cache.recordEvent: - name=User.Logout
+2024-03-14T14:29:59.461|DEBU|CTL|cache.responseRuleLookup: No response rule match - event=event workload=
+2024-03-14T14:29:59.461|DEBU|CTL|cache.recordEvent: - name=RESTful.Write
+2024-03-14T14:29:59.465|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/11
+2024-03-14T14:29:59.469|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/12
+2024-03-14T14:29:59.476|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/13
+2024-03-14T14:29:59.485|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/14
+2024-03-14T14:29:59.49 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/15
+2024-03-14T14:29:59.494|DEBU|CTL|cache.preparePolicySlotsNode: begin slots - beginSlot=16 maxPolicySlots=512 wlen=31
+2024-03-14T14:29:59.494|DEBU|CTL|cache.preparePolicySlotsNode: segregate rules to slots - final_slots=16 maxPolicySlots=512 orig_rule_lens=41 rule_lens=41 slots=16 wlen=31
+2024-03-14T14:29:59.5  |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/0
+2024-03-14T14:29:59.504|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/1
+2024-03-14T14:29:59.511|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/2
+2024-03-14T14:29:59.518|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/3
+2024-03-14T14:29:59.523|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/4
+2024-03-14T14:29:59.531|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/5
+2024-03-14T14:29:59.537|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/6
+2024-03-14T14:29:59.542|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/7
+2024-03-14T14:29:59.548|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/8
+2024-03-14T14:29:59.553|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/9
+2024-03-14T14:29:59.559|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/10
+2024-03-14T14:29:59.565|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/11
+2024-03-14T14:29:59.571|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/12
+2024-03-14T14:29:59.574|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/13
+2024-03-14T14:29:59.581|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/14
+2024-03-14T14:29:59.586|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/15
+2024-03-14T14:29:59.591|DEBU|CTL|cache.putPolicyIPRulesToClusterScaleNode: New policy rules written - newNodeKey=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/ policyVer={Key:NeuVectorPolicyVersion PolicyIPRulesVersion:ver.1710426599403133105.1710426599403133496 NodeId:rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d CommonSlotNo:16 CommonRulesLen:16 SlotNo:16 RulesLen:41 WorkloadSlot:16 WorkloadLen:31}
+2024-03-14T14:29:59.591|DEBU|CTL|cluster.Put: - key=noderule/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/NeuVectorPolicyVersion value={"common_rules_len":16,"common_slot_no":16,"key":"NeuVectorPolicyVersion","node_id":"rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d","pol_version":"ver.1710426599403133105.1710426599403133496","rules_len":41,"slot_no":16,"workload_len":31,"workload_slot":16}
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/0
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/1
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/10
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/11
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/12
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/13
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/14
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/15
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/2
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/3
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/4
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/5
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/6
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/7
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/8
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426553046333140.1710426553046334031/9
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/0
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/1
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/10
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/11
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/12
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/13
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/14
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/15
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/2
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/3
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/4
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/5
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/6
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/7
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/8
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426553046333140.1710426553046334031/9
+2024-03-14T14:29:59.599|DEBU|CTL|cluster.(*ClusterTransact).Apply: Transact
+2024-03-14T14:29:59.608|DEBU|CTL|cache.putPolicyIPRulesToClusterScaleNode: All policy rules written
+2024-03-14T14:29:59.608|DEBU|CTL|cache.calculateGroupDlpRulesFromCache:
+2024-03-14T14:29:59.608|DEBU|CTL|cache.processDlpGroupPolicy:
+2024-03-14T14:29:59.608|DEBU|CTL|cache.assocWl2RuleNames:
+2024-03-14T14:29:59.608|DEBU|CTL|cache.assocWl2RuleNames:
+2024-03-14T14:29:59.608|DEBU|CTL|cache.calculateGroupWafRulesFromCache:
+2024-03-14T14:29:59.608|DEBU|CTL|cache.processWafGroupPolicy:
+2024-03-14T14:29:59.608|DEBU|CTL|cache.assocWafWl2RuleNames:
+2024-03-14T14:29:59.608|DEBU|CTL|cache.assocWafWl2RuleNames:
+2024-03-14T14:29:59.609|DEBU|CTL|cache.prepareDlpSlots: segregate dlpwlrules to slots - final_slots=0 maxDlpSlots=512 r_lens=0 slots=16 wl_lens=0
+2024-03-14T14:29:59.609|DEBU|CTL|cache.putDlpWorkloadRulesToClusterScale: New dlp rules written - DlpRules=recalculate/dlp/DlpWorkloadRules/ver.1710426599609603950.1710426599609604272/ dlpVer={Key:NeuVectorDlpVersion DlpRulesVersion:ver.1710426599609603950.1710426599609604272 SlotNo:0 RulesLen:0 WorkloadLen:0}
+2024-03-14T14:29:59.609|DEBU|CTL|cluster.Put: - key=network/NeuVectorDlpVersion value={"dlp_version":"ver.1710426599609603950.1710426599609604272","key":"NeuVectorDlpVersion","rules_len":0,"slot_no":0,"workload_len":0}
+2024-03-14T14:29:59.615|DEBU|CTL|cluster.(*ClusterTransact).Apply: Transact
+2024-03-14T14:30:05.825|DEBU|CTL|ruleid.(*uuidPRuleCache).handleProcessProfile: UUID:  - group=fed.nodes
+2024-03-14T14:30:05.826|DEBU|CTL|ruleid.(*uuidPRuleCache).handleProcessProfile: UUID:  - group=fed.containers
+2024-03-14T14:30:28.239|DEBU|CTL|rest.handlerAuthLogin: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/auth
+2024-03-14T14:30:28.239|DEBU|CTL|rest.getAuthServersInOrder: - auth-order=[]
+2024-03-14T14:30:28.24 |DEBU|CTL|rest.handlerAuthLogin: - server=local
+2024-03-14T14:30:28.242|DEBU|CTL|cluster.PutRev: - key=object/config/user/admin rev=1653 value={"fullname":"admin","username":"admin","password_hash":"832e8860defa1d5d815fe548bb418656e1d2ef985c9e540a663526c1d65545834ddaf055aebb50d81285033cf1e1c9d75a490689e88b22a71a00a4b9f5bbde9f","pwd_reset_time":"2024-03-14T14:27:38.369557774Z","pwd_hash_history":null,"domain":"","server":"","email":"","role":"fedAdmin","role_oride":false,"timeout":3600,"locale":"en","role_domains":{},"last_login_at":"2024-03-14T14:30:28.24066088Z","login_count":4,"failed_login_count":0,"block_login_since":"0001-01-01T00:00:00Z","reset_password_in_next_login":false}
+2024-03-14T14:30:28.258|DEBU|CTL|rest.localPasswordAuth: Updated user in cluster - user=admin
+2024-03-14T14:30:28.269|DEBU|CTL|rest._registerLoginSession: - ibmsaSetup=false id=04f33df760ab importStatus=false user=admin
+2024-03-14T14:30:28.277|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=POST URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/auth
+2024-03-14T14:30:28.357|DEBU|CTL|rest.handlerSystemSummary: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/system/summary
+2024-03-14T14:30:28.361|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/system/summary
+2024-03-14T14:30:28.791|DEBU|CTL|rest.handlerSystemGetRBAC: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/system/rbac
+2024-03-14T14:30:28.8  |DEBU|CTL|rest.handlerSystemGetConfigBase: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v2/system/config
+2024-03-14T14:30:28.802|DEBU|CTL|rest.restParseQuery: - req={start:0 limit:0 backward:false brief:false raw:false verbose:false withCap:false filters:[] sorts:[] pairs:map[]}
+2024-03-14T14:30:28.803|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v2/system/config
+2024-03-14T14:30:28.805|DEBU|CTL|rest.handlerGetFedMember: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/fed/member
+2024-03-14T14:30:28.803|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-updater-pod sa=neuvector
+2024-03-14T14:30:28.807|DEBU|CTL|cluster.Put: - key=object/config/federation/ping_poll value={"cmd":3,"full_polling":0,"now":1710426628}
+2024-03-14T14:30:28.817|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/fed/member
+2024-03-14T14:30:28.826|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-enforcer-pod sa=neuvector
+2024-03-14T14:30:28.846|DEBU|CTL|resource.xlateRoleBinding: v1 - binding=&{uid:15568414-9e8c-473b-86a2-ed570da3df33 name:neuvector-admin domain:cattle-neuvector-system role:{name:admin domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:28.854|DEBU|CTL|rest.handlerInternalSystem: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/internal/system?f_domain=null
+2024-03-14T14:30:28.86 |DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/internal/system?f_domain=null
+2024-03-14T14:30:28.873|DEBU|CTL|cache.fedConfigUpdate: - cfgType=ping_poll
+2024-03-14T14:30:28.895|DEBU|CTL|rest.handlerSystemGetRBAC: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/system/rbac
+2024-03-14T14:30:28.91 |DEBU|CTL|rest.handlerSystemGetConfigBase: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v2/system/config
+2024-03-14T14:30:28.921|DEBU|CTL|rest.restParseQuery: - req={start:0 limit:0 backward:false brief:false raw:false verbose:false withCap:false filters:[] sorts:[] pairs:map[]}
+2024-03-14T14:30:28.922|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v2/system/config
+2024-03-14T14:30:28.927|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-updater-pod sa=neuvector
+2024-03-14T14:30:28.937|INFO|CTL|resource.getNeuvectorSvcAccount: - name=neuvector-enforcer-pod sa=neuvector
+2024-03-14T14:30:28.959|DEBU|CTL|resource.xlateRoleBinding: v1 - binding=&{uid:15568414-9e8c-473b-86a2-ed570da3df33 name:neuvector-admin domain:cattle-neuvector-system role:{name:admin domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:28.976|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:3a475755-2470-4311-9d90-3aaa4b7ab418 name:neuvector-binding-nvwafsecurityrules domain: role:{name:neuvector-binding-nvwafsecurityrules domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:28.985|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:c066c323-f324-4566-b7d4-d078a8a6b02a name:neuvector-binding-rbac domain: role:{name:neuvector-binding-rbac domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.003|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:8ef79179-879b-4b97-907f-a2f826043c17 name:neuvector-binding-admission domain: role:{name:neuvector-binding-admission domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.017|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:a6362517-5a04-4d9f-9614-c17d72e15a5c name:neuvector-binding-nvsecurityrules domain: role:{name:neuvector-binding-nvsecurityrules domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.037|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:608b9b3a-9cab-4db9-b85c-45ab1b71189b name:neuvector-binding-nvdlpsecurityrules domain: role:{name:neuvector-binding-nvdlpsecurityrules domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.049|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:88aa064d-8a8b-47c2-8bdc-74df00b7c5d8 name:neuvector-binding-nvcomplianceprofiles domain: role:{name:neuvector-binding-nvcomplianceprofiles domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.064|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:bed56d9f-7965-4537-bc95-1eb4ecce5ab8 name:neuvector-binding-view domain: role:{name:view domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.066|DEBU|CTL|rest.handlerThreatList: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/log/threat
+2024-03-14T14:30:29.067|DEBU|CTL|rest.handlerViolationList: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/log/violation
+2024-03-14T14:30:29.067|DEBU|CTL|rest.restParseQuery: - req={start:0 limit:0 backward:false brief:false raw:false verbose:false withCap:false filters:[] sorts:[] pairs:map[]}
+2024-03-14T14:30:29.067|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/log/threat
+2024-03-14T14:30:29.069|DEBU|CTL|rest.restParseQuery: - req={start:0 limit:0 backward:false brief:false raw:false verbose:false withCap:false filters:[] sorts:[] pairs:map[]}
+2024-03-14T14:30:29.069|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/log/violation
+2024-03-14T14:30:29.07 |DEBU|CTL|rest.handlerIncidentList: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/log/incident
+2024-03-14T14:30:29.071|DEBU|CTL|rest.restParseQuery: - req={start:0 limit:0 backward:false brief:false raw:false verbose:false withCap:false filters:[] sorts:[] pairs:map[]}
+2024-03-14T14:30:29.071|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/log/incident
+2024-03-14T14:30:29.08 |DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:12ccbdf9-976a-4ed4-982b-98ed814b1f47 name:neuvector-binding-app domain: role:{name:neuvector-binding-app domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.089|DEBU|CTL|rest.handlerSystemUsage: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/system/usage
+2024-03-14T14:30:29.093|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/system/usage
+2024-03-14T14:30:29.097|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:b6652ba5-3e9a-4360-ac1a-6f29a7bdf884 name:neuvector-binding-customresourcedefinition domain: role:{name:neuvector-binding-customresourcedefinition domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.115|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:3ed1749f-ab20-49ee-92e0-0d2912e03d8b name:neuvector-binding-nvadmissioncontrolsecurityrules domain: role:{name:neuvector-binding-nvadmissioncontrolsecurityrules domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.121|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:a6362517-5a04-4d9f-9614-c17d72e15a5c name:neuvector-binding-nvsecurityrules domain: role:{name:neuvector-binding-nvsecurityrules domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.127|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:bc4ca5fd-ea9b-4edd-9c23-96de4ff639d1 name:neuvector-binding-nvvulnerabilityprofiles domain: role:{name:neuvector-binding-nvvulnerabilityprofiles domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.133|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:608b9b3a-9cab-4db9-b85c-45ab1b71189b name:neuvector-binding-nvdlpsecurityrules domain: role:{name:neuvector-binding-nvdlpsecurityrules domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.158|DEBU|CTL|rest.handlerHostList: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/host?start=0&limit=0
+2024-03-14T14:30:29.158|DEBU|CTL|rest.restParseQuery: - req={start:0 limit:0 backward:false brief:false raw:false verbose:false withCap:false filters:[] sorts:[] pairs:map[scope:local view:pod]}
+2024-03-14T14:30:29.158|DEBU|CTL|rest.handlerGroupList: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/group?view=pod&scope=local
+2024-03-14T14:30:29.159|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:3a475755-2470-4311-9d90-3aaa4b7ab418 name:neuvector-binding-nvwafsecurityrules domain: role:{name:neuvector-binding-nvwafsecurityrules domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.162|DEBU|CTL|rest.restParseQuery: - req={start:0 limit:0 backward:false brief:false raw:false verbose:false withCap:false filters:[] sorts:[] pairs:map[]}
+2024-03-14T14:30:29.165|DEBU|CTL|rest.handlerHostList: Response - entries=1
+2024-03-14T14:30:29.166|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/host?start=0&limit=0
+2024-03-14T14:30:29.168|DEBU|CTL|rest.handlerPolicyRuleList: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/policy/rule
+2024-03-14T14:30:29.169|DEBU|CTL|rest.restParseQuery: - req={start:0 limit:0 backward:false brief:false raw:false verbose:false withCap:false filters:[] sorts:[] pairs:map[]}
+2024-03-14T14:30:29.17 |DEBU|CTL|rest.handlerPolicyRuleList: Response - entries=41
+2024-03-14T14:30:29.171|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/policy/rule
+2024-03-14T14:30:29.178|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:c066c323-f324-4566-b7d4-d078a8a6b02a name:neuvector-binding-rbac domain: role:{name:neuvector-binding-rbac domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.179|DEBU|CTL|rest.handlerGroupList: Response - entries=33
+2024-03-14T14:30:29.18 |DEBU|CTL|rest.restParseQuery: - req={start:0 limit:0 backward:false brief:false raw:false verbose:false withCap:false filters:[] sorts:[] pairs:map[view:pod]}
+2024-03-14T14:30:29.18 |DEBU|CTL|rest.handlerWorkloadListBase: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/workload?view=pod
+2024-03-14T14:30:29.188|DEBU|CTL|rest.handlerWorkloadListBase: Response - entries=58
+2024-03-14T14:30:29.197|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:8ef79179-879b-4b97-907f-a2f826043c17 name:neuvector-binding-admission domain: role:{name:neuvector-binding-admission domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.199|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/group?view=pod&scope=local
+2024-03-14T14:30:29.203|DEBU|CTL|rest.handlerConverList: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/conversation
+2024-03-14T14:30:29.205|DEBU|CTL|rest.restParseQuery: - req={start:0 limit:0 backward:false brief:false raw:false verbose:false withCap:false filters:[] sorts:[] pairs:map[]}
+2024-03-14T14:30:29.207|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/workload?view=pod
+2024-03-14T14:30:29.211|DEBU|CTL|rest.handlerScanConfigGet: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/scan/config
+2024-03-14T14:30:29.212|DEBU|CTL|rest.handlerConverList: Response - conversations=90 endpoints=72
+2024-03-14T14:30:29.212|DEBU|CTL|cache.CacheMethod.GetScanConfig:
+2024-03-14T14:30:29.212|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/scan/config
+2024-03-14T14:30:29.223|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:3ed1749f-ab20-49ee-92e0-0d2912e03d8b name:neuvector-binding-nvadmissioncontrolsecurityrules domain: role:{name:neuvector-binding-nvadmissioncontrolsecurityrules domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.235|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:bc4ca5fd-ea9b-4edd-9c23-96de4ff639d1 name:neuvector-binding-nvvulnerabilityprofiles domain: role:{name:neuvector-binding-nvvulnerabilityprofiles domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.236|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/conversation
+2024-03-14T14:30:29.258|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:88aa064d-8a8b-47c2-8bdc-74df00b7c5d8 name:neuvector-binding-nvcomplianceprofiles domain: role:{name:neuvector-binding-nvcomplianceprofiles domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.267|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/system/rbac
+2024-03-14T14:30:29.274|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:bed56d9f-7965-4537-bc95-1eb4ecce5ab8 name:neuvector-binding-view domain: role:{name:view domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.293|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:12ccbdf9-976a-4ed4-982b-98ed814b1f47 name:neuvector-binding-app domain: role:{name:neuvector-binding-app domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.303|DEBU|CTL|resource.xlateClusRoleBinding: v1 - binding=&{uid:b6652ba5-3e9a-4360-ac1a-6f29a7bdf884 name:neuvector-binding-customresourcedefinition domain: role:{name:neuvector-binding-customresourcedefinition domain:} users:[] svcAccounts:[{name:neuvector domain:cattle-neuvector-system}] roleKind:ClusterRole}
+2024-03-14T14:30:29.359|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/system/rbac
+2024-03-14T14:30:29.415|DEBU|CTL|cluster.PutBinary: - key=object/eventlog/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc/controller
+2024-03-14T14:30:29.486|DEBU|CTL|cache.eventLogUpdate: - key=object/eventlog/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc/controller type=modify
+2024-03-14T14:30:29.486|DEBU|CTL|cache.responseRuleLookup: No response rule match - event=event workload=
+2024-03-14T14:30:29.486|DEBU|CTL|cache.recordEvent: - name=User.Login
+2024-03-14T14:30:45.398|DEBU|CTL|rest.handlerAuthRefresh: Login keep-alive - user=admin
+2024-03-14T14:30:45.398|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=PATCH URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/auth
+2024-03-14T14:30:46.526|DEBU|CTL|rest.handlerGetFedMember: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/fed/member
+2024-03-14T14:30:46.527|DEBU|CTL|cluster.Put: - key=object/config/federation/ping_poll value={"cmd":3,"full_polling":0,"now":1710426646}
+2024-03-14T14:30:46.532|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/fed/member
+2024-03-14T14:30:46.572|DEBU|CTL|cache.fedConfigUpdate: - cfgType=ping_poll
+2024-03-14T14:30:46.98 |DEBU|CTL|rest.handlerSystemSummary: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/system/summary
+2024-03-14T14:30:46.981|DEBU|CTL|rest.handlerInternalSystem: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/internal/system
+2024-03-14T14:30:46.99 |DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/system/summary
+2024-03-14T14:30:46.993|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/internal/system
+2024-03-14T14:30:47.466|DEBU|CTL|rest.handlerInternalSystem: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/internal/system
+2024-03-14T14:30:47.466|DEBU|CTL|rest.handlerSystemSummary: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/system/summary
+2024-03-14T14:30:47.469|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/internal/system
+2024-03-14T14:30:47.469|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/system/summary
+2024-03-14T14:30:50.229|DEBU|CTL|rest.handlerGetFedJoinToken: - URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/fed/join_token
+2024-03-14T14:30:50.234|DEBU|CTL|rest.restParseQuery: - req={start:0 limit:0 backward:false brief:false raw:false verbose:false withCap:false filters:[] sorts:[] pairs:map[]}
+2024-03-14T14:30:50.235|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=GET URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/fed/join_token
+2024-03-14T14:31:27.752|DEBU|CTL|rest.handlerJoinFedInternal: - URL=/v1/fed/join_internal
+2024-03-14T14:31:27.774|DEBU|CTL|cluster.Put: - key=state/dist_lock/federation value={"locked_by":"e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc","locked_at":"2024-03-14T14:31:27.774190276Z","caller":"rest.handlerJoinFedInternal"}
+2024-03-14T14:31:27.81 |INFO|CTL|rest.pingJointCluster: success - id= proxyUsed=false
+2024-03-14T14:31:28.371|DEBU|CTL|cluster.Put: - key=object/config/federation/clusters/43317eb164f1dc0189ad4d9495949bd2 value={"client_cert":"dTnPSQvj9hNkuRjp79mY4p4h7HSKMCL09IVLQoh7QdfWRKM6q3Y30LZza4RmO2xXn3FQBAu2662Dlz7K+DHjHD9n8N3BB7XuIxDAXk72FS7qr90rHxTuQaYzoXPW3YftVBULNdtmFwB2c3u0XiTQH4HiFHmhgGUKPLSg080EMDc50nUrVutW0ETaOLG/pK2w/ohp45t390TBSx6FHl2coNIgKIpqupV3O88v6BkYSvelI2Q1O9FXNYbBxPtGpv6l0Bj/7nfVc/58chIycAZj+SoXKACYJB/FS1P5fZC3nxdmy5HSTIjSeVDAF0oxG+9jBQ9t2ppP7MJd2MpxlyI3MNtz42W+bMwO/E0VeyXl44Hij+jTYBGeEiJL+ZqlSLKwIyLFGF7hU+5TUXTrT7GgfmBsOR0Br5xwvSYVWK/8JaKafbDbdF7JRutfn49Xa97/XWIeSwsYu++srnZHcVm0U56/Zc3It2YpF7a/IRxdHPCpH+tbDxfgy+BKg6mkNMX0BEm5Uw3WwQwpXdFyiCAp7Esi88U63nrWXgzbsB4CboLaixKxc9m6hjoon8Lx8Il4tOgK3o4xwd2XWg3c0COr0mt7nmc5Sdgn8mv1sPkmuWucjweU7afkOMxCRK57EwLO8ZI+HkjPMh2g9rgEfkwig8OwfaRb0pfMMD58D1r37u1BCtewj26f333qjr3wNxSaccTcziIT0VAa+Loyfk5UXdD2qdtSjPd7qgBQjtKLYfJutX6JbkqTt8Eir4ZmT9yiURK24IPRPp2gfZxEpZSvoGRtFWpabZFFp74XmfTEqCaWm80U/bAxXUqfad+6Rh3bkFTZQ7NGbmNY4vFSyVUD9UVSrkWpMXbnjxTF52Dhn2sGL8bCsvdjZwPt7tru5Bw9kiH5RiemVPnrQIKMXAtBUg7i3etyKmw9FwPFyB9izHhMB2py3Jj57BTq2LYW69050T6fIW6Q8VoyMwFgCCpq2JSWAyIs0E+FNkBvgJpGcCdxEK0GXsx99Zze4vWL+R7A7K7T/wSI+xCp5sflMfhEjD1eFMPjW3vHC1+iD22FALwtKMmhqMahr7ygi1MD2Pcf721DpsLBCcV5/kDtLdeqbupi6/kw+//9gqCSUUUdnXJzIjJ6uq3kz5Ru5p/32QH5Lq360k/5mk1R3mdbFeMaZ4Od/CQWxkwSddMuybDD01P59F21H642nU88aODdqkW+1A9/E+n1LD1BeoSN3is4iRHaZh3kk0nD5ftKXeKrw/V9pvCwIEMerlNfjQpnMt2EYtImVbZ5T0KonfI8q82YSbRNuDDY8LNbTuPkgydaprd0tvZbTLY8DmvEf1YOP3aNJE0ohAZ2R6zXZE17Yk1r3ov3jNFconczU7JMPeQ2drdTCaVFN7SC50rG5lcSOZVJeL09UqF48iLG5WJ102bPywTDo1Ji7ny8kNw4JNYAA8QjrUWtrfS/YimjnsBhj3Q9yuyZBBo3H1xc+5rDG/PWLHyDCaDRI6uxSAm5CLgr6/OTyfcOuogQf+V5BmG3DRo4UwwNk8cijjgfOmL2McdlAsNQjDDpNYA03pKGXsljp0ZgYnocROX5GfxBjxH1yWW4uAPpJekTIB4aBTRpzzPS7DCM5Yxo2ONyFNdRT+8ToQAvX5k/rPf/8Bl2qv39xCYiIdv91TXV2okKynU6a8Wx4+kX/H42tNFo6Y87PDNiVmDF/aTsijYu3hVGk3y0Ud33MnpQ5lbxvo6ri7Og7JrFTq8cilBtIyK+eC4adV6VuxqDyQ1XmwGRfka4bIil0uqzA+FIDlCqiSL1DMFsstYOSuZ7+lQsEed2x0eLfkv+A1fIWGWpXOdH1utjCKZACLV3ffJt4XXuOlx5GiikAkuMRliWVbFqwVJeSKPQRGSU4fINMpypGWS0f775Ex0hX1ILsXABEXpy4GZ3nxgEwmWzQicU2RVuAhYwbm3U+bL6FL/izcrTd9tlfpZZX32USCyH/zcf84UTWpGxt1hxKWNlKisrM2S16sf4L9zgmvgx3VUu0mSmqE9AwBxrBCxSX2kK+MOuSJSgd62DhXqOdTGPh9fOXpgrkfoAlVUpMmeTQQJooyZIRgHs6bZHnCuMMmPuY7hx/pBPurOzcWX5rV0/3XUeQVcEWm8JIk+7UcOyGNdF/kzqJdYDOarrW2ijmNgDnV8qW/JdxLJgiaC3v3AiStAHi5GfqPkuEP5e4S+LMfK6OtpUA+t+/MMJZo+uZKg/Jhv/d8RXgHylZEKqKyZgOjD0krA7JlBx/RxP96nT/Qv65BPdt83CG1gM8nx1JlOIgWplEvRm+nkh5SyFwt1fGRNMyi6J+f1n1y9aVXvUo3IG9OGEEcKusiL7ChQpV+YmVnJkrbyBGfXOJxYLvtGnmw==","client_key":"0Jbm7ZT3/Xb1f6qukVPcmceUJCIbMjQzUeebxN/kh3qi7BelnXmmWf5cAPPA2sZil3zB3JM+grb3m5osGVxeeE55Xw1mTZmYqJMOPq3DmF2x2w7/KOTazQjKgdIMG2QQFKA/qbVMHQgSG1d8K/Ts4MhPoNOWqAllcV7MfUr+3IdY08RAHfFJzYPAZH7w7YUdNls4QY0pFUsm6Ympik6h3tqtFdh2arXV7v+kPzTbnQ+vlA9isF95Z7ZiCXrWYxBTJ5emT3UK/jStRZmD0KDPtDJeV83UceGNv40zVItZpM26jjJjwwbazWue6FkWBYEObQbgEPHMkqGmVW6n2gCMK4b72ARPKZrZO/NWH3+OEONgYWJs6ORAZHuqXX+ylAfsYPOKZqbHlRkYxSCWiwYtBZgtW38QoKfCsAREB4PSAhJJ6C6s//bT2wwWshiYW7ch2lZvUH6z6wfTBI+Zj4RudWYI9QqI+l5XbtvLW8JEVaXij3MoXTEbkxcOaHsyOET+W91dPTuJjhTNnCdeR6fM+qWo5I8lLo67hPVIzZgXHzjAoTBWLinieWD3TMg+y/aYYPEIhkZ2Km1RD+tFC6pM9MoSPQeX0dcnn2wPRsd5hN2Vh98q6Dfq9gV3AJgjXfe+CH83h/zNoGIengo0O4vFjxQQMQl1hndNvsLxpSIF/v5/tPexAnG4WwgTxpHyczV20CAUoaTW/MvkT2W/4wilBWFhTv8Xbi7W69nMt0NChracEF28WEBHApxt6Xjv94wjecvpBabRa82+fykukQhJ5RDmAgITYNMmrDFR91utS31ODKZf8prz9e0s8moq53Jn7KBz6RSZ2yIb9OdauxsmNz0diIH+9J7VaZ9jthtMZuiMcZN2R7j+Vp+IXeipbLZnxNeqWV1rAdKIsUJNApHL+ee5+TUG5aEnoNP1AsYBx4V4NJp4RCm+PDNNGkH+RXX4PFvB4HMkqjlXzF7FkvQ2AK+9TwxzbTH+Vkui2OhSfgc5gbUgACQoSG5p4K/tVcmAlowz7STt9mgZlCw7pCLIUPYgGkN1hri65sBu1ytxyLckOKIgL6YPiv7P8EPjtjgQM1V7pjIXDdonkAZumCwMuK20c4J1GWAy/se1k6a3uQMh9fGaVxiyd9b4DQlEF3WLf7E9WYL7vujE4ulucccadIFsZLYZntB6AeatP/S0fZTXXX0mBxx6Fxo4lfSkPrSf5mTnLdPEidusmx7velrl/TSEldn+4YSquQ3OUUVcOplFNVYGl1Tw3MoemigH8Z40Y6sBtkI7oQxg5cYilWBsDSSnSuQFLGmLp9CKz4wIoAfUMjv/Zl9gFbcF3Y46g8MANXjVa5HhJHsUiEWFvNcqDlB4zPg1+BksmCuO/Y4mngf17FGGqP05b/Xb85PzXI5WeD45iLMNhQIKjP2P3rOM6oFiBAF9ti9JpE/TpiMOTuQ8q4q/c+r33YI84plI49qa28b/VtP6Kj3j2L8TDtdH0jW/+FBpyGT89704ZH/sLDceBEyk1OFyHKiH2lXKZtb6uNk8yjK16ZvmmQDg1Mqqso8005fB7BnJNolLmhGunVtcPOCG2M7ZwOw2w4E3I2LjAiYhyP1UztR8sNF75Xk0QmU1ZKe1ESpwYjsDCud3eRhjpPJPTyVsLykX/JcZ0y3r/0miqIe3CpZxGUlhT6hu3eWUT3Sal9QhB0qd5v+c9fgLaysdnz7NABprm0wJ+wufAQ4qyohvxV+B4YiKjMpTib+3KqSAZN+GHTOQ6gOhQr/ZXvyE84By4MMM88hPXpOlFbzhWuDZfjy8IyYMI31TMGkb8wWIjaUbP0Gwy20ZllBHKfBPD136LddH9rN1E0c9UoEdNrGMZZCap0pPDvfr623fxyvTVlcXOlYsYMCCEebts2lnjK4L30OTTbmPT86XU5D04bHVLlQEx5+e/gygWPs33z/b9Fkg2hcQsk87Kb+5c4lsHPjNhLlnSg3K7xrbuHF6m4WCmA2CuuLJiBTFCqFDYnp4miLgw1lGGAG5A61o7+laWrUMdz/rq+USaX+YEK1A1hfSsd/qAblepOD8OfFII9rnyQLvqGlziAsEA2w2VhBWxmfKhJzZrvIr5Y+sAYtdqXiOdkuKgCR9j7gCPyxDAXjnpm1gRnAReW5RzcX9y47JnNiEnHa9Ni+AyGqheXJmArMAOfpOcaop2CpfiPno9NwhcBaDit8udVqHb7/04P2A9xvOJDRAmiyTyjV1keQ0mimWeBYrMw1tOyzeXKsTW7UDNyjnrGCyEn6hYsNphrKIJhJGzJOB/oDRTFCX1MQAb6zzrJURvJZ3m17F7aXBEysrDotiaGaTSHyqfKZ1emVsdkjN1cprlk8EPUajyOolh8tCLryUsNXlLWybp2G7VmXlFaZRFQjK20c7eetsN/q5HopawLbNvUjxtkzIOCF1OoCGoXPAFSv80w6wQRFN1ShQRpk2QjZb1b4R+YF1wtqciUYEndFMKLr5qwSdtfVpQqPIUgmOGiX0Z3iRM0ONE7Eb+CRrQx4bpVeUrYlaPmmkfbcvvkjOPqTqLy0DYS13V4Q3zZ/Fnw10kihWMfDjtLrnSfrPbF14Q5oy+5wQveTvnDjemdgnep2kRjWpluJFpaU1vScREYUq5APX9QUZ7jXpcmBMi3VALTNaZsIJNnkXX/dd8M8pYh7r5LQ6jFjGvkrL/sD5H5HyfcWam5dXB6tMJfykBVJCtkCuW/oBdjeMSV0WhBnjgcZG7nuPiBynh1fbMwX+pT7kJhToDNh+fkWJWMW7khigXUp3CNpGGs0MEY51kBZXmDJAPFoQwrbT3GYZRe47jZUA4oV5plho3cuMOZ6H2faGyN0PyGevDqC2VEGUYzAfaY60ciujsPlbSfCT0W26BL6IbENKg9H1/5LbJR4KDu2FwEFp7FHfGEbLN4wgthh3FnBgTw5TA+buLI+LMV9jZ6Q39N6K++aVhbLzvI0HQ3uP6FYIi4CxfCHo9DuE7Sxtbv4=","disabled":false,"id":"43317eb164f1dc0189ad4d9495949bd2","name":"cluster.local","proxy_required":false,"rest_info":{"port":30667,"server":"134.209.157.103"},"rest_version":"449EC339","secret":"4cem3/k8mhTGDhOkug3pzC6xs7MivW+hIr6Xt6y/IKsAJCndD5a4e5taBxq0IsN+","user":"admin"}
+2024-03-14T14:31:28.376|DEBU|CTL|cluster.Put: - key=object/config/federation/clusters_status/43317eb164f1dc0189ad4d9495949bd2 value={"status":201,"csp_type":0,"nodes":1,"last_connected_time":"0001-01-01T00:00:00Z"}
+2024-03-14T14:31:28.386|DEBU|CTL|cluster.Put: - key=object/config/federation/clusters_list value={"ids":["43317eb164f1dc0189ad4d9495949bd2"]}
+2024-03-14T14:31:28.395|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=POST URL=/v1/fed/join_internal
+2024-03-14T14:31:28.395|DEBU|CTL|cluster.Delete: - key=state/dist_lock/federation
+2024-03-14T14:31:28.397|INFO|CTL|rest._genFedJwtToken: reload key - id=43317eb164f1dc0189ad4d9495949bd2
+2024-03-14T14:31:28.411|DEBU|CTL|cluster.Put: - key=object/config/federation/clusters_status/43317eb164f1dc0189ad4d9495949bd2 value={"status":210,"csp_type":0,"nodes":0,"last_connected_time":"0001-01-01T00:00:00Z"}
+2024-03-14T14:31:28.414|DEBU|CTL|cache.fedConfigUpdate: - cfgType=clusters
+2024-03-14T14:31:28.414|INFO|CTL|cache.fedConfigUpdate: add - id=43317eb164f1dc0189ad4d9495949bd2
+2024-03-14T14:31:28.457|DEBU|CTL|cluster.Put: - key=object/config/federation/clusters_status/43317eb164f1dc0189ad4d9495949bd2 value={"status":202,"csp_type":0,"nodes":1,"last_connected_time":"0001-01-01T00:00:00Z"}
+2024-03-14T14:31:28.461|DEBU|CTL|cache.fedConfigUpdate: - cfgType=clusters_list
+2024-03-14T14:31:28.461|DEBU|CTL|cache.fedConfigUpdate: - cfgType=clusters_status
+2024-03-14T14:31:28.522|DEBU|CTL|cache.fedConfigUpdate: - cfgType=clusters_status
+2024-03-14T14:31:28.581|DEBU|CTL|cluster.Put: - key=object/config/federation/clusters_status/43317eb164f1dc0189ad4d9495949bd2 value={"status":203,"csp_type":0,"nodes":1,"last_connected_time":"0001-01-01T00:00:00Z"}
+2024-03-14T14:31:28.63 |DEBU|CTL|cache.fedConfigUpdate: - cfgType=clusters_status
+2024-03-14T14:31:29.415|DEBU|CTL|cluster.PutBinary: - key=object/eventlog/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc/controller
+2024-03-14T14:31:29.466|DEBU|CTL|cache.eventLogUpdate: - key=object/eventlog/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc/controller type=modify
+2024-03-14T14:31:29.466|DEBU|CTL|cache.responseRuleLookup: No response rule match - event=event workload=
+2024-03-14T14:31:29.466|DEBU|CTL|cache.recordEvent: - name=Federation.Join
+2024-03-14T14:31:29.467|DEBU|CTL|cache.responseRuleLookup: No response rule match - event=event workload=
+2024-03-14T14:31:29.467|DEBU|CTL|cache.recordEvent: - name=RESTful.Write
+2024-03-14T14:32:12.36 |DEBU|CTL|cache.workloadUpdate: - key=object/workload/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/fb8eee52a7d806a772809fd05e926db49ba3222725e6f16bc7afa37ab77830c4 type=modify
+2024-03-14T14:32:12.361|DEBU|CTL|cache.addrWorkloadAdd: - id=fb8eee52a7d806a772809fd05e926db49ba3222725e6f16bc7afa37ab77830c4 name=k8s_POD_external-secrets-webhook-59fb68584-tsx9t_external-secrets_1965bddf-2f20-46de-be89-18d6a62b7282_0
+2024-03-14T14:32:12.362|DEBU|CTL|cache.addrWorkloadAdd: ip-workload map - ip=10.42.0.204 workload=fb8eee52a7d8
+2024-03-14T14:32:12.362|DEBU|CTL|cache.connectWorkloadAdd: - id=fb8eee52a7d806a772809fd05e926db49ba3222725e6f16bc7afa37ab77830c4 name=k8s_POD_external-secrets-webhook-59fb68584-tsx9t_external-secrets_1965bddf-2f20-46de-be89-18d6a62b7282_0
+2024-03-14T14:32:24.011|DEBU|CTL|cluster.Put: - key=state/dist_lock/policy value={"locked_by":"e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc","locked_at":"2024-03-14T14:32:24.011935063Z","caller":"cache.procLearnedPolicy"}
+2024-03-14T14:32:24.028|DEBU|CTL|cluster.(*ClusterTransact).Put: Transact - key=object/config/policy/default/rule/10016 value={"id":10016,"comment":"","from":"Workload:ingress","to":"nv.local-cluster-thanos-query-frontend.monitoring","from_host":"","to_host":"","ports":"any","applications":[1001,1002],"action":"allow","learned":false,"Disable":false,"created_at":"2024-03-14T14:26:09.005615034Z","last_modified_at":"2024-03-14T14:32:24.027921935Z","cfg_type":1,"priority":0}
+2024-03-14T14:32:24.029|DEBU|CTL|cluster.(*ClusterTransact).Put: Transact - key=object/config/policy/default/rule/10015 value={"id":10015,"comment":"","from":"Workload:ingress","to":"nv.external-secrets-webhook.external-secrets","from_host":"","to_host":"","ports":"any","applications":[1001,1002],"action":"allow","learned":false,"Disable":false,"created_at":"2024-03-14T14:26:09.005631586Z","last_modified_at":"2024-03-14T14:32:24.029441092Z","cfg_type":1,"priority":0}
+2024-03-14T14:32:24.034|DEBU|CTL|cluster.(*ClusterTransact).Put: Transact - key=object/config/policy/default/rule/10020 value={"id":10020,"comment":"","from":"Workload:ingress","to":"nv.local-cluster-thanos-query.monitoring","from_host":"","to_host":"","ports":"any","applications":[1001,1002],"action":"allow","learned":false,"Disable":false,"created_at":"2024-03-14T14:26:09.02829763Z","last_modified_at":"2024-03-14T14:32:24.034715952Z","cfg_type":1,"priority":0}
+2024-03-14T14:32:24.036|DEBU|CTL|cluster.(*ClusterTransact).Put: Transact - key=object/config/policy/default/rule/10042 value={"id":10042,"comment":"","from":"nv.local-cluster-thanos-query-frontend.monitoring","to":"nv.coredns.kube-system","from_host":"","to_host":"","ports":"any","applications":[1004],"action":"allow","learned":false,"Disable":false,"created_at":"2024-03-14T14:32:23.974582933Z","last_modified_at":"2024-03-14T14:32:23.974582933Z","cfg_type":1,"priority":0}
+2024-03-14T14:32:24.036|DEBU|CTL|cluster.(*ClusterTransact).Put: Transact - key=object/config/policy/default/rule/10043 value={"id":10043,"comment":"","from":"nv.traefik.kube-system","to":"nv.local-cluster-thanos-query-frontend.monitoring","from_host":"","to_host":"","ports":"any","applications":[1001],"action":"allow","learned":false,"Disable":false,"created_at":"2024-03-14T14:32:23.974581025Z","last_modified_at":"2024-03-14T14:32:23.974581025Z","cfg_type":1,"priority":0}
+2024-03-14T14:32:24.036|DEBU|CTL|cluster.(*ClusterTransact).Put: Transact - key=object/config/policy/default/rule/10044 value={"id":10044,"comment":"","from":"nv.local-cluster-thanos-query-frontend.monitoring","to":"nv.local-cluster-thanos-query.monitoring","from_host":"","to_host":"","ports":"any","applications":[1001],"action":"allow","learned":false,"Disable":false,"created_at":"2024-03-14T14:32:23.974575308Z","last_modified_at":"2024-03-14T14:32:23.974575308Z","cfg_type":1,"priority":0}
+2024-03-14T14:32:24.037|DEBU|CTL|cluster.(*ClusterTransact).PutBinary: Transact - key=object/config/policy/default/ziprules
+2024-03-14T14:32:24.037|DEBU|CTL|cluster.(*ClusterTransact).Apply: Transact
+2024-03-14T14:32:24.045|DEBU|CTL|cluster.Delete: - key=state/dist_lock/policy
+2024-03-14T14:32:24.092|DEBU|CTL|cache.scheduleIPPolicyCalculation: - fast=false policyCalculated=false
+2024-03-14T14:32:24.092|DEBU|CTL|cache.scheduleIPPolicyCalculation: - fast=false policyCalculated=true
+2024-03-14T14:32:24.092|DEBU|CTL|cache.scheduleIPPolicyCalculation: - fast=false policyCalculated=true
+2024-03-14T14:32:24.092|DEBU|CTL|cache.scheduleIPPolicyCalculation: - fast=false policyCalculated=true
+2024-03-14T14:32:24.093|DEBU|CTL|cache.scheduleIPPolicyCalculation: - fast=false policyCalculated=true
+2024-03-14T14:32:24.093|DEBU|CTL|cache.scheduleIPPolicyCalculation: - fast=false policyCalculated=true
+2024-03-14T14:32:24.093|DEBU|CTL|cache.scheduleIPPolicyCalculation: - fast=false policyCalculated=true
+2024-03-14T14:32:28.093|DEBU|CTL|cache.calculateIPPolicyFromCache:
+2024-03-14T14:32:28.095|DEBU|CTL|cache.preparePolicySlotsCommon: begin slots - beginSlot=16 maxPolicySlots=512 wlen=31
+2024-03-14T14:32:28.095|DEBU|CTL|cache.preparePolicySlotsCommon: segregate rules to slots - final_slots=16 maxPolicySlots=512 orig_rule_lens=45 rule_lens=16 slots=16 wl_lens=31 wl_slots=16
+2024-03-14T14:32:28.099|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/0
+2024-03-14T14:32:28.103|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/1
+2024-03-14T14:32:28.111|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/2
+2024-03-14T14:32:28.118|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/3
+2024-03-14T14:32:28.122|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/4
+2024-03-14T14:32:28.126|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/5
+2024-03-14T14:32:28.134|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/6
+2024-03-14T14:32:28.138|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/7
+2024-03-14T14:32:28.144|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/8
+2024-03-14T14:32:28.149|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/9
+2024-03-14T14:32:28.156|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/10
+2024-03-14T14:32:28.16 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/11
+2024-03-14T14:32:28.165|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/12
+2024-03-14T14:32:28.171|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/13
+2024-03-14T14:32:28.175|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/14
+2024-03-14T14:32:28.183|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/15
+2024-03-14T14:32:28.194|DEBU|CTL|cache.preparePolicySlotsNode: begin slots - beginSlot=16 maxPolicySlots=512 wlen=31
+2024-03-14T14:32:28.194|DEBU|CTL|cache.preparePolicySlotsNode: segregate rules to slots - final_slots=16 maxPolicySlots=512 orig_rule_lens=44 rule_lens=44 slots=16 wlen=31
+2024-03-14T14:32:28.199|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/0
+2024-03-14T14:32:28.203|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/1
+2024-03-14T14:32:28.209|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/2
+2024-03-14T14:32:28.214|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/3
+2024-03-14T14:32:28.22 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/4
+2024-03-14T14:32:28.234|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/5
+2024-03-14T14:32:28.239|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/6
+2024-03-14T14:32:28.25 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/7
+2024-03-14T14:32:28.254|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/8
+2024-03-14T14:32:28.259|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/9
+2024-03-14T14:32:28.264|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/10
+2024-03-14T14:32:28.272|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/11
+2024-03-14T14:32:28.28 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/12
+2024-03-14T14:32:28.291|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/13
+2024-03-14T14:32:28.298|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/14
+2024-03-14T14:32:28.306|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/15
+2024-03-14T14:32:28.321|DEBU|CTL|cache.putPolicyIPRulesToClusterScaleNode: New policy rules written - newNodeKey=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/ policyVer={Key:NeuVectorPolicyVersion PolicyIPRulesVersion:ver.1710426748095574401.1710426748095574922 NodeId:rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d CommonSlotNo:16 CommonRulesLen:16 SlotNo:16 RulesLen:44 WorkloadSlot:16 WorkloadLen:31}
+2024-03-14T14:32:28.321|DEBU|CTL|cluster.Put: - key=noderule/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/NeuVectorPolicyVersion value={"common_rules_len":16,"common_slot_no":16,"key":"NeuVectorPolicyVersion","node_id":"rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d","pol_version":"ver.1710426748095574401.1710426748095574922","rules_len":44,"slot_no":16,"workload_len":31,"workload_slot":16}
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/0
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/1
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/10
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/11
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/12
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/13
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/14
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/15
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/2
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/3
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/4
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/5
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/6
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/7
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/8
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426599403133105.1710426599403133496/9
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/0
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/1
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/10
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/11
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/12
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/13
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/14
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/15
+2024-03-14T14:32:28.327|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/2
+2024-03-14T14:32:28.328|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/3
+2024-03-14T14:32:28.328|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/4
+2024-03-14T14:32:28.328|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/5
+2024-03-14T14:32:28.328|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/6
+2024-03-14T14:32:28.328|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/7
+2024-03-14T14:32:28.328|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/8
+2024-03-14T14:32:28.328|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426599403133105.1710426599403133496/9
+2024-03-14T14:32:28.328|DEBU|CTL|cluster.(*ClusterTransact).Apply: Transact
+2024-03-14T14:32:28.336|DEBU|CTL|cache.putPolicyIPRulesToClusterScaleNode: All policy rules written
+2024-03-14T14:32:28.336|DEBU|CTL|cache.calculateGroupDlpRulesFromCache:
+2024-03-14T14:32:28.336|DEBU|CTL|cache.processDlpGroupPolicy:
+2024-03-14T14:32:28.336|DEBU|CTL|cache.assocWl2RuleNames:
+2024-03-14T14:32:28.336|DEBU|CTL|cache.assocWl2RuleNames:
+2024-03-14T14:32:28.336|DEBU|CTL|cache.calculateGroupWafRulesFromCache:
+2024-03-14T14:32:28.336|DEBU|CTL|cache.processWafGroupPolicy:
+2024-03-14T14:32:28.336|DEBU|CTL|cache.assocWafWl2RuleNames:
+2024-03-14T14:32:28.336|DEBU|CTL|cache.assocWafWl2RuleNames:
+2024-03-14T14:32:28.34 |DEBU|CTL|cache.prepareDlpSlots: segregate dlpwlrules to slots - final_slots=0 maxDlpSlots=512 r_lens=0 slots=16 wl_lens=0
+2024-03-14T14:32:28.34 |DEBU|CTL|cache.putDlpWorkloadRulesToClusterScale: New dlp rules written - DlpRules=recalculate/dlp/DlpWorkloadRules/ver.1710426748340656369.1710426748340657111/ dlpVer={Key:NeuVectorDlpVersion DlpRulesVersion:ver.1710426748340656369.1710426748340657111 SlotNo:0 RulesLen:0 WorkloadLen:0}
+2024-03-14T14:32:28.34 |DEBU|CTL|cluster.Put: - key=network/NeuVectorDlpVersion value={"dlp_version":"ver.1710426748340656369.1710426748340657111","key":"NeuVectorDlpVersion","rules_len":0,"slot_no":0,"workload_len":0}
+2024-03-14T14:32:28.345|DEBU|CTL|cluster.(*ClusterTransact).Apply: Transact
+2024-03-14T14:32:28.593|DEBU|CTL|cluster.Put: - key=object/config/federation/clusters_status/43317eb164f1dc0189ad4d9495949bd2 value={"status":202,"csp_type":0,"nodes":1,"last_connected_time":"0001-01-01T00:00:00Z"}
+2024-03-14T14:32:28.635|DEBU|CTL|cache.fedConfigUpdate: - cfgType=clusters_status
+2024-03-14T14:32:28.674|DEBU|CTL|cluster.Put: - key=object/config/federation/clusters_status/43317eb164f1dc0189ad4d9495949bd2 value={"status":203,"csp_type":0,"nodes":1,"last_connected_time":"0001-01-01T00:00:00Z"}
+2024-03-14T14:32:28.727|DEBU|CTL|cache.fedConfigUpdate: - cfgType=clusters_status
+2024-03-14T14:32:36.204|DEBU|CTL|rest.handlerAuthRefresh: Login keep-alive - user=admin
+2024-03-14T14:32:36.204|DEBU|CTL|rest.writer.WriteHeader: 200 - Method=PATCH URL=https://neuvector-svc-controller.cattle-neuvector-system:10443/v1/auth
+2024-03-14T14:32:54.008|DEBU|CTL|cluster.Put: - key=state/dist_lock/policy value={"locked_by":"e3d27222616bea606aede51bcb550b0e648d22990117e88b8e0341ef4a14fdfc","locked_at":"2024-03-14T14:32:54.008702856Z","caller":"cache.procLearnedPolicy"}
+2024-03-14T14:32:54.019|DEBU|CTL|cluster.(*ClusterTransact).Put: Transact - key=object/config/policy/default/rule/10045 value={"id":10045,"comment":"","from":"nv.prometheus-local-cluster-prometheus-k-prometheus.monitoring","to":"nv.local-cluster-thanos-minio.monitoring","from_host":"","to_host":"","ports":"any","applications":[1001],"action":"allow","learned":false,"Disable":false,"created_at":"2024-03-14T14:32:53.973166161Z","last_modified_at":"2024-03-14T14:32:53.973166161Z","cfg_type":1,"priority":0}
+2024-03-14T14:32:54.02 |DEBU|CTL|cluster.(*ClusterTransact).PutBinary: Transact - key=object/config/policy/default/ziprules
+2024-03-14T14:32:54.02 |DEBU|CTL|cluster.(*ClusterTransact).Apply: Transact
+2024-03-14T14:32:54.044|DEBU|CTL|cluster.Delete: - key=state/dist_lock/policy
+2024-03-14T14:32:54.126|DEBU|CTL|cache.scheduleIPPolicyCalculation: - fast=false policyCalculated=false
+2024-03-14T14:32:54.126|DEBU|CTL|cache.scheduleIPPolicyCalculation: - fast=false policyCalculated=true
+2024-03-14T14:32:58.127|DEBU|CTL|cache.calculateIPPolicyFromCache:
+2024-03-14T14:32:58.129|DEBU|CTL|cache.preparePolicySlotsCommon: begin slots - beginSlot=16 maxPolicySlots=512 wlen=31
+2024-03-14T14:32:58.129|DEBU|CTL|cache.preparePolicySlotsCommon: segregate rules to slots - final_slots=16 maxPolicySlots=512 orig_rule_lens=46 rule_lens=16 slots=16 wl_lens=31 wl_slots=16
+2024-03-14T14:32:58.132|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/0
+2024-03-14T14:32:58.139|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/1
+2024-03-14T14:32:58.143|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/2
+2024-03-14T14:32:58.147|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/3
+2024-03-14T14:32:58.15 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/4
+2024-03-14T14:32:58.157|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/5
+2024-03-14T14:32:58.161|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/6
+2024-03-14T14:32:58.165|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/7
+2024-03-14T14:32:58.169|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/8
+2024-03-14T14:32:58.175|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/9
+2024-03-14T14:32:58.18 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/10
+2024-03-14T14:32:58.185|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/11
+2024-03-14T14:32:58.192|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/12
+2024-03-14T14:32:58.195|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/13
+2024-03-14T14:32:58.199|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/14
+2024-03-14T14:32:58.203|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/ver.1710426778129104518.1710426778129104879/15
+2024-03-14T14:32:58.208|DEBU|CTL|cache.preparePolicySlotsNode: begin slots - beginSlot=16 maxPolicySlots=512 wlen=31
+2024-03-14T14:32:58.209|DEBU|CTL|cache.preparePolicySlotsNode: segregate rules to slots - final_slots=16 maxPolicySlots=512 orig_rule_lens=45 rule_lens=45 slots=16 wlen=31
+2024-03-14T14:32:58.212|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/0
+2024-03-14T14:32:58.222|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/1
+2024-03-14T14:32:58.226|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/2
+2024-03-14T14:32:58.233|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/3
+2024-03-14T14:32:58.241|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/4
+2024-03-14T14:32:58.246|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/5
+2024-03-14T14:32:58.252|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/6
+2024-03-14T14:32:58.257|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/7
+2024-03-14T14:32:58.263|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/8
+2024-03-14T14:32:58.268|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/9
+2024-03-14T14:32:58.272|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/10
+2024-03-14T14:32:58.276|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/11
+2024-03-14T14:32:58.28 |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/12
+2024-03-14T14:32:58.286|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/13
+2024-03-14T14:32:58.296|DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/14
+2024-03-14T14:32:58.3  |DEBU|CTL|cluster.PutBinary: - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/15
+2024-03-14T14:32:58.304|DEBU|CTL|cache.putPolicyIPRulesToClusterScaleNode: New policy rules written - newNodeKey=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426778129104518.1710426778129104879/ policyVer={Key:NeuVectorPolicyVersion PolicyIPRulesVersion:ver.1710426778129104518.1710426778129104879 NodeId:rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d CommonSlotNo:16 CommonRulesLen:16 SlotNo:16 RulesLen:45 WorkloadSlot:16 WorkloadLen:31}
+2024-03-14T14:32:58.305|DEBU|CTL|cluster.Put: - key=noderule/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/NeuVectorPolicyVersion value={"common_rules_len":16,"common_slot_no":16,"key":"NeuVectorPolicyVersion","node_id":"rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d","pol_version":"ver.1710426778129104518.1710426778129104879","rules_len":45,"slot_no":16,"workload_len":31,"workload_slot":16}
+2024-03-14T14:32:58.31 |DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/0
+2024-03-14T14:32:58.31 |DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/1
+2024-03-14T14:32:58.31 |DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/10
+2024-03-14T14:32:58.31 |DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/11
+2024-03-14T14:32:58.31 |DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/12
+2024-03-14T14:32:58.31 |DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/13
+2024-03-14T14:32:58.31 |DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/14
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/15
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/2
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/3
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/4
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/5
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/6
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/7
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/8
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/ver.1710426748095574401.1710426748095574922/9
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/0
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/1
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/10
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/11
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/12
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/13
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/14
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/15
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/2
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/3
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/4
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/5
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/6
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/7
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/8
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Delete: Transact - key=recalculate/policy/GroupIPRules/ver.1710426748095574401.1710426748095574922/9
+2024-03-14T14:32:58.311|DEBU|CTL|cluster.(*ClusterTransact).Apply: Transact
+2024-03-14T14:32:58.32 |DEBU|CTL|cache.putPolicyIPRulesToClusterScaleNode: All policy rules written
+2024-03-14T14:32:58.32 |DEBU|CTL|cache.calculateGroupDlpRulesFromCache:
+2024-03-14T14:32:58.32 |DEBU|CTL|cache.processDlpGroupPolicy:
+2024-03-14T14:32:58.32 |DEBU|CTL|cache.assocWl2RuleNames:
+2024-03-14T14:32:58.32 |DEBU|CTL|cache.assocWl2RuleNames:
+2024-03-14T14:32:58.32 |DEBU|CTL|cache.calculateGroupWafRulesFromCache:
+2024-03-14T14:32:58.32 |DEBU|CTL|cache.processWafGroupPolicy:
+2024-03-14T14:32:58.32 |DEBU|CTL|cache.assocWafWl2RuleNames:
+2024-03-14T14:32:58.32 |DEBU|CTL|cache.assocWafWl2RuleNames:
+2024-03-14T14:32:58.324|DEBU|CTL|cache.prepareDlpSlots: segregate dlpwlrules to slots - final_slots=0 maxDlpSlots=512 r_lens=0 slots=16 wl_lens=0
+2024-03-14T14:32:58.324|DEBU|CTL|cache.putDlpWorkloadRulesToClusterScale: New dlp rules written - DlpRules=recalculate/dlp/DlpWorkloadRules/ver.1710426778324267553.1710426778324267961/ dlpVer={Key:NeuVectorDlpVersion DlpRulesVersion:ver.1710426778324267553.1710426778324267961 SlotNo:0 RulesLen:0 WorkloadLen:0}
+2024-03-14T14:32:58.324|DEBU|CTL|cluster.Put: - key=network/NeuVectorDlpVersion value={"dlp_version":"ver.1710426778324267553.1710426778324267961","key":"NeuVectorDlpVersion","rules_len":0,"slot_no":0,"workload_len":0}
+2024-03-14T14:32:58.328|DEBU|CTL|cluster.(*ClusterTransact).Apply: Transact
+2024-03-14T14:34:20.337|DEBU|CTL|cache.workloadUpdate: - key=object/workload/rajesh-manual-local-rancher:2bf41e72-50d6-4203-b3ab-b599fd61c88d/99008914b6a896bdca93843a50a68fb73fa1f3110d10fa28b1b75466b954f659 type=modify
+2024-03-14T14:34:20.337|DEBU|CTL|cache.addrWorkloadAdd: - id=99008914b6a896bdca93843a50a68fb73fa1f3110d10fa28b1b75466b954f659 name=k8s_POD_traefik-58qdj_kube-system_9607c77e-1f4a-4556-a98f-300d93439528_0
+2024-03-14T14:34:20.337|DEBU|CTL|cache.addrWorkloadAdd: ip-workload map - ip=10.42.0.190 workload=99008914b6a8
+2024-03-14T14:34:20.338|DEBU|CTL|cache.connectWorkloadAdd: - id=99008914b6a896bdca93843a50a68fb73fa1f3110d10fa28b1b75466b954f659 name=k8s_POD_traefik-58qdj_kube-system_9607c77e-1f4a-4556-a98f-300d93439528_0
