@@ -5,4 +5,5 @@ use (
 	./dockerEngineApiClient
         ./basicCalculatorToExploreCobra
         ./harvesterNavigator
+        ./pixieDocs
 )

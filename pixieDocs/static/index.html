@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Tool</title>
+</head>
+
+<body>
+    <h1>PDF Processing Tool</h1>
+
+    <h2>Convert to PDF</h2>
+    <input type="file" id="convertFile">
+    <button onclick="convertToPDF()">Convert</button>
+    <a id="convertDownload" style="display:none;">Download PDF</a>
+
+    <h2>Merge PDFs</h2>
+    <input type="file" id="mergeFiles" multiple>
+    <button onclick="mergePDFs()">Merge</button>
+    <a id="mergeDownload" style="display:none;">Download PDF</a>
+
+    <h2>Compress PDF</h2>
+    <input type="file" id="compressFile">
+    <button onclick="compressPDF()">Compress</button>
+    <a id="compressDownload" style="display:none;">Download PDF</a>
+
+    <script>
+        function convertToPDF() {
+            let file = document.getElementById("convertFile").files[0];
+            let formData = new FormData();
+            formData.append("file", file);
+
+            fetch("/convert", { method: "POST", body: formData })
+                .then(res => res.blob())
+                .then(blob => {
+                    let url = window.URL.createObjectURL(blob);
+                    let link = document.getElementById("convertDownload");
+                    link.href = url;
+                    link.style.display = "block";
+                    link.download = "converted.pdf";
+                    link.innerText = "Download PDF";
+                });
+        }
+
+        function mergePDFs() {
+            let files = document.getElementById("mergeFiles").files;
+            let formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                formData.append("files", files[i]);
+            }
+
+            fetch("/merge", { method: "POST", body: formData })
+                .then(res => res.blob())
+                .then(blob => {
+                    let url = window.URL.createObjectURL(blob);
+                    let link = document.getElementById("mergeDownload");
+                    link.href = url;
+                    link.style.display = "block";
+                    link.download = "merged.pdf";
+                    link.innerText = "Download PDF";
+                });
+        }
+
+        function compressPDF() {
+            let file = document.getElementById("compressFile").files[0];
+            let formData = new FormData();
+            formData.append("file", file);
+
+            fetch("/compress", { method: "POST", body: formData })
+                .then(res => res.blob())
+                .then(blob => {
+                    let url = window.URL.createObjectURL(blob);
+                    let link = document.getElementById("compressDownload");
+                    link.href = url;
+                    link.style.display = "block";
+                    link.download = "compressed.pdf";
+                    link.innerText = "Download PDF";
+                });
+        }
+    </script>
+</body>
+
+</html>
