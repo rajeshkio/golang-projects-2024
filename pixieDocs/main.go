@@ -1,25 +1,114 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"net/http"
+	"os"
+	"runtime"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"resty.dev/v3"
 )
 
-var GotenbergURL = "https://pixiedocs.rajesh-kumar.in"
+var (
+	version   = "1.0.0"
+	buildTime = time.Now().Format(time.RFC3339)
+	// These will be overridden during build with -ldflags
+)
+
+// Use environment variable for service URLs with fallbacks
+var GotenbergURL = getEnv("GOTENBERG_URL", "http://gotenberg-service:3000")
+var PixiedocsURL = getEnv("PIXIEDOCS_URL", "http://pixiedocs-service:8080")
+
+// Helper function to get environment variable with default fallback
+func getEnv(key, fallback string) string {
+	if value, exists := os.LookupEnv(key); exists {
+		return value
+	}
+	return fallback
+}
+
+var startTime = time.Now()
+
+// Print a nice startup banner with useful information
+func printStartupBanner() {
+	banner := `
+╔════════════════════════════════════════════════════╗
+║                                                    ║
+║             PDF Processor Service                  ║
+║                                                    ║
+╚════════════════════════════════════════════════════╝
+`
+	fmt.Println(banner)
+	log.Printf("Starting PDF Processor version %s", version)
+	log.Printf("Build time: %s", buildTime)
+	log.Printf("Go version: %s", runtime.Version())
+	log.Printf("OS/Arch: %s/%s", runtime.GOOS, runtime.GOARCH)
+	log.Printf("CPU cores: %d", runtime.NumCPU())
+
+	hostname, err := os.Hostname()
+	if err == nil {
+		log.Printf("Hostname: %s", hostname)
+	}
+
+	log.Printf("Environment: %s", getEnv("ENVIRONMENT", "production"))
+	log.Println("----------------------------------------------------")
+}
 
 func main() {
+
+	printStartupBanner()
+
+	ginMode := getEnv("GIN_MODE", "release")
+	gin.SetMode(ginMode)
+	log.Printf("Gin mode: %s", ginMode)
+
+	// Log configured services
+	log.Printf("Gotenberg service URL: %s", GotenbergURL)
+	log.Printf("Pixiedocs service URL: %s", PixiedocsURL)
 	r := gin.Default()
 
 	// Serve frontend
 	r.Static("/static", "./static")
 	r.LoadHTMLFiles("static/index.html")
+	log.Printf("Loaded static assets from ./static")
 
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
+	})
+
+	r.GET("/health", func(c *gin.Context) {
+		// Check if we can connect to Gotenberg
+		client := resty.New().SetTimeout(5 * time.Second)
+		gotenbergHealthy := true
+
+		resp, err := client.R().Get(GotenbergURL + "/health")
+		if err != nil || resp.StatusCode() != 200 {
+			gotenbergHealthy = false
+			log.Printf("Warning: Gotenberg service health check failed: %v", err)
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"status":    "UP",
+			"timestamp": time.Now().Format(time.RFC3339),
+			"version":   version,
+			"buildTime": buildTime,
+			"uptime":    time.Since(startTime).String(),
+			"checks": []gin.H{
+				{
+					"name":   "application",
+					"status": "UP",
+				},
+				{
+					"name":    "gotenberg",
+					"status":  map[bool]string{true: "UP", false: "DOWN"}[gotenbergHealthy],
+					"details": map[string]string{"url": GotenbergURL},
+				},
+			},
+		})
 	})
 
 	// Convert to PDF
