@@ -1,29 +1,59 @@
-# Use a small Go base image
-FROM golang:1.21 AS builder
+# Build stage
+FROM golang:1.22-alpine AS builder
 
-# Set the working directory inside the container
-WORKDIR /app
+# Install build dependencies
+RUN apk add --no-cache git build-base
 
-# Copy the source code
+# Set working directory
+WORKDIR /build
+
+# Copy go.mod and go.sum files first for better caching
+COPY go.mod go.sum* ./
+
+# Download dependencies
+RUN go mod download
+
+# Copy source code
 COPY . .
 
-# Download dependencies and build the Go binary
-RUN go mod tidy && go build -o pixiedocs main.go
+# Build the application with optimizations for container environment
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
+    -ldflags="-s -w -X main.version=$(git describe --tags --always) -X main.buildTime=$(date +%Y-%m-%dT%H:%M:%S)" \
+    -o pixiedocs .
 
-# Use a lightweight image for the final container
-FROM alpine:latest
+# Runtime stage
+FROM alpine:3.19
 
-# Install necessary dependencies (if any)
-RUN apk add --no-cache ca-certificates poppler-utils
+# Install runtime dependencies
+RUN apk add --no-cache qpdf ca-certificates tzdata && \
+    update-ca-certificates
 
-# Set the working directory
+# Create a non-root user to run the application
+RUN adduser -D -h /app appuser
+
+# Set working directory
 WORKDIR /app
 
-# Copy the binary from the builder stage
-COPY --from=builder /app/pixiedocs /app/pixiedocs
+# Copy binary from builder stage
+COPY --from=builder /build/pixiedocs /app/
+COPY --from=builder /build/static /app/static
 
-# Expose the port (if your app runs as a web service)
+# Set ownership for security
+RUN chown -R appuser:appuser /app
+
+# Use non-root user for security
+USER appuser
+
+# Expose application port
 EXPOSE 8080
 
-# Set the entrypoint to run the binary
+# Configure health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget -qO- http://localhost:8080/health || exit 1
+
+# Set environment variables
+ENV GIN_MODE=release
+ENV GOTENBERG_URL=https://pixiedocs.rajesh-kumar.in/
+
+# Run the application
 ENTRYPOINT ["/app/pixiedocs"]
