@@ -77,3 +77,29 @@ func TestPersonSettersWithTableDriven(t *testing.T) {
 		})
 	}
 }
+
+func TestPersonStringWithTableDriven(t *testing.T) {
+	testCases := []struct {
+		name           string
+		person         Person
+		expectedString string
+	}{
+		{
+			name:           "Regular person",
+			person:         NewPerson(35, "rajesh", "Mumbai"),
+			expectedString: "Person(name: rajesh, age: 35, address: Mumbai)",
+		},
+		{
+			name:           "Empty fields",
+			person:         NewPerson(0, "", ""),
+			expectedString: "Person(name: , age: 0, address: )",
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			if tc.person.String() != tc.expectedString {
+				t.Errorf("String returned %q, expected %q", tc.person.String(), tc.expectedString)
+			}
+		})
+	}
+}

@@ -1,5 +1,7 @@
 package task1
 
+import "fmt"
+
 /*
 Task 1: Create a Basic Struct with Fields and Methods
 Outline:
@@ -46,4 +48,8 @@ func (p Person) GetAddress() string {
 
 func (p *Person) SetAddress(address string) {
 	p.address = address
+}
+
+func (p Person) String() string {
+	return fmt.Sprintf("Person(name: %s, age: %d, address: %s)", p.name, p.age, p.address)
 }
