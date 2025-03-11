@@ -15,7 +15,7 @@ Go uses field name capitalization to control visibility:
 - Lowercase field names are private (unexported)
 - Uppercase field names are public (exported)
 
-We use private fields with public methods to enforce encapsulation:
+We use private fields with public methods to enforce encapsulation, check models/person.go
 
 ```go
 type Person struct {

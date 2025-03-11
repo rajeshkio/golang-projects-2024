@@ -1,55 +1,28 @@
 package task1
 
-import "fmt"
+import (
+	"fmt"
 
-/*
-Task 1: Create a Basic Struct with Fields and Methods
-Outline:
+	person "github.com/rajeshkio/goMethodsStructs/models"
+)
 
-Define a Person struct with name, age, and address fields
-Create methods to get and update these fields
-Implement a String() method to format the struct data
+func RunExample() {
+	p := person.NewPerson(
+		30,
+		"Rajesh Kumar",
+		"Mumbai",
+	)
+	fmt.Println("Person created: ", p)
+	fmt.Printf("Name: %s\n", p.GetName())
+	fmt.Printf("Age: %d\n", p.GetAge())
+	fmt.Printf("Address: %s\n", p.GetAddress())
 
-Plain English Solution:
-Create a Go file with a Person struct having string and integer fields. Add methods like GetName(), SetAge(), and a special String()
-method (which Go uses automatically when printing). Test by creating a Person, modifying fields with your methods, and printing it.
-*/
-type Person struct {
-	age     int
-	name    string
-	address string
-}
+	p.SetAge(31)
+	fmt.Printf("New Age: %d\n", p.GetAge())
 
-func NewPerson(age int, name, address string) Person {
-	return Person{
-		age:     age,
-		name:    name,
-		address: address,
-	}
-}
-func (p Person) GetName() string {
-	return p.name
-}
+	p.SetAddress("Pune")
+	fmt.Printf("New Address: %s\n", p.GetAddress())
 
-func (p *Person) SetName(name string) {
-	p.name = name
-}
-
-func (p Person) GetAge() int {
-	return p.age
-}
-func (p *Person) SetAge(age int) {
-	p.age = age
-}
-
-func (p Person) GetAddress() string {
-	return p.address
-}
-
-func (p *Person) SetAddress(address string) {
-	p.address = address
-}
-
-func (p Person) String() string {
-	return fmt.Sprintf("Person(name: %s, age: %d, address: %s)", p.name, p.age, p.address)
+	p.SetName("Raj")
+	fmt.Printf("New name: %s\n", p.GetName())
 }
