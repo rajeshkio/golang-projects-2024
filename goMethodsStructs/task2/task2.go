@@ -12,14 +12,30 @@ First, separate the address into its own struct with fields like street, city, a
 Then modify your Person struct to include an Address field. Notice how you can access Address fields directly
 from Person (field promotion) and how methods work with nested structs. This demonstrates Go's composition approach versus inheritance.
 */
-package main
+package task2
 
-type Address struct {
-	street string
-	city   string
-	zip    string
-}
+import (
+	"fmt"
 
-func test2() {
+	"github.com/rajeshkio/goMethodsStructs/models"
+)
 
+func RunExample() {
+	address := models.NewAddress("MH", "Pune", 412110)
+	fmt.Println("Address created: ", address)
+
+	newPerson := models.NewPersonWithAddress(31, "Rajesh", address)
+	fmt.Println("new person created: ", newPerson)
+
+	fmt.Printf("%s aged %d lives in %s\n", newPerson.GetName(), newPerson.GetAge(), newPerson.GetFullAddress())
+
+	oldAddress := newPerson.GetAddress()
+	newAddress := oldAddress
+	newAddress.SetState("KA")
+	newAddress.SetCity("Bangalore")
+	newAddress.SetZip(321234)
+
+	newPerson.SetAddress(newAddress)
+
+	fmt.Printf("%s moved to %s from %s", newPerson.GetName(), newPerson.GetFullAddress(), oldAddress.Format())
 }

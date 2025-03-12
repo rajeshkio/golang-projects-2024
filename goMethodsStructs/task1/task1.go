@@ -3,26 +3,27 @@ package task1
 import (
 	"fmt"
 
-	person "github.com/rajeshkio/goMethodsStructs/models"
+	"github.com/rajeshkio/goMethodsStructs/models"
 )
 
 func RunExample() {
-	p := person.NewPerson(
-		30,
-		"Rajesh Kumar",
-		"Mumbai",
-	)
-	fmt.Println("Person created: ", p)
-	fmt.Printf("Name: %s\n", p.GetName())
-	fmt.Printf("Age: %d\n", p.GetAge())
-	fmt.Printf("Address: %s\n", p.GetAddress())
+	address := models.NewAddress("MH", "Mumbai", 123456)
+	fmt.Printf("Address created: %s\n", address.Format())
 
-	p.SetAge(31)
-	fmt.Printf("New Age: %d\n", p.GetAge())
+	person := models.NewPersonWithAddress(30, "Rajesh", address)
+	fmt.Printf("Person created: %s\n", person)
 
-	p.SetAddress("Pune")
-	fmt.Printf("New Address: %s\n", p.GetAddress())
+	fmt.Printf("Name: %s\n", person.GetName())
+	fmt.Printf("Age: %d\n", person.GetAge())
+	fmt.Printf("Address: %s\n", person.GetAddress())
 
-	p.SetName("Raj")
-	fmt.Printf("New name: %s\n", p.GetName())
+	person.SetAge(31)
+	fmt.Printf("New Age: %d\n", person.GetAge())
+
+	newAddress := models.NewAddress("KA", "Bangalore", 124323)
+	person.SetAddress(newAddress)
+	fmt.Printf("New Address: %s\n", person.GetAddress())
+
+	person.SetName("Raj")
+	fmt.Printf("New name: %s\n", person.GetName())
 }

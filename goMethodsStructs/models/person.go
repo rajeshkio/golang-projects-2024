@@ -16,42 +16,57 @@ Plain English Solution:
 Create a Go file with a Person struct having string and integer fields. Add methods like GetName(), SetAge(), and a special String()
 method (which Go uses automatically when printing). Test by creating a Person, modifying fields with your methods, and printing it.
 */
-type Person struct {
-	age     int
-	name    string
-	address string
+type PersonWithAddress struct {
+	age  int
+	name string
+	Address
 }
 
-func NewPerson(age int, name, address string) Person {
-	return Person{
+func NewPersonWithAddress(age int, name string, address Address) PersonWithAddress {
+	return PersonWithAddress{
 		age:     age,
 		name:    name,
-		address: address,
+		Address: address,
 	}
 }
-func (p Person) GetName() string {
+
+func (p PersonWithAddress) GetName() string {
 	return p.name
 }
 
-func (p *Person) SetName(name string) {
+func (p *PersonWithAddress) SetName(name string) {
 	p.name = name
 }
 
-func (p Person) GetAge() int {
+func (p PersonWithAddress) GetAge() int {
 	return p.age
 }
-func (p *Person) SetAge(age int) {
+func (p *PersonWithAddress) SetAge(age int) {
 	p.age = age
 }
 
-func (p Person) GetAddress() string {
-	return p.address
+func (p PersonWithAddress) GetAddress() Address {
+	return p.Address
 }
 
-func (p *Person) SetAddress(address string) {
-	p.address = address
+func (p *PersonWithAddress) SetAddress(address Address) {
+	p.Address = address
 }
 
-func (p Person) String() string {
-	return fmt.Sprintf("Person(name: %s, age: %d, address: %s)", p.name, p.age, p.address)
+func (p PersonWithAddress) String() string {
+	return fmt.Sprintf("Person(name: %s, age: %d, address: %s)", p.name, p.age, p.Address.Format())
+}
+
+func (p PersonWithAddress) GetFullAddress() string {
+	return p.Address.Format()
+}
+
+func (p PersonWithAddress) GetCity() string {
+	return p.Address.GetCity()
+}
+
+func (p *PersonWithAddress) UpdateAddressState(state string) {
+	addr := p.Address
+	addr.state = state
+	p.Address = addr
 }
