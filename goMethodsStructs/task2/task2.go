@@ -22,9 +22,10 @@ import (
 
 func RunExample() {
 	address := models.NewAddress("MH", "Pune", 412110)
+	NewPerson := models.NewPerson(30, "Rajesh")
 	fmt.Println("Address created: ", address)
 
-	newPerson := models.NewPersonWithAddress(31, "Rajesh", address)
+	newPerson := models.NewPersonWithAddress(NewPerson, address)
 	fmt.Println("new person created: ", newPerson)
 
 	fmt.Printf("%s aged %d lives in %s\n", newPerson.GetName(), newPerson.GetAge(), newPerson.GetFullAddress())

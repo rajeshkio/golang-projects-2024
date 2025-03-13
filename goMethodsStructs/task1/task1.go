@@ -8,9 +8,11 @@ import (
 
 func RunExample() {
 	address := models.NewAddress("MH", "Mumbai", 123456)
+	NewPerson := models.NewPerson(30, "Rajesh")
+
 	fmt.Printf("Address created: %s\n", address.Format())
 
-	person := models.NewPersonWithAddress(30, "Rajesh", address)
+	person := models.NewPersonWithAddress(NewPerson, address)
 	fmt.Printf("Person created: %s\n", person)
 
 	fmt.Printf("Name: %s\n", person.GetName())

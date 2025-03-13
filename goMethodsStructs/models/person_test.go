@@ -7,6 +7,7 @@ import (
 func TestPersonGettersWithTableDriven(t *testing.T) {
 
 	address := NewAddress("Maharashtra", "Pune", 411001)
+	newperson := NewPerson(33, "Rajesh")
 	testCases := []struct {
 		name            string
 		person          PersonWithAddress
@@ -16,7 +17,7 @@ func TestPersonGettersWithTableDriven(t *testing.T) {
 	}{
 		{
 			name:            "Regular person",
-			person:          NewPersonWithAddress(33, "Rajesh", address),
+			person:          NewPersonWithAddress(newperson, address),
 			expectedName:    "Rajesh",
 			expectedAge:     33,
 			expectedAddress: address,
@@ -42,6 +43,7 @@ func TestPersonGettersWithTableDriven(t *testing.T) {
 
 func TestPersonSettersWithTableDriven(t *testing.T) {
 	address := NewAddress("Maharashtra", "Mumbai", 411091)
+	newperson := NewPerson(30, "Raj")
 	testCases := []struct {
 		name            string
 		initalPerson    PersonWithAddress
@@ -54,7 +56,7 @@ func TestPersonSettersWithTableDriven(t *testing.T) {
 	}{
 		{
 			name:            "Regular test",
-			initalPerson:    NewPersonWithAddress(33, "Raj", address),
+			initalPerson:    NewPersonWithAddress(newperson, address),
 			newAge:          34,
 			newName:         "Rajeshk",
 			newAddress:      address,
@@ -71,10 +73,10 @@ func TestPersonSettersWithTableDriven(t *testing.T) {
 			person.SetAge(tc.newAge)
 			person.SetAddress(tc.newAddress)
 
-			if person.name != tc.expectedName {
+			if person.Name != tc.expectedName {
 				t.Errorf("After Setname %s, GetName() is %s, expected is %s", tc.newName, person.GetName(), tc.expectedName)
 			}
-			if person.age != tc.expectedAge {
+			if person.Age != tc.expectedAge {
 				t.Errorf("After Setname %d, GetAge() is %d, expected is %d", tc.newAge, person.GetAge(), tc.expectedAge)
 			}
 			if person.Address != tc.expectedAddress {
@@ -87,6 +89,8 @@ func TestPersonSettersWithTableDriven(t *testing.T) {
 func TestPersonStringWithTableDriven(t *testing.T) {
 
 	address := NewAddress("Maharashtra", "Mumbai", 411091)
+	newperson := NewPerson(30, "Raj")
+	newEmptyPerson := NewPerson(0, "")
 	testCases := []struct {
 		name           string
 		person         PersonWithAddress
@@ -94,12 +98,12 @@ func TestPersonStringWithTableDriven(t *testing.T) {
 	}{
 		{
 			name:           "Regular person",
-			person:         NewPersonWithAddress(35, "rajesh", address),
-			expectedString: "Person(name: rajesh, age: 35, address: Maharashtra, Mumbai, 411091)",
+			person:         NewPersonWithAddress(newperson, address),
+			expectedString: "Person(name: Raj, age: 30, address: Maharashtra, Mumbai, 411091)",
 		},
 		{
 			name:           "Empty fields",
-			person:         NewPersonWithAddress(0, "", Address{}),
+			person:         NewPersonWithAddress(newEmptyPerson, Address{}),
 			expectedString: "Person(name: , age: 0, address: , , 0)",
 		},
 	}
