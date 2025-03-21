@@ -7,36 +7,10 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path/filepath"
 
+	kubeclient "github.com/rk280392/harvesterNavigator/internal/client"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
-	"k8s.io/client-go/tools/clientcmd"
 )
-
-func getKubeconfig(kubeconfig string) (*kubernetes.Clientset, error) {
-	var config *rest.Config
-	var err error
-
-	if kubeconfig != "" {
-		config, err = clientcmd.BuildConfigFromFlags("", kubeconfig)
-	} else {
-		kubeconfig = os.Getenv("KUBECONFIG")
-		if kubeconfig == "" {
-			kubeconfig = filepath.Join(os.Getenv("HOME"), ".kube", "config")
-		}
-		config, err = clientcmd.BuildConfigFromFlags("", kubeconfig)
-	}
-	if err != nil {
-		return nil, fmt.Errorf("failed to create Kubernetes client: %v", err)
-	}
-
-	clientset, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		return nil, fmt.Errorf("failed to create Kubernetes client: %v", err)
-	}
-	return clientset, nil
-}
 
 func fetchResource(clientset *kubernetes.Clientset, resourceName, namespace, absPath, resource string) (map[string]interface{}, error) {
 	vm, err := clientset.RESTClient().Get().
@@ -63,7 +37,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	clientset, err := getKubeconfig(*kubeconfigPath)
+	clientset, err := kubeclient.NewClient(*kubeconfigPath)
 	if err != nil {
 		log.Fatalf("Error creating Kubernetes client: %v", err)
 	}
