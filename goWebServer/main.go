@@ -2,11 +2,12 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"encoding/json"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"runtime/debug"
 	"syscall"
 	"time"
 )
@@ -18,6 +19,56 @@ func Chain(handler http.Handler, middlewares ...Middleware) http.Handler {
 		handler = middlewares[i](handler)
 	}
 	return handler
+}
+
+type customLogger struct {
+	http.ResponseWriter
+	statusCode int
+}
+
+// captures the status code before writing it
+
+func (c *customLogger) WriteHeader(code int) {
+	c.statusCode = code
+	c.ResponseWriter.WriteHeader(code)
+}
+func LoggingMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		customLogs := &customLogger{
+			ResponseWriter: w,
+			statusCode:     http.StatusOK,
+		}
+
+		// Record start time
+		start := time.Now()
+		log.Printf("Request Received: %s %s", r.Method, r.URL.Path)
+		next.ServeHTTP(w, r)
+
+		duration := time.Since(start)
+
+		log.Printf(
+			"REQUEST: method=%s path=%s ip=%s status=%d duration=%s",
+			r.Method,
+			r.URL.Path,
+			r.RemoteAddr,
+			customLogs.statusCode,
+			duration,
+		)
+	})
+}
+
+func RecoveryMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer func() {
+			if err := recover(); err != nil {
+				log.Printf("PANIC: %v\n%s", err, debug.Stack())
+
+				http.Error(w, "Internal Server error", http.StatusInternalServerError)
+			}
+		}()
+		next.ServeHTTP(w, r)
+	})
 }
 
 func CORSMiddleware(next http.Handler) http.Handler {
@@ -34,40 +85,94 @@ func CORSMiddleware(next http.Handler) http.Handler {
 	})
 }
 
+type ErrorResponse struct {
+	Status  int    `json:"status"`
+	Message string `json:"message"`
+	Error   string `json:"error,omitempty"`
+}
+
+func RespondWithError(w http.ResponseWriter, status int, message string, err error) {
+	response := ErrorResponse{
+		Status:  status,
+		Message: message,
+	}
+
+	if err != nil {
+		response.Error = err.Error()
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+	}
+}
+
+func RespondWithJSON(w http.ResponseWriter, status int, data interface{}) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		RespondWithError(w, http.StatusInternalServerError, "Failed to encode response", err)
+	}
+}
+func greetHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		RespondWithError(w, http.StatusMethodNotAllowed, "Method not allowed", nil)
+		return
+	}
+
+	name := r.URL.Query().Get("name")
+	if name == "" {
+		name = " World"
+	}
+	response := map[string]string{"message": "Greeting, " + name + "!"}
+	RespondWithJSON(w, http.StatusOK, response)
+}
+
+func panicHandler(w http.ResponseWriter, r *http.Request) {
+	panic("This is a deliberate panic!")
+}
 func main() {
 	// Create a new router
 	mux := http.NewServeMux()
 
 	// Add a simple route
-	mux.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Processing request for /hello")
-		fmt.Fprint(w, "Hello, World!")
-	})
+	// mux.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
+	// 	log.Println("Processing request for /hello")
+	// 	fmt.Fprint(w, "Hello, World!")
+	// })
 
 	// Add a route that reads query parameters
-	mux.HandleFunc("/greet", func(w http.ResponseWriter, r *http.Request) {
-		name := r.URL.Query().Get("name")
-		if name == "" {
-			name = "Guest"
-		}
-		log.Printf("Greeting %s", name)
-		fmt.Fprintf(w, "Hello, %s!", name)
-	})
+	mux.Handle("/greet", Chain(
+		http.HandlerFunc(greetHandler),
+		LoggingMiddleware,
+		RecoveryMiddleware,
+		CORSMiddleware,
+	))
 
 	// Add a very slow endpoint
-	mux.HandleFunc("/slow", func(w http.ResponseWriter, r *http.Request) {
-		clientId := r.URL.Query().Get("id")
-		if clientId == "" {
-			clientId = "unknown"
-		}
-		log.Printf("Processing slow request from client %s", clientId)
+	// mux.HandleFunc("/slow", func(w http.ResponseWriter, r *http.Request) {
+	// 	clientId := r.URL.Query().Get("id")
+	// 	if clientId == "" {
+	// 		clientId = "unknown"
+	// 	}
+	// 	log.Printf("Processing slow request from client %s", clientId)
 
-		// Simulate work taking 10 seconds
-		time.Sleep(10 * time.Second)
+	// 	// Simulate work taking 10 seconds
+	// 	time.Sleep(10 * time.Second)
 
-		fmt.Fprintf(w, "Slow response for client %s!", clientId)
-		log.Printf("Completed slow request from client %s", clientId)
-	})
+	// 	fmt.Fprintf(w, "Slow response for client %s!", clientId)
+	// 	log.Printf("Completed slow request from client %s", clientId)
+	// })
+
+	mux.Handle("/panic", Chain(
+		http.HandlerFunc(panicHandler),
+		LoggingMiddleware,
+		RecoveryMiddleware,
+		CORSMiddleware,
+	))
 
 	// Create the server and assign our router
 	server := &http.Server{
