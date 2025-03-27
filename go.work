@@ -9,5 +9,4 @@ use (
         ./goMethodsStructs
         ./kubeMetricsWithNode
         ./embeddingArticle
-        ./understandingServiceMesh
 )

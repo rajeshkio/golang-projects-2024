@@ -1,13 +1,13 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
 	"os"
 
 	kubeclient "github.com/rk280392/harvesterNavigator/internal/client"
+	types "github.com/rk280392/harvesterNavigator/internal/models"
 	vm "github.com/rk280392/harvesterNavigator/internal/services"
 )
 
@@ -32,21 +32,14 @@ func main() {
 
 	vmData, err := vm.FetchVMData(clientset, vmName, absPath, namespace, resource)
 	if err != nil {
-		log.Fatalf("Failed to fetch the VM Data: %s", err)
+		log.Fatalf("failed to fetch the VM Data: %s", err)
 	}
 
 	//fmt.Println(vmData)
 
-	metadata := vmData["metadata"].(map[string]interface{})
-	//	fmt.Println(metadata["name"])
-	//fmt.Println()
+	vmInfo := &types.VMInfo{Name: vmName}
+	err = vm.ParseVMMetaData(vmData, vmInfo)
 
-	annotations := metadata["annotations"].(map[string]interface{})
-	volumeClaimTemplateStr := annotations["harvesterhci.io/volumeClaimTemplates"].(string)
-	//fmt.Println()
-
-	var volumeClaimTemplates []map[string]interface{}
-	err = json.Unmarshal([]byte(volumeClaimTemplateStr), &volumeClaimTemplates)
-	fmt.Println(volumeClaimTemplates[0])
+	vm.DisplayVMInfo(vmInfo)
 
 }
