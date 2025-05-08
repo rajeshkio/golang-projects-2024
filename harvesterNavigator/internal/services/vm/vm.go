@@ -62,6 +62,9 @@ func ParseVMMetaData(vmData map[string]interface{}, vmInfo *types.VMInfo) error 
 		return fmt.Errorf("template metadata missing or not an object")
 	}
 
+	pvcClaimName := templateMetadata["name"].(string)
+	vmInfo.ClaimNames = pvcClaimName
+
 	templateMetaAnnotation, ok := templateMetadata["annotations"].(map[string]interface{})
 	if !ok {
 		return fmt.Errorf("template annotations missing or not an object")
@@ -95,6 +98,7 @@ func DisplayVMInfo(info *types.VMInfo) {
 	fmt.Println("VM Storage Class:", info.StorageClass)
 	fmt.Println("PVC Claim Names:", info.ClaimNames)
 	fmt.Println("Volume Name:", info.VolumeName)
+	fmt.Println("PVC Status:", info.PVCStatus)
 	fmt.Println(info.AttachmentInfo)
 
 }

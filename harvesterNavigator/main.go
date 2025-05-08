@@ -8,7 +8,9 @@ import (
 
 	kubeclient "github.com/rk280392/harvesterNavigator/internal/client"
 	types "github.com/rk280392/harvesterNavigator/internal/models"
-	vm "github.com/rk280392/harvesterNavigator/internal/services"
+	pvc "github.com/rk280392/harvesterNavigator/internal/services/longhornPVC"
+	vm "github.com/rk280392/harvesterNavigator/internal/services/vm"
+	volume "github.com/rk280392/harvesterNavigator/internal/services/volume"
 )
 
 func main() {
@@ -35,11 +37,39 @@ func main() {
 		log.Fatalf("failed to fetch the VM Data: %s", err)
 	}
 
-	//fmt.Println(vmData)
-
 	vmInfo := &types.VMInfo{Name: vmName}
 	err = vm.ParseVMMetaData(vmData, vmInfo)
 
-	vm.DisplayVMInfo(vmInfo)
+	pvcAPIPath := "/api/v1"
+	pvcResource := "persistentvolumeclaims"
+	pvcData, err := pvc.FetchPVCData(clientset, vmInfo.ClaimNames, pvcAPIPath, namespace, pvcResource)
+	if err != nil {
+		log.Fatalf("failed to fetch the VM Data: %s", err)
+	}
 
+	volumeName, err := pvc.ParsePVCSpec(pvcData)
+	if err != nil {
+		log.Fatalf("failed to parse PVC Spec: %s", err)
+	}
+	vmInfo.VolumeName = volumeName
+
+	status, err := pvc.ParsePVCStatus(pvcData)
+	if err != nil {
+		log.Fatalf("failed to parse PVC Spec: %s", err)
+	}
+	vmInfo.PVCStatus = status
+
+	volumeAPIPath := "apis/longhorn.io/v1beta2"
+	volNamespace := "longhorn-system"
+	volumeResource := "volumes"
+	volumeResourceName := volumeName
+	volumeDetails, err := volume.FetchVolumeDetails(clientset, volumeResourceName, volumeAPIPath, volNamespace, volumeResource)
+
+	//volumeInfo := &types.VolumeInfo{Name: volumeName}
+	podName, err := volume.GetPodFromVolume(volumeDetails)
+	if err != nil {
+		log.Fatalf("failed to get podname from volume Status: %s", err)
+	}
+	vmInfo.PodName = podName
+	vm.DisplayVMInfo(vmInfo)
 }

@@ -9,6 +9,8 @@ type VMInfo struct {
 	VolumeName     string
 	AttachmentInfo map[string]interface{}
 	ReplicaInfo    []ReplicaInfo
+	VMStatus       string
+	PVCStatus      string
 }
 
 type ReplicaInfo struct {
@@ -18,4 +20,9 @@ type ReplicaInfo struct {
 	HasMismatch      string
 	LonghornNode     string
 	LonghornDiskUUID string
+}
+
+type VolumeInfo struct {
+	Name          string
+	VolumeDetails map[string]interface{}
 }
