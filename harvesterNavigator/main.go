@@ -1,10 +1,11 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
 	"os"
+	"os/user"
+	"path/filepath"
 
 	kubeclient "github.com/rk280392/harvesterNavigator/internal/client"
 	types "github.com/rk280392/harvesterNavigator/internal/models"
@@ -14,30 +15,75 @@ import (
 	vm "github.com/rk280392/harvesterNavigator/internal/services/vm"
 	volume "github.com/rk280392/harvesterNavigator/internal/services/volume"
 	display "github.com/rk280392/harvesterNavigator/pkg/display"
+	flag "github.com/spf13/pflag"
 )
 
+func defaultKubeconfigPath() string {
+	if env := os.Getenv("KUBECONFIG"); env != "" {
+		return env
+	}
+	usr, err := user.Current()
+	if err != nil {
+		return ""
+	}
+	return filepath.Join(usr.HomeDir, ".kube", "config")
+}
+func getNamespace(cliNamespace string) string {
+	if cliNamespace != "" {
+		return cliNamespace
+	}
+	if env := os.Getenv("NAMESPACE"); env != "" {
+		return env
+	}
+	return "default"
+}
+
+func fatalNotFound(resourceType, name, namespace string, err error) {
+	log.Fatalf(
+		"\nError: %s %q not found in namespace %q.\nCheck if the %s exists and that the namespace is correct.\nDetails: %v",
+		resourceType, name, namespace, resourceType, err,
+	)
+}
+
 func main() {
-	kubeconfigPath := flag.String("kubeconfig", "", "Path to kubeconfig file (optional, falls back to $KUBECONFIG)")
+
+	// Define optional flags
+	kubeconfig := flag.StringP("kubeconfig", "k", defaultKubeconfigPath(), "Path to kubeconfig file (optional)")
+	cliNamespace := flag.StringP("namespace", "n", "", "Namespace of the VM (optional, or export NAMESPACE env var)")
+
+	// Override default usage message
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage: %s [flags] <vm-name>\n", os.Args[0])
+		flag.PrintDefaults()
+	}
+
 	flag.Parse()
 
+	// Validate positional arg: VM name
 	if flag.NArg() < 1 {
-		fmt.Println("Usage: ./harvester_vm_info [--kubeconfig <path>] <vm-name> [--namespace <name>]")
+		fmt.Fprintln(os.Stderr, "Error: VM name is required.")
+		flag.Usage()
 		os.Exit(1)
 	}
 
-	clientset, err := kubeclient.NewClient(*kubeconfigPath)
+	vmName := flag.Arg(0)
+	namespace := getNamespace(*cliNamespace)
+
+	if _, err := os.Stat(*kubeconfig); os.IsNotExist(err) {
+		log.Fatalf("Error: kubeconfig file not found at '%s'", *kubeconfig)
+	}
+
+	clientset, err := kubeclient.NewClient(*kubeconfig)
 	if err != nil {
 		log.Fatalf("Error creating Kubernetes client: %v", err)
 	}
 
-	vmName := flag.Arg(0)
-	namespace := flag.Arg(1)
 	absPath := "apis/kubevirt.io/v1"
 	resource := "virtualmachines"
 
 	vmData, err := vm.FetchVMData(clientset, vmName, absPath, namespace, resource)
 	if err != nil {
-		log.Fatalf("failed to fetch the VM Data: %s", err)
+		fatalNotFound("VM", vmName, namespace, err)
 	}
 
 	vmInfo := &types.VMInfo{Name: vmName}
@@ -50,7 +96,7 @@ func main() {
 	pvcResource := "persistentvolumeclaims"
 	pvcData, err := pvc.FetchPVCData(clientset, vmInfo.ClaimNames, pvcAPIPath, namespace, pvcResource)
 	if err != nil {
-		log.Fatalf("failed to fetch the VM Data: %s", err)
+		fatalNotFound("PVC", vmInfo.ClaimNames, namespace, err)
 	}
 
 	volumeName, err := pvc.ParsePVCSpec(pvcData)
@@ -68,10 +114,9 @@ func main() {
 	volumeAPIPath := "apis/longhorn.io/v1beta2"
 	volNamespace := "longhorn-system"
 	volumeResource := "volumes"
-	volumeResourceName := volumeName
-	volumeDetails, err := volume.FetchVolumeDetails(clientset, volumeResourceName, volumeAPIPath, volNamespace, volumeResource)
+	volumeDetails, err := volume.FetchVolumeDetails(clientset, volumeName, volumeAPIPath, volNamespace, volumeResource)
 	if err != nil {
-		log.Fatalf("failed to get volumeDetails: %s", err)
+		fatalNotFound("Volume", volumeName, volNamespace, err)
 	}
 
 	//volumeInfo := &types.VolumeInfo{Name: volumeName}
@@ -85,7 +130,7 @@ func main() {
 	replicaNamespace := "longhorn-system"
 	replicaResource := "replicas"
 
-	relatedReplicas, err := replicas.FindReplicaDetails(clientset, volumeResourceName, replicaAPIPath, replicaNamespace, replicaResource)
+	relatedReplicas, err := replicas.FindReplicaDetails(clientset, volumeName, replicaAPIPath, replicaNamespace, replicaResource)
 	if err != nil {
 		log.Fatalf("failed to get replica from volume: %s", err)
 	}
