@@ -34,6 +34,49 @@ func ParseVMMetaData(vmData map[string]interface{}, vmInfo *types.VMInfo) error 
 	if !ok {
 		return fmt.Errorf("metadata field missing or not an object")
 	}
+
+	statusRaw, ok := vmData["status"].(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("status field missing")
+	}
+
+	conditionRaw, ok := statusRaw["conditions"]
+	if !ok || conditionRaw == nil {
+		return fmt.Errorf("conditions field not found or is nil")
+	}
+
+	conditionsArray, ok := conditionRaw.([]interface{})
+	if !ok {
+		return fmt.Errorf("conditions is not an array")
+	}
+
+	for _, conditionRaw := range conditionsArray {
+		// Assert each condition is a map
+		condition, ok := conditionRaw.(map[string]interface{})
+		if !ok {
+			// Skip invalid entries
+			continue
+		}
+
+		if typeVal, ok := condition["reason"]; ok && typeVal != nil {
+			if typeStr, ok := typeVal.(string); ok {
+				vmInfo.VMStatusReason = typeStr
+			}
+		}
+
+		if statusVal, ok := condition["status"]; ok && statusVal != nil {
+			if statusStr, ok := statusVal.(string); ok {
+				vmInfo.VMStatus = statusStr
+			}
+		}
+	}
+
+	printableStatus, ok := statusRaw["printableStatus"]
+	if !ok {
+		return fmt.Errorf("printableStatus is not present")
+	}
+	vmInfo.PrintableStatus = printableStatus.(string)
+
 	//	fmt.Println(metadata["name"])
 	//fmt.Println()
 
@@ -89,16 +132,4 @@ func ParseVMMetaData(vmData map[string]interface{}, vmInfo *types.VMInfo) error 
 	vmInfo.StorageClass = storageClass
 
 	return nil
-}
-
-func DisplayVMInfo(info *types.VMInfo) {
-	fmt.Println("VM Name:", info.Name)
-	fmt.Println("VM Image ID:", info.ImageId)
-	fmt.Println("Pod Name:", info.PodName)
-	fmt.Println("VM Storage Class:", info.StorageClass)
-	fmt.Println("PVC Claim Names:", info.ClaimNames)
-	fmt.Println("Volume Name:", info.VolumeName)
-	fmt.Println("PVC Status:", info.PVCStatus)
-	fmt.Println(info.AttachmentInfo)
-
 }

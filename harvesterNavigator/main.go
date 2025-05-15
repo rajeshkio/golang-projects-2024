@@ -8,9 +8,12 @@ import (
 
 	kubeclient "github.com/rk280392/harvesterNavigator/internal/client"
 	types "github.com/rk280392/harvesterNavigator/internal/models"
+	"github.com/rk280392/harvesterNavigator/internal/services/engine"
 	pvc "github.com/rk280392/harvesterNavigator/internal/services/longhornPVC"
+	"github.com/rk280392/harvesterNavigator/internal/services/replicas"
 	vm "github.com/rk280392/harvesterNavigator/internal/services/vm"
 	volume "github.com/rk280392/harvesterNavigator/internal/services/volume"
+	display "github.com/rk280392/harvesterNavigator/pkg/display"
 )
 
 func main() {
@@ -18,7 +21,7 @@ func main() {
 	flag.Parse()
 
 	if flag.NArg() < 1 {
-		fmt.Println("Usage: ./harvester_vm_info [--kubeconfig <path>] <vm-name>")
+		fmt.Println("Usage: ./harvester_vm_info [--kubeconfig <path>] <vm-name> [--namespace <name>]")
 		os.Exit(1)
 	}
 
@@ -28,7 +31,7 @@ func main() {
 	}
 
 	vmName := flag.Arg(0)
-	namespace := "default"
+	namespace := flag.Arg(1)
 	absPath := "apis/kubevirt.io/v1"
 	resource := "virtualmachines"
 
@@ -39,6 +42,9 @@ func main() {
 
 	vmInfo := &types.VMInfo{Name: vmName}
 	err = vm.ParseVMMetaData(vmData, vmInfo)
+	if err != nil {
+		log.Fatalf("failed to parse VMMetadata: %s", err)
+	}
 
 	pvcAPIPath := "/api/v1"
 	pvcResource := "persistentvolumeclaims"
@@ -64,6 +70,9 @@ func main() {
 	volumeResource := "volumes"
 	volumeResourceName := volumeName
 	volumeDetails, err := volume.FetchVolumeDetails(clientset, volumeResourceName, volumeAPIPath, volNamespace, volumeResource)
+	if err != nil {
+		log.Fatalf("failed to get volumeDetails: %s", err)
+	}
 
 	//volumeInfo := &types.VolumeInfo{Name: volumeName}
 	podName, err := volume.GetPodFromVolume(volumeDetails)
@@ -71,5 +80,29 @@ func main() {
 		log.Fatalf("failed to get podname from volume Status: %s", err)
 	}
 	vmInfo.PodName = podName
-	vm.DisplayVMInfo(vmInfo)
+
+	replicaAPIPath := "apis/longhorn.io/v1beta2"
+	replicaNamespace := "longhorn-system"
+	replicaResource := "replicas"
+
+	relatedReplicas, err := replicas.FindReplicaDetails(clientset, volumeResourceName, replicaAPIPath, replicaNamespace, replicaResource)
+	if err != nil {
+		log.Fatalf("failed to get replica from volume: %s", err)
+	}
+	vmInfo.ReplicaInfo = relatedReplicas
+
+	engineAPIPath := "apis/longhorn.io/v1beta2"
+	engineNamespace := "longhorn-system"
+	engineResource := "engines"
+
+	engineInfos, err := engine.FindEngineDetails(clientset, vmInfo.VolumeName, engineAPIPath, engineNamespace, engineResource)
+	if err != nil {
+		// Log the error but continue - engine info is optional
+		log.Printf("Warning: failed to get engine details: %s", err)
+	} else {
+		vmInfo.EngineInfo = engineInfos
+	}
+
+	display.DisplayVMInfo(vmInfo)
+
 }
