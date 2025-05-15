@@ -11,8 +11,10 @@ import (
 	types "github.com/rk280392/harvesterNavigator/internal/models"
 	"github.com/rk280392/harvesterNavigator/internal/services/engine"
 	pvc "github.com/rk280392/harvesterNavigator/internal/services/longhornPVC"
+	"github.com/rk280392/harvesterNavigator/internal/services/pod"
 	"github.com/rk280392/harvesterNavigator/internal/services/replicas"
 	vm "github.com/rk280392/harvesterNavigator/internal/services/vm"
+	vmi "github.com/rk280392/harvesterNavigator/internal/services/vmi"
 	volume "github.com/rk280392/harvesterNavigator/internal/services/volume"
 	display "github.com/rk280392/harvesterNavigator/pkg/display"
 	flag "github.com/spf13/pflag"
@@ -38,8 +40,8 @@ func getNamespace(cliNamespace string) string {
 	return "default"
 }
 
-func fatalNotFound(resourceType, name, namespace string, err error) {
-	log.Fatalf(
+func logNotFound(resourceType, name, namespace string, err error) {
+	log.Printf(
 		"\nError: %s %q not found in namespace %q.\nCheck if the %s exists and that the namespace is correct.\nDetails: %v",
 		resourceType, name, namespace, resourceType, err,
 	)
@@ -83,7 +85,7 @@ func main() {
 
 	vmData, err := vm.FetchVMData(clientset, vmName, absPath, namespace, resource)
 	if err != nil {
-		fatalNotFound("VM", vmName, namespace, err)
+		logNotFound("VM", vmName, namespace, err)
 	}
 
 	vmInfo := &types.VMInfo{Name: vmName}
@@ -96,7 +98,7 @@ func main() {
 	pvcResource := "persistentvolumeclaims"
 	pvcData, err := pvc.FetchPVCData(clientset, vmInfo.ClaimNames, pvcAPIPath, namespace, pvcResource)
 	if err != nil {
-		fatalNotFound("PVC", vmInfo.ClaimNames, namespace, err)
+		logNotFound("PVC", vmInfo.ClaimNames, namespace, err)
 	}
 
 	volumeName, err := pvc.ParsePVCSpec(pvcData)
@@ -116,7 +118,7 @@ func main() {
 	volumeResource := "volumes"
 	volumeDetails, err := volume.FetchVolumeDetails(clientset, volumeName, volumeAPIPath, volNamespace, volumeResource)
 	if err != nil {
-		fatalNotFound("Volume", volumeName, volNamespace, err)
+		logNotFound("Volume", volumeName, volNamespace, err)
 	}
 
 	//volumeInfo := &types.VolumeInfo{Name: volumeName}
@@ -125,6 +127,42 @@ func main() {
 		log.Fatalf("failed to get podname from volume Status: %s", err)
 	}
 	vmInfo.PodName = podName
+
+	podApiPath := "/api/v1"
+	podResource := "pods"
+	podData, err := pod.FetchPodDetails(clientset, podName, podApiPath, namespace, podResource)
+	if err != nil {
+		logNotFound("POD", podName, namespace, err)
+	}
+	ownerRef, err := pod.ParsePodData(podData)
+	if err != nil {
+		fmt.Println(err)
+	}
+	vmInfo.PodInfo = ownerRef
+
+	vmiName := ""
+	if len(vmInfo.PodInfo) > 0 {
+		for _, pod := range vmInfo.PodInfo {
+			if pod.VMI != "" {
+				vmiName = pod.VMI
+			}
+		}
+	}
+	//fmt.Println("vmiName", vmiName)
+
+	vmiApiPath := "apis/kubevirt.io/v1"
+	vmiResource := "virtualmachineinstances"
+
+	vmiData, err := vmi.FetchVMIDetails(clientset, vmiName, vmiApiPath, namespace, vmiResource)
+	if err != nil {
+		logNotFound("VMI", vmiName, namespace, err)
+	}
+	//	fmt.Println("vmiData", vmiData)
+	vmiStatus, err := vmi.ParseVMIData(vmiData)
+	if err != nil {
+		fmt.Println(err)
+	}
+	vmInfo.VMIInfo = vmiStatus
 
 	replicaAPIPath := "apis/longhorn.io/v1beta2"
 	replicaNamespace := "longhorn-system"

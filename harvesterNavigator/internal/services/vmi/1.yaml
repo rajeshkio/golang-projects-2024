@@ -1,0 +1,81 @@
+status:
+  activePods:
+    6247fa0a-c0d4-4993-a689-ff8f04f769eb: harvestwk05
+  conditions:
+  - lastTransitionTime: "2025-05-07T11:20:50Z"
+    status: "True"
+    type: Ready
+  - status: "True"
+    type: LiveMigratable
+  - lastProbeTime: "2025-05-07T11:24:29Z"
+    status: "True"
+    type: AgentConnected
+  currentCPUTopology:
+    cores: 2
+    sockets: 1
+    threads: 1
+  guestOSInfo:
+    id: mswindows
+    kernelRelease: "19045"
+    kernelVersion: "10.0"
+    machine: x86_64
+    name: Microsoft Windows
+    prettyName: Windows 10 Pro N
+    version: Microsoft Windows 10
+    versionId: "10"
+  interfaces:
+  - infoSource: domain, guest-agent, multus-status
+    interfaceName: Ethernet Instance 0
+    ipAddress: 192.168.1.116
+    ipAddresses:
+    - fe80::5f27:961d:7566:859a%4
+    - 192.168.1.116
+    mac: 96:fc:85:e8:e2:1a
+    name: default
+    queueCount: 1
+  - infoSource: guest-agent
+    interfaceName: Loopback Pseudo-Interface 1
+    ipAddress: 127.0.0.1
+    ipAddresses:
+    - ::1
+    - 127.0.0.1
+  launcherContainerImageVersion: registry.suse.com/suse/sles/15.6/virt-launcher:1.3.1-150600.5.9.1
+  machine:
+    type: pc-q35-8.2
+  memory:
+    guestAtBoot: 2Gi
+    guestCurrent: 2Gi
+    guestRequested: 2Gi
+  migrationMethod: BlockMigration
+  migrationTransport: Unix
+  nodeName: harvestwk05
+  phase: Running
+  phaseTransitionTimestamps:
+  - phase: Pending
+    phaseTransitionTimestamp: "2025-05-07T11:20:37Z"
+  - phase: Scheduling
+    phaseTransitionTimestamp: "2025-05-07T11:20:37Z"
+  - phase: Scheduled
+    phaseTransitionTimestamp: "2025-05-07T11:20:50Z"
+  - phase: Running
+    phaseTransitionTimestamp: "2025-05-07T11:20:53Z"
+  qosClass: Burstable
+  runtimeUser: 107
+  selinuxContext: none
+  virtualMachineRevisionName: revision-start-vm-5a52564d-4fa6-4a4d-ac30-617b92e57cb8-6
+  volumeStatus:
+  - name: cloudinitdisk
+    size: 1048576
+    target: vda
+  - name: disk-0
+    persistentVolumeClaimInfo:
+      accessModes:
+      - ReadWriteMany
+      capacity:
+        storage: 64Gi
+      claimName: shareaza-group1-03-disk-0-656zp
+      filesystemOverhead: "0.055"
+      requests:
+        storage: 64Gi
+      volumeMode: Block
+    target: sda

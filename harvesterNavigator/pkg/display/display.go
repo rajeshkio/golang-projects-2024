@@ -27,7 +27,57 @@ func DisplayVMInfo(info *types.VMInfo) {
 	fmt.Fprintf(w, "Status:\t%s\n", formatVMStatus(info.VMStatus))
 	fmt.Fprintf(w, "Status Reason:\t%s\n", formatVMStatusReason(info.VMStatusReason))
 	fmt.Fprintf(w, "Printable Status:\t%s\n", formatPrintableStatus(info.PrintableStatus))
-	fmt.Fprintf(w, "Pod Name:\t%s\n", info.PodName)
+
+	fmt.Fprintf(w, "VMI info length:\t%v\n", len(info.VMIInfo))
+
+	if len(info.PodInfo) > 0 {
+		fmt.Fprintf(w, "\nPOD INFORMATION:\n")
+		fmt.Fprintln(w, "------------------------")
+
+		for _, pod := range info.PodInfo {
+			fmt.Fprintf(w, "Pod Name:\t%s\n", info.PodName)
+
+			fmt.Fprintf(w, "Node Name:\t%s\n", pod.NodeID)
+			fmt.Fprintf(w, "Pod State:\t%s\n", formatPrintableStatus(pod.Status))
+		}
+	}
+
+	if len(info.VMIInfo) > 0 {
+
+		fmt.Fprintf(w, "\nVMI INFORMATION:\n")
+		fmt.Fprintln(w, "------------------------")
+
+		for _, vmi := range info.VMIInfo {
+			fmt.Fprintf(w, "VMIName:\t%s\n", vmi.Name)
+			fmt.Fprintf(w, "NodeName:\t%s\n", vmi.NodeName)
+			fmt.Fprintf(w, "Phase:\t%s\n", formatPrintableStatus(vmi.Phase))
+
+			if len(vmi.ActivePods) > 0 {
+				for podUID, nodeName := range vmi.ActivePods {
+					fmt.Fprintf(w, "POD UUID: \t%s\n", podUID)
+					fmt.Fprintf(w, "Node Name: \t%s \n", nodeName)
+				}
+			}
+			if vmi.GuestOSInfo.Name != "" {
+				if vmi.GuestOSInfo.PrettyName != "" {
+					fmt.Fprintf(w, "Guest OS:\t%s\n", vmi.GuestOSInfo.PrettyName)
+				} else {
+					fmt.Fprintf(w, "Guest OS:\t%s \t%s\n", vmi.GuestOSInfo.Name, vmi.GuestOSInfo.Version)
+				}
+			}
+
+			fmt.Println("vmi.Interfaces", vmi.Interfaces)
+
+			if len(vmi.Interfaces) > 0 {
+				fmt.Println("\nNetwork Interfaces:")
+				fmt.Println("------------------")
+				for _, iface := range vmi.Interfaces {
+					fmt.Printf("  MAC:         %s\n", iface.Mac)
+					fmt.Printf("  IP Address:  %s\n", iface.IpAddress)
+				}
+			}
+		}
+	}
 
 	// Storage section
 	fmt.Fprintln(w, "\nSTORAGE INFO:")
@@ -78,37 +128,37 @@ func DisplayVMInfo(info *types.VMInfo) {
 			fmt.Fprintf(w, "Started:\t%s\n", formatBool(engine.Started))
 			w.Flush()
 
-			if len(engine.Snapshots) > 0 {
-				// Define column widths
-				nameWidth := 38
-				createdWidth := 22
-				userCreatedWidth := 16
-				removedWidth := 20
+			// if len(engine.Snapshots) > 0 {
+			// 	// Define column widths
+			// 	nameWidth := 38
+			// 	createdWidth := 22
+			// 	userCreatedWidth := 16
+			// 	removedWidth := 20
 
-				// Print headers
-				fmt.Printf("%s %s %s %s\n",
-					padToVisualWidth("NAME", nameWidth),
-					padToVisualWidth("CREATED", createdWidth),
-					padToVisualWidth("USER CREATED", userCreatedWidth),
-					padToVisualWidth("REMOVED", removedWidth))
+			// 	// Print headers
+			// 	fmt.Printf("\n%s %s %s %s\n",
+			// 		padToVisualWidth("NAME", nameWidth),
+			// 		padToVisualWidth("CREATED", createdWidth),
+			// 		padToVisualWidth("USER CREATED", userCreatedWidth),
+			// 		padToVisualWidth("REMOVED", removedWidth))
 
-				fmt.Printf("%s %s %s %s\n",
-					padToVisualWidth("----", nameWidth),
-					padToVisualWidth("-------", createdWidth),
-					padToVisualWidth("------------", userCreatedWidth),
-					padToVisualWidth("-------", removedWidth))
+			// 	fmt.Printf("%s %s %s %s\n",
+			// 		padToVisualWidth("----", nameWidth),
+			// 		padToVisualWidth("-------", createdWidth),
+			// 		padToVisualWidth("------------", userCreatedWidth),
+			// 		padToVisualWidth("-------", removedWidth))
 
-				for _, snapshot := range engine.Snapshots {
-					fmt.Printf("%s %s %s %s\n",
-						padToVisualWidth(snapshot.Name, nameWidth),
-						padToVisualWidth(snapshot.Created, createdWidth),
-						padToVisualWidth(formatBool(snapshot.UserCreated), userCreatedWidth),
-						padToVisualWidth(formatBool(snapshot.Removed), removedWidth))
-				}
-				fmt.Println("\nSNAPSHOT TREE:")
-				fmt.Println("-------------")
-				displaySnapshotTree(engine.Snapshots)
-			}
+			// 	for _, snapshot := range engine.Snapshots {
+			// 		fmt.Printf("%s %s %s %s\n",
+			// 			padToVisualWidth(snapshot.Name, nameWidth),
+			// 			padToVisualWidth(snapshot.Created, createdWidth),
+			// 			padToVisualWidth(formatBool(snapshot.UserCreated), userCreatedWidth),
+			// 			padToVisualWidth(formatBool(snapshot.Removed), removedWidth))
+			// 	}
+			//fmt.Println("\nSNAPSHOT TREE:")
+			//fmt.Println("-------------")
+			//displaySnapshotTree(engine.Snapshots)
+			//}
 		}
 	}
 

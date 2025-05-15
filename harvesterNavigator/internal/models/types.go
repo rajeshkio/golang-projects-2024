@@ -10,10 +10,41 @@ type VMInfo struct {
 	AttachmentInfo  map[string]interface{}
 	ReplicaInfo     []ReplicaInfo
 	EngineInfo      []EngineInfo
+	PodInfo         []PodInfo
 	VMStatus        string
 	PVCStatus       string
 	PrintableStatus string
 	VMStatusReason  string
+	VMIInfo         []VMIInfo
+}
+
+type PodInfo struct {
+	Name   string
+	VMI    string
+	NodeID string
+	Status string
+}
+
+type VMIInfo struct {
+	ActivePods  map[string]string
+	GuestOSInfo GuestOSInfo
+	Interfaces  []Interfaces
+	NodeName    string
+	Phase       string
+	Name        string
+}
+
+type Interfaces struct {
+	IpAddress string
+	Mac       string
+}
+type GuestOSInfo struct {
+	KernelRelease string
+	KernelVersion string
+	Machine       string
+	Name          string
+	PrettyName    string
+	Version       string
 }
 
 type ReplicaInfo struct {
