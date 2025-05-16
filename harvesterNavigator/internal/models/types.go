@@ -16,6 +16,7 @@ type VMInfo struct {
 	PrintableStatus string
 	VMStatusReason  string
 	VMIInfo         []VMIInfo
+	MissingResource string
 }
 
 type PodInfo struct {
