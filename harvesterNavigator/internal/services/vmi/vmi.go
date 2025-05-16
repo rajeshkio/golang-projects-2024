@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 
 	types "github.com/rk280392/harvesterNavigator/internal/models"
 	"k8s.io/client-go/kubernetes"
@@ -76,26 +77,29 @@ func ParseVMIData(vmiData map[string]interface{}) ([]types.VMIInfo, error) {
 		}
 	}
 
-	fmt.Println("vmiStatus", vmiStatus)
+	//fmt.Printf("vmiStatus type: %T\n", vmiStatus)
+	//fmt.Printf("vmiStatus value: %+v\n", vmiStatus)
 
-	if interfacesRaw, ok := vmiStatus["interfaces"].(map[string]interface{}); ok {
-		fmt.Println("interfacesRaw", interfacesRaw)
-		for _, ifaceRaw := range interfacesRaw {
-			ifaceMap, ok := ifaceRaw.(map[string]interface{})
-			if !ok {
-				continue
+	if interfacesRaw, ok := vmiStatus["interfaces"]; ok {
+		if interfaces, ok := interfacesRaw.([]interface{}); ok {
+			for _, ifaceRaw := range interfaces {
+				if ifaceMap, ok := ifaceRaw.(map[string]interface{}); ok {
+					iface := types.Interfaces{}
+					if ipAddress, ok := ifaceMap["ipAddress"].(string); ok {
+						iface.IpAddress = ipAddress
+					}
+					if mac, ok := ifaceMap["mac"].(string); ok {
+						iface.Mac = mac
+					}
+					if iface.IpAddress != "" || iface.Mac != "" {
+						vmiInfo.Interfaces = append(vmiInfo.Interfaces, iface)
+					}
+				}
 			}
-			iface := types.Interfaces{}
-			if ipAddress, ok := ifaceMap["ipAddress"].(string); ok {
-				iface.IpAddress = ipAddress
-			}
-			if mac, ok := ifaceMap["mac"].(string); ok {
-				iface.Mac = mac
-			}
-			vmiInfo.Interfaces = append(vmiInfo.Interfaces, iface)
+		} else {
+			log.Printf("No 'interfaces' key found in vmiStatus")
 		}
 	}
-
 	vmiInfos = append(vmiInfos, vmiInfo)
 	return vmiInfos, nil
 }

@@ -65,16 +65,22 @@ func DisplayVMInfo(info *types.VMInfo) {
 					fmt.Fprintf(w, "Guest OS:\t%s \t%s\n", vmi.GuestOSInfo.Name, vmi.GuestOSInfo.Version)
 				}
 			}
-
-			fmt.Println("vmi.Interfaces", vmi.Interfaces)
-
+			fmt.Fprintln(w, "VMI NIC:")
 			if len(vmi.Interfaces) > 0 {
-				fmt.Println("\nNetwork Interfaces:")
-				fmt.Println("------------------")
 				for _, iface := range vmi.Interfaces {
-					fmt.Printf("  MAC:         %s\n", iface.Mac)
-					fmt.Printf("  IP Address:  %s\n", iface.IpAddress)
+					// Only display interfaces with both MAC and IP (or just IP if that's acceptable)
+					if iface.Mac != "" { // Check for MAC if required
+						fmt.Fprintf(w, "  MAC Address: %s\n", iface.Mac)
+						fmt.Fprintf(w, "  IP Address:  %s\n", iface.IpAddress)
+						fmt.Fprintln(w) // Add a blank line between interfaces
+					} else if iface.IpAddress != "" && iface.IpAddress != "127.0.0.1" {
+						// Only print IP addresses without MAC if they're not localhost
+						fmt.Fprintf(w, "  IP Address:  %s\n", iface.IpAddress)
+						fmt.Fprintln(w) // Add a blank line
+					}
 				}
+			} else {
+				fmt.Fprintf(w, "  No interfaces found\n")
 			}
 		}
 	}
