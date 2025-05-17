@@ -10,15 +10,37 @@ import (
 	kubeclient "github.com/rk280392/harvesterNavigator/internal/client"
 	types "github.com/rk280392/harvesterNavigator/internal/models"
 	"github.com/rk280392/harvesterNavigator/internal/services/engine"
-	pvc "github.com/rk280392/harvesterNavigator/internal/services/longhornPVC"
 	"github.com/rk280392/harvesterNavigator/internal/services/pod"
+	pvc "github.com/rk280392/harvesterNavigator/internal/services/pvc"
 	"github.com/rk280392/harvesterNavigator/internal/services/replicas"
 	vm "github.com/rk280392/harvesterNavigator/internal/services/vm"
 	vmi "github.com/rk280392/harvesterNavigator/internal/services/vmi"
 	volume "github.com/rk280392/harvesterNavigator/internal/services/volume"
 	display "github.com/rk280392/harvesterNavigator/pkg/display"
 	flag "github.com/spf13/pflag"
+	"k8s.io/client-go/kubernetes"
 )
+
+// Configuration holds application configuration settings
+type Configuration struct {
+	KubeconfigPath string
+	Namespace      string
+	VMName         string
+}
+
+// ResourcePaths defines the API paths and namespaces for resources
+type ResourcePaths struct {
+	VMPath           string
+	PVCPath          string
+	VolumePath       string
+	ReplicaPath      string
+	EnginePath       string
+	VMIPath          string
+	PodPath          string
+	VolumeNamespace  string
+	ReplicaNamespace string
+	EngineNamespace  string
+}
 
 func defaultKubeconfigPath() string {
 	if env := os.Getenv("KUBECONFIG"); env != "" {
@@ -55,7 +77,13 @@ func handleResourceError(resourceType string, vmInfo *types.VMInfo) {
 	os.Exit(1)
 }
 
-func main() {
+// Convert string to VMStatus for type compatibility
+func ToVMStatus(s string) types.VMStatus {
+	return types.VMStatus(s)
+}
+
+// parseCommandLineArgs parses command line arguments and returns a Configuration
+func parseCommandLineArgs() Configuration {
 	// Define optional flags
 	kubeconfig := flag.StringP("kubeconfig", "k", defaultKubeconfigPath(), "Path to kubeconfig file (optional)")
 	cliNamespace := flag.StringP("namespace", "n", "", "Namespace of the VM (optional, or export NAMESPACE env var)")
@@ -82,20 +110,46 @@ func main() {
 		log.Fatalf("Error: kubeconfig file not found at '%s'", *kubeconfig)
 	}
 
-	clientset, err := kubeclient.NewClient(*kubeconfig)
+	return Configuration{
+		KubeconfigPath: *kubeconfig,
+		Namespace:      namespace,
+		VMName:         vmName,
+	}
+}
+
+// initializeClient creates a Kubernetes client from the given configuration
+func initializeClient(config Configuration) *kubernetes.Clientset {
+	clientset, err := kubeclient.NewClient(config.KubeconfigPath)
 	if err != nil {
 		log.Fatalf("Error creating Kubernetes client: %v", err)
 	}
+	return clientset
+}
 
-	// Initialize the VM info structure
-	vmInfo := &types.VMInfo{Name: vmName}
+// getDefaultResourcePaths returns the default API paths and namespaces
+func getDefaultResourcePaths(namespace string) ResourcePaths {
+	return ResourcePaths{
+		VMPath:           "apis/kubevirt.io/v1",
+		PVCPath:          "/api/v1",
+		VolumePath:       "apis/longhorn.io/v1beta2",
+		ReplicaPath:      "apis/longhorn.io/v1beta2",
+		EnginePath:       "apis/longhorn.io/v1beta2",
+		VMIPath:          "apis/kubevirt.io/v1",
+		PodPath:          "/api/v1",
+		VolumeNamespace:  "longhorn-system",
+		ReplicaNamespace: "longhorn-system",
+		EngineNamespace:  "longhorn-system",
+	}
+}
+
+// fetchVMInfo fetches and parses VM information
+func fetchVMInfo(clientset *kubernetes.Clientset, config Configuration, paths ResourcePaths) *types.VMInfo {
+	vmInfo := &types.VMInfo{Name: config.VMName}
 
 	// Fetch VM data
-	absPath := "apis/kubevirt.io/v1"
-	resource := "virtualmachines"
-	vmData, err := vm.FetchVMData(clientset, vmName, absPath, namespace, resource)
+	vmData, err := vm.FetchVMData(clientset, config.VMName, paths.VMPath, config.Namespace, "virtualmachines")
 	if err != nil {
-		logNotFound("VM", vmName, namespace, err)
+		logNotFound("VM", config.VMName, config.Namespace, err)
 		handleResourceError("VM", vmInfo)
 	}
 
@@ -106,12 +160,15 @@ func main() {
 		handleResourceError("VM METADATA", vmInfo)
 	}
 
+	return vmInfo
+}
+
+// fetchPVCInfo fetches and parses PVC information
+func fetchPVCInfo(clientset *kubernetes.Clientset, vmInfo *types.VMInfo, config Configuration, paths ResourcePaths) string {
 	// Fetch PVC data
-	pvcAPIPath := "/api/v1"
-	pvcResource := "persistentvolumeclaims"
-	pvcData, err := pvc.FetchPVCData(clientset, vmInfo.ClaimNames, pvcAPIPath, namespace, pvcResource)
+	pvcData, err := pvc.FetchPVCData(clientset, vmInfo.ClaimNames, paths.PVCPath, config.Namespace, "persistentvolumeclaims")
 	if err != nil {
-		logNotFound("PVC", vmInfo.ClaimNames, namespace, err)
+		logNotFound("PVC", vmInfo.ClaimNames, config.Namespace, err)
 		handleResourceError("PVC", vmInfo)
 	}
 
@@ -129,15 +186,17 @@ func main() {
 		log.Printf("Failed to parse PVC status: %s", err)
 		handleResourceError("PVC STATUS", vmInfo)
 	}
-	vmInfo.PVCStatus = status
+	vmInfo.PVCStatus = types.PVCStatus(status)
 
+	return volumeName
+}
+
+// fetchVolumeInfo fetches and parses volume information
+func fetchVolumeInfo(clientset *kubernetes.Clientset, volumeName string, vmInfo *types.VMInfo, config Configuration, paths ResourcePaths) string {
 	// Fetch volume details
-	volumeAPIPath := "apis/longhorn.io/v1beta2"
-	volNamespace := "longhorn-system"
-	volumeResource := "volumes"
-	volumeDetails, err := volume.FetchVolumeDetails(clientset, volumeName, volumeAPIPath, volNamespace, volumeResource)
+	volumeDetails, err := volume.FetchVolumeDetails(clientset, volumeName, paths.VolumePath, paths.VolumeNamespace, "volumes")
 	if err != nil {
-		logNotFound("Volume", volumeName, volNamespace, err)
+		logNotFound("Volume", volumeName, paths.VolumeNamespace, err)
 		handleResourceError("VOLUME", vmInfo)
 	}
 
@@ -149,12 +208,15 @@ func main() {
 	}
 	vmInfo.PodName = podName
 
+	return podName
+}
+
+// fetchPodInfo fetches and parses pod information
+func fetchPodInfo(clientset *kubernetes.Clientset, podName string, vmInfo *types.VMInfo, config Configuration, paths ResourcePaths) string {
 	// Fetch pod details
-	podApiPath := "/api/v1"
-	podResource := "pods"
-	podData, err := pod.FetchPodDetails(clientset, podName, podApiPath, namespace, podResource)
+	podData, err := pod.FetchPodDetails(clientset, podName, paths.PodPath, config.Namespace, "pods")
 	if err != nil {
-		logNotFound("POD", podName, namespace, err)
+		logNotFound("POD", podName, config.Namespace, err)
 		handleResourceError("POD", vmInfo)
 	}
 
@@ -185,27 +247,35 @@ func main() {
 	vmInfo.PodInfo = ownerRef
 
 	// Extract VMI name
-	vmiName := ""
-	if len(vmInfo.PodInfo) > 0 {
-		for _, pod := range vmInfo.PodInfo {
-			if pod.VMI != "" {
-				vmiName = pod.VMI
-				break
-			}
-		}
-	}
-
+	vmiName := extractVMIName(vmInfo)
 	if vmiName == "" {
 		log.Printf("Error: No VMI name found in pod data")
 		handleResourceError("VMI NAME", vmInfo)
 	}
 
+	return vmiName
+}
+
+// extractVMIName extracts the VMI name from pod information
+func extractVMIName(vmInfo *types.VMInfo) string {
+	if len(vmInfo.PodInfo) == 0 {
+		return ""
+	}
+
+	for _, pod := range vmInfo.PodInfo {
+		if pod.VMI != "" {
+			return pod.VMI
+		}
+	}
+	return ""
+}
+
+// fetchVMIInfo fetches and parses VMI information
+func fetchVMIInfo(clientset *kubernetes.Clientset, vmiName string, vmInfo *types.VMInfo, config Configuration, paths ResourcePaths) {
 	// Fetch VMI details
-	vmiApiPath := "apis/kubevirt.io/v1"
-	vmiResource := "virtualmachineinstances"
-	vmiData, err := vmi.FetchVMIDetails(clientset, vmiName, vmiApiPath, namespace, vmiResource)
+	vmiData, err := vmi.FetchVMIDetails(clientset, vmiName, paths.VMIPath, config.Namespace, "virtualmachineinstances")
 	if err != nil {
-		logNotFound("VMI", vmiName, namespace, err)
+		logNotFound("VMI", vmiName, config.Namespace, err)
 		handleResourceError("VMI", vmInfo)
 	}
 
@@ -216,29 +286,61 @@ func main() {
 		handleResourceError("VMI DATA", vmInfo)
 	}
 	vmInfo.VMIInfo = vmiStatus
+}
 
+// fetchReplicaInfo fetches and parses replica information
+func fetchReplicaInfo(clientset *kubernetes.Clientset, volumeName string, vmInfo *types.VMInfo, paths ResourcePaths) {
 	// Find replica details
-	replicaAPIPath := "apis/longhorn.io/v1beta2"
-	replicaNamespace := "longhorn-system"
-	replicaResource := "replicas"
-	relatedReplicas, err := replicas.FindReplicaDetails(clientset, volumeName, replicaAPIPath, replicaNamespace, replicaResource)
+	relatedReplicas, err := replicas.FindReplicaDetails(clientset, volumeName, paths.ReplicaPath, paths.ReplicaNamespace, "replicas")
 	if err != nil {
 		log.Printf("Failed to get replica details: %s", err)
 		handleResourceError("REPLICAS", vmInfo)
 	}
 	vmInfo.ReplicaInfo = relatedReplicas
+}
 
+// fetchEngineInfo fetches and parses engine information (optional)
+func fetchEngineInfo(clientset *kubernetes.Clientset, vmInfo *types.VMInfo, paths ResourcePaths) {
 	// Find engine details - this is optional
-	engineAPIPath := "apis/longhorn.io/v1beta2"
-	engineNamespace := "longhorn-system"
-	engineResource := "engines"
-	engineInfos, err := engine.FindEngineDetails(clientset, vmInfo.VolumeName, engineAPIPath, engineNamespace, engineResource)
+	engineInfos, err := engine.FindEngineDetails(clientset, vmInfo.VolumeName, paths.EnginePath, paths.EngineNamespace, "engines")
 	if err != nil {
 		// Log the error but continue - engine info is optional
 		log.Printf("Warning: failed to get engine details: %s", err)
 	} else {
 		vmInfo.EngineInfo = engineInfos
 	}
+}
+
+func main() {
+	// Parse command line arguments
+	config := parseCommandLineArgs()
+
+	// Initialize Kubernetes client
+	clientset := initializeClient(config)
+
+	// Get default resource paths
+	paths := getDefaultResourcePaths(config.Namespace)
+
+	// Fetch VM information
+	vmInfo := fetchVMInfo(clientset, config, paths)
+
+	// Fetch PVC information
+	volumeName := fetchPVCInfo(clientset, vmInfo, config, paths)
+
+	// Fetch volume information
+	podName := fetchVolumeInfo(clientset, volumeName, vmInfo, config, paths)
+
+	// Fetch pod information
+	vmiName := fetchPodInfo(clientset, podName, vmInfo, config, paths)
+
+	// Fetch VMI information
+	fetchVMIInfo(clientset, vmiName, vmInfo, config, paths)
+
+	// Fetch replica information
+	fetchReplicaInfo(clientset, volumeName, vmInfo, paths)
+
+	// Fetch engine information (optional)
+	fetchEngineInfo(clientset, vmInfo, paths)
 
 	// Display all collected information
 	display.DisplayVMInfo(vmInfo)
