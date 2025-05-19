@@ -40,7 +40,7 @@ func displayVMInfo(w *tabwriter.Writer, info *types.VMInfo) {
 	fmt.Fprintf(w, "Name:\t%s\n", info.Name)
 	fmt.Fprintf(w, "Image ID:\t%s\n", info.ImageId)
 	fmt.Fprintf(w, "Storage Class:\t%s\n", info.StorageClass)
-	fmt.Fprintf(w, "Status:\t%s\n", formatVMStatus(info.VMStatus))
+	fmt.Fprintf(w, "Status:\t%s\n", formatVMStatus(string(info.VMStatus)))
 	fmt.Fprintf(w, "Status Reason:\t%s\n", formatVMStatusReason(info.VMStatusReason))
 	fmt.Fprintf(w, "Printable Status:\t%s\n", formatPrintableStatus(info.PrintableStatus))
 }
@@ -117,7 +117,7 @@ func displayStorageInfo(w *tabwriter.Writer, info *types.VMInfo) {
 	fmt.Fprintln(w, "-------------")
 	fmt.Fprintf(w, "PVC Claim Names:\t%s\n", info.ClaimNames)
 	fmt.Fprintf(w, "Volume Name:\t%s\n", info.VolumeName)
-	fmt.Fprintf(w, "PVC Status:\t%s\n", formatPVCStatus(info.PVCStatus))
+	fmt.Fprintf(w, "PVC Status:\t%s\n", formatPVCStatus(string(info.PVCStatus)))
 }
 func displayEngineInfo(w *tabwriter.Writer, info *types.VMInfo) {
 	if len(info.EngineInfo) == 0 {
