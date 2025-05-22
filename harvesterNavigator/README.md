@@ -40,6 +40,9 @@ sudo mv harvester-navigator /usr/local/bin/
 
 ```bash
 # Basic usage with default namespace and kubeconfig
+EXPORT NAMESPACE=default
+EXPORT KUBECONFIG=kubeconfig.yaml
+
 harvester-navigator <vm-name>
 
 # Specify a namespace
@@ -63,7 +66,7 @@ harvester-navigator --kubeconfig /path/to/kubeconfig --namespace harvester-syste
 │   ├── models/            # Data structures and types
 │   └── services/          # Service packages for different resources
 │       ├── engine/        # Longhorn engine service
-│       ├── longhornPVC/   # PVC service for Longhorn
+│       ├── pvc/   # PVC service for Longhorn
 │       ├── replicas/      # Replica service
 │       ├── vm/            # Virtual Machine service
 │       ├── vmi/           # Virtual Machine Instance service
